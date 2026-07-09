@@ -1,6 +1,10 @@
 import './globals.css';
+import Script from 'next/script';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+
+// Google Analytics 4 Measurement ID
+const GA_ID = 'G-9DEPFJ6916';
 
 export const metadata = {
   title: {
@@ -27,6 +31,20 @@ export default function RootLayout({ children }) {
           href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
+
+        {/* Google Analytics 4 */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="ga4-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_ID}');
+          `}
+        </Script>
       </head>
       <body>
         <Header />

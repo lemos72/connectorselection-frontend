@@ -10,6 +10,7 @@ import BlocksRenderer, {
 } from '../../../components/BlocksRenderer';
 
 // Static export needs the full list of slugs to pre-render at build time.
+
 export async function generateStaticParams() {
   try {
     const articles = await getArticles();

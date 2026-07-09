@@ -9,6 +9,7 @@ import BlocksRenderer, {
   blocksToPlainText,
 } from '../../../components/BlocksRenderer';
 
+
 export async function generateStaticParams() {
   try {
     const posts = await getBlogPosts();

@@ -8,6 +8,7 @@ import {
 import { blocksToPlainText } from '../../../components/BlocksRenderer';
 import ArticleCard from '../../../components/ArticleCard';
 
+
 export async function generateStaticParams() {
   try {
     const categories = await getCategories();
