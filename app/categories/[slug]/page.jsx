@@ -8,6 +8,8 @@ import {
 import { blocksToPlainText } from '../../../components/BlocksRenderer';
 import ArticleCard from '../../../components/ArticleCard';
 
+// Keep in sync with the same constant in the article page template.
+const SITE_URL = 'https://www.connectorselection.com';
 
 export async function generateStaticParams() {
   try {
@@ -26,6 +28,9 @@ export async function generateMetadata({ params }) {
   return {
     title: cat.Name || cat.name,
     description: blocksToPlainText(cat.description, 155),
+    alternates: {
+      canonical: `${SITE_URL}/categories/${cat.slug}/`,
+    },
   };
 }
 
@@ -34,19 +39,54 @@ export default async function CategoryPage({ params }) {
   const cat = await getCategoryBySlug(slug).catch(() => null);
   if (!cat) notFound();
 
-  const articles = await getArticlesByCategorySlug(slug).catch(() => []);
+  const [articles, allCategories] = await Promise.all([
+    getArticlesByCategorySlug(slug).catch(() => []),
+    getCategories().catch(() => []),
+  ]);
+
+  const categoryName = cat.Name || cat.name;
+  const otherCategories = allCategories.filter((c) => c.slug !== slug);
+
+  // ---- Breadcrumb structured data (schema.org BreadcrumbList) ----
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Categories',
+        item: `${SITE_URL}/categories/`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: categoryName,
+        item: `${SITE_URL}/categories/${cat.slug}/`,
+      },
+    ],
+  };
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+
       <section className="cs-band">
         <div className="cs-container">
           <nav className="cs-breadcrumb" aria-label="Breadcrumb">
             <Link href="/">Home</Link>
             <span>/</span>
             <Link href="/categories/">Categories</Link>
+            <span>/</span>
+            <span>{categoryName}</span>
           </nav>
           <span className="cs-eyebrow">Category</span>
-          <h1>{cat.Name || cat.name}</h1>
+          <h1>{categoryName}</h1>
           {cat.description && <p>{blocksToPlainText(cat.description, 260)}</p>}
         </div>
       </section>
@@ -72,6 +112,27 @@ export default async function CategoryPage({ params }) {
           )}
         </div>
       </section>
+
+      {otherCategories.length > 0 && (
+        <section className="cs-section cs-related">
+          <div className="cs-container">
+            <div className="cs-section-head">
+              <h2>Explore Other Categories</h2>
+            </div>
+            <div className="cs-cat-grid">
+              {otherCategories.map((c) => (
+                <Link
+                  key={c.id}
+                  href={`/categories/${c.slug}/`}
+                  className="cs-cat"
+                >
+                  <h3>{c.Name || c.name}</h3>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
     </>
   );
 }

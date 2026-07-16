@@ -3,11 +3,16 @@ import { notFound } from 'next/navigation';
 import {
   getArticles,
   getArticleBySlug,
+  getArticlesByCategorySlug,
   imageFrom,
 } from '../../../lib/strapi';
 import BlocksRenderer, {
   blocksToPlainText,
 } from '../../../components/BlocksRenderer';
+import ArticleCard from '../../../components/ArticleCard';
+
+// Update if the canonical (indexed) domain form differs, e.g. non-www.
+const SITE_URL = 'https://www.connectorselection.com';
 
 // Static export needs the full list of slugs to pre-render at build time.
 
@@ -31,6 +36,9 @@ export async function generateMetadata({ params }) {
       article.seo_description ||
       article.excerpt ||
       blocksToPlainText(article.content, 155),
+    alternates: {
+      canonical: `${SITE_URL}/articles/${article.slug}/`,
+    },
   };
 }
 
@@ -59,8 +67,50 @@ export default async function ArticlePage({ params }) {
   const author = article.author;
   const date = fmtDate(article.published_date || article.publishedAt);
 
+  // ---- Related Articles (same category, excluding this one) ----
+  const relatedArticles = category?.slug
+    ? (await getArticlesByCategorySlug(category.slug).catch(() => []))
+        .filter((a) => a.slug !== article.slug)
+        .slice(0, 4)
+    : [];
+
+  // ---- Breadcrumb structured data (schema.org BreadcrumbList) ----
+  const breadcrumbItems = [
+    { name: 'Home', url: `${SITE_URL}/` },
+    { name: 'Articles', url: `${SITE_URL}/articles/` },
+  ];
+  if (category?.slug) {
+    breadcrumbItems.push({
+      name: category.Name || category.name,
+      url: `${SITE_URL}/categories/${category.slug}/`,
+    });
+  }
+  breadcrumbItems.push({
+    name: article.title,
+    url: `${SITE_URL}/articles/${article.slug}/`,
+  });
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: breadcrumbItems.map((item, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  };
+
   return (
     <article className="cs-article">
+      {/* Structured data: helps Google understand site hierarchy and can
+          surface breadcrumb rich results in search. */}
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+
       <div className="cs-container">
         <div className="cs-article-header">
           <nav className="cs-breadcrumb" aria-label="Breadcrumb">
@@ -110,6 +160,24 @@ export default async function ArticlePage({ params }) {
             </div>
           )}
         </div>
+
+        {relatedArticles.length > 0 && (
+          <section className="cs-section cs-related">
+            <div className="cs-section-head">
+              <h2>Related Articles</h2>
+              {category?.slug && (
+                <Link href={`/categories/${category.slug}/`}>
+                  More in {category.Name || category.name} →
+                </Link>
+              )}
+            </div>
+            <div className="cs-grid">
+              {relatedArticles.map((a) => (
+                <ArticleCard key={a.id} article={a} />
+              ))}
+            </div>
+          </section>
+        )}
       </div>
     </article>
   );
