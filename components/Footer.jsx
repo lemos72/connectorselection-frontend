@@ -23,6 +23,7 @@ export default function Footer() {
               <Link href="/categories/">Categories</Link>
               <Link href="/blog/">Blog</Link>
               <Link href="/products/">Products</Link>
+              <Link href="/contact/">Contact</Link>
             </div>
             <div className="cs-footer-col">
               <h5>Resource</h5>

@@ -602,3 +602,184 @@ button:focus-visible {
     transition: none !important;
   }
 }
+
+
+
+/* =========================================================================
+   Contact Page — append to globals.css
+   Uses var(--blueprint) / var(--muted) if defined on your site already,
+   with hex fallbacks (#12355b engineering blue, #5a6b7d muted gray-blue)
+   in case the exact variable names differ.
+   ========================================================================= */
+
+.cs-contact-hero .cs-contact-lede {
+  font-size: 1.15rem;
+  line-height: 1.6;
+  max-width: 640px;
+  color: var(--muted, #5a6b7d);
+  margin-top: 12px;
+}
+
+.cs-contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 64px;
+  align-items: start;
+  padding-top: 16px;
+}
+
+@media (max-width: 860px) {
+  .cs-contact-layout {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+}
+
+/* ---- Left column: direct contact methods ---- */
+
+.cs-contact-methods h2 {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+
+.cs-contact-methods-intro {
+  color: var(--muted, #5a6b7d);
+  font-size: 1rem;
+  line-height: 1.55;
+  margin-bottom: 28px;
+}
+
+.cs-contact-method-card {
+  border: 1px solid #dbe4ee;
+  border-radius: 8px;
+  padding: 24px 28px;
+  margin-bottom: 20px;
+  background: #fbfcfd;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.cs-contact-method-card:hover {
+  border-color: var(--blueprint, #12355b);
+  box-shadow: 0 2px 12px rgba(18, 53, 91, 0.08);
+}
+
+.cs-contact-method-value {
+  display: block;
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--blueprint, #12355b);
+  margin: 8px 0 6px;
+  text-decoration: none;
+}
+
+.cs-contact-method-value:hover {
+  text-decoration: underline;
+}
+
+.cs-contact-method-note {
+  font-size: 0.9rem;
+  color: var(--muted, #5a6b7d);
+  margin: 0;
+}
+
+/* ---- Right column: form ---- */
+
+.cs-contact-form-wrap h2 {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+
+.cs-contact-form-intro {
+  color: var(--muted, #5a6b7d);
+  font-size: 1rem;
+  margin-bottom: 28px;
+}
+
+.cs-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.cs-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cs-form-group label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--blueprint, #12355b);
+}
+
+.cs-form-group input,
+.cs-form-group textarea {
+  font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.05rem;
+  padding: 14px 16px;
+  border: 1px solid #c7d0da;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #1a1a1a;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.cs-form-group input:focus,
+.cs-form-group textarea:focus {
+  outline: none;
+  border-color: var(--blueprint, #12355b);
+  box-shadow: 0 0 0 3px rgba(18, 53, 91, 0.12);
+}
+
+.cs-form-group textarea {
+  resize: vertical;
+  min-height: 160px;
+  font-family: inherit;
+}
+
+.cs-form button.cs-btn {
+  align-self: flex-start;
+  font-size: 1.05rem;
+  padding: 16px 36px;
+  margin-top: 8px;
+}
+
+.cs-form button.cs-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cs-form-success {
+  border: 1px solid #12355b;
+  border-radius: 8px;
+  padding: 32px;
+  background: #f0f4f8;
+}
+
+.cs-form-success h3 {
+  color: var(--blueprint, #12355b);
+  margin-bottom: 8px;
+  font-size: 1.3rem;
+}
+
+.cs-form-success p {
+  color: var(--muted, #5a6b7d);
+  margin: 0;
+}
+
+.cs-form-error {
+  border: 1px solid #b3541e;
+  border-radius: 6px;
+  padding: 16px 20px;
+  background: #fdf3ee;
+  color: #8a3d13;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.cs-form-error a {
+  color: #b3541e;
+  font-weight: 600;
+}
