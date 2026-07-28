@@ -13,8 +13,9 @@ export default function Header() {
         <nav className="cs-nav" aria-label="Primary">
           <Link href="/articles/">Articles</Link>
           <Link href="/categories/">Categories</Link>
-          <Link href="/blog/">Blog</Link>
-          <Link href="/products/">Products</Link>
+	  <Link href="/blog/">Blog</Link>
+	  <Link href="/news/">News</Link>
+	  <Link href="/products/">Products</Link>
           <Link href="/contact/">Contact</Link>
         </nav>
       </div>
