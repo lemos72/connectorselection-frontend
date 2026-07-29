@@ -783,3 +783,38 @@ button:focus-visible {
   color: #b3541e;
   font-weight: 600;
 }
+.cs-home-top-band {
+  padding-top: 1rem;
+}
+.cs-home-top-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+}
+@media (max-width: 900px) {
+  .cs-home-top-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.cs-home-news-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.cs-home-news-item {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+.cs-home-news-item a {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  text-decoration: none;
+}
+.cs-home-news-title {
+  font-weight: 600;
+}
+.cs-home-news-meta {
+  font-size: 0.85rem;
+  opacity: 0.7;
+}

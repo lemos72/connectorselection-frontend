@@ -1,6 +1,12 @@
 import Link from 'next/link';
-import { getArticles, getCategories } from '../lib/strapi';
+import {
+  getArticles,
+  getCategories,
+  getTopStories,
+  getNewsItems,
+} from '../lib/strapi';
 import ArticleCard from '../components/ArticleCard';
+import TopStoryCard from '../components/TopStoryCard';
 
 // Re-fetch at build; safe defaults if the API is unreachable so the build
 // doesn't hard-fail during early setup.
@@ -16,6 +22,9 @@ async function safe(fn, fallback) {
 export default async function HomePage() {
   const articles = await safe(getArticles, []);
   const categories = await safe(getCategories, []);
+  const topStories = await safe(() => getTopStories(6), []);
+  const newsItemsRaw = await safe(getNewsItems, []);
+  const newsItems = newsItemsRaw.slice(0, 5);
   const featured = articles.slice(0, 6);
 
   return (
@@ -33,15 +42,74 @@ export default async function HomePage() {
             board-to-board, EV, and data-center applications.
           </p>
           <div className="cs-hero-actions">
-            <Link href="/articles/" className="cs-btn">
-              Browse Articles
-            </Link>
             <Link href="/categories/" className="cs-btn cs-btn-ghost">
               Explore Categories
+            </Link>
+            <Link href="/contact/" className="cs-btn">
+              Contact Us
             </Link>
           </div>
         </div>
       </section>
+
+      {/* Top Stories + News — front and center, directly below the hero */}
+      {(topStories.length > 0 || newsItems.length > 0) && (
+        <section className="cs-section cs-home-top-band">
+          <div className="cs-container">
+            <div className="cs-home-top-grid">
+              {/* Top Stories */}
+              <div className="cs-home-top-stories">
+                <div className="cs-section-head">
+                  <h2>Top Stories</h2>
+                </div>
+                {topStories.length > 0 ? (
+                  <div className="cs-grid">
+                    {topStories.map((item) => (
+                      <TopStoryCard key={`${item._type}-${item.id}`} item={item} />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="cs-empty">
+                    No stories marked as featured yet. Toggle `featured` on an
+                    Article or Blog Post in Strapi to show it here.
+                  </div>
+                )}
+              </div>
+
+              {/* News */}
+              <div className="cs-home-news">
+                <div className="cs-section-head">
+                  <h2>News</h2>
+                  <Link href="/news/">All news →</Link>
+                </div>
+                {newsItems.length > 0 ? (
+                  <ul className="cs-home-news-list">
+                    {newsItems.map((n) => (
+                      <li key={n.id} className="cs-home-news-item">
+                        <a
+                          href={n.sourceUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <span className="cs-home-news-title">{n.title}</span>
+                          <span className="cs-home-news-meta">
+                            {n.sourceName}
+                          </span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <div className="cs-empty">
+                    No news items yet. The RSS fetch job populates this
+                    automatically every 6 hours.
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Categories */}
       {categories.length > 0 && (

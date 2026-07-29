@@ -49,10 +49,10 @@ export default function ContactPage() {
             <div className="cs-contact-method-card">
               <span className="cs-eyebrow">Email</span>
               <a
-                href="mailto:sales@connectorselection.com"
+                href="mailto:lemos@connectorselection.com"
                 className="cs-contact-method-value"
               >
-                sales@connectorselection.com
+                lemos@connectorselection.com
               </a>
               <p className="cs-contact-method-note">
                 Best for detailed technical inquiries and documentation
