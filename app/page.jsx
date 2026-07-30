@@ -22,7 +22,7 @@ async function safe(fn, fallback) {
 export default async function HomePage() {
   const articles = await safe(getArticles, []);
   const categories = await safe(getCategories, []);
-  const topStories = await safe(() => getTopStories(6), []);
+  const topStories = await safe(() => getTopStories(2), []);
   const newsItemsRaw = await safe(getNewsItems, []);
   const newsItems = newsItemsRaw.slice(0, 5);
   const featured = articles.slice(0, 6);
