@@ -838,3 +838,159 @@ button:focus-visible {
   grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
 }
+/* ==========================================================================
+   Header updates: sticky header, categories dropdown, search, persistent CTA
+   Added 8/1/26
+   ========================================================================== */
+
+/* Make the header stick to the top on scroll so nav + CTA stay visible */
+.cs-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #fff; /* adjust to match your existing header background */
+}
+
+.cs-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.cs-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.cs-header-cta {
+  white-space: nowrap;
+}
+
+/* --- Categories dropdown --- */
+.cs-nav-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.cs-nav-dropdown-trigger {
+  background: none;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0;
+  color: inherit;
+}
+
+.cs-nav-dropdown-arrow {
+  font-size: 0.7em;
+}
+
+.cs-nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  left: 0;
+  min-width: 220px;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  padding: 0.5rem 0;
+  z-index: 200;
+}
+
+.cs-nav-dropdown-item {
+  display: block;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  color: inherit;
+  white-space: nowrap;
+}
+
+.cs-nav-dropdown-item:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.cs-nav-dropdown-all {
+  font-weight: 600;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  margin-bottom: 0.25rem;
+  padding-bottom: 0.75rem;
+}
+
+/* --- Search box --- */
+.cs-nav-search {
+  position: relative;
+}
+
+.cs-nav-search-input {
+  padding: 0.45rem 0.75rem;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  width: 180px;
+  max-width: 40vw;
+}
+
+.cs-nav-search-input:focus {
+  outline: none;
+  border-color: rgba(0, 0, 0, 0.35);
+  width: 240px;
+}
+
+.cs-nav-search-results {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  width: 320px;
+  max-width: 80vw;
+  max-height: 400px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  z-index: 200;
+}
+
+.cs-nav-search-result {
+  display: block;
+  padding: 0.6rem 1rem;
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.cs-nav-search-result:last-child {
+  border-bottom: none;
+}
+
+.cs-nav-search-result:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.cs-nav-search-result-title {
+  font-size: 0.9rem;
+}
+
+.cs-nav-search-empty {
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  opacity: 0.6;
+}
+
+/* Mobile: keep header from overflowing on small screens */
+@media (max-width: 900px) {
+  .cs-nav-search-input {
+    width: 120px;
+  }
+  .cs-nav {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+}

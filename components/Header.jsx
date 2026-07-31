@@ -1,6 +1,11 @@
 import Link from 'next/link';
+import { getCategories } from '../lib/strapi';
+import NavCategoriesDropdown from './NavCategoriesDropdown';
+import NavSearch from './NavSearch';
 
-export default function Header() {
+export default async function Header() {
+  const categories = await getCategories().catch(() => []);
+
   return (
     <header className="cs-header">
       <div className="cs-container cs-header-inner">
@@ -10,14 +15,21 @@ export default function Header() {
           </span>
           <span className="cs-brand-sub">Interconnect Knowledge Base</span>
         </Link>
+
         <nav className="cs-nav" aria-label="Primary">
           <Link href="/articles/">Articles</Link>
-          <Link href="/categories/">Categories</Link>
-	  <Link href="/blog/">Blog</Link>
-	  <Link href="/news/">News</Link>
-	  <Link href="/products/">Products</Link>
-          <Link href="/contact/">Contact</Link>
+          <NavCategoriesDropdown categories={categories} />
+          <Link href="/blog/">Blog</Link>
+          <Link href="/news/">News</Link>
+          <Link href="/products/">Products</Link>
         </nav>
+
+        <div className="cs-header-actions">
+          <NavSearch />
+          <Link href="/contact/" className="cs-btn cs-btn-sm cs-header-cta">
+            Contact Us
+          </Link>
+        </div>
       </div>
     </header>
   );
