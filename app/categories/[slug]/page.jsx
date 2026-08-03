@@ -25,9 +25,28 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const cat = await getCategoryBySlug(slug).catch(() => null);
   if (!cat) return { title: 'Category not found' };
+
+  const categoryName = cat.Name || cat.name;
+
+  // Article count feeds the auto-generated description below, and makes
+  // it feel concrete/specific rather than generic boilerplate.
+  const articles = await getArticlesByCategorySlug(slug).catch(() => []);
+  const count = articles.length;
+
+  // If a category has custom seo_title/seo_description set in Strapi,
+  // prefer those. Otherwise, auto-generate a solid default from the
+  // category name + article count — no per-category upkeep required.
+  const autoTitle = `${categoryName}: Engineering Guides & Selection Resources`;
+  const autoDescription = count > 0
+    ? `Explore ${count} engineering guide${count === 1 ? '' : 's'} on ${categoryName.toLowerCase()} — selection criteria, comparisons, and design considerations for hardware engineers.`
+    : `Engineering guides and selection resources on ${categoryName.toLowerCase()} for hardware engineers.`;
+
+  const title = cat.seo_title || autoTitle;
+  const description = cat.seo_description || autoDescription;
+
   return {
-    title: cat.Name || cat.name,
-    description: blocksToPlainText(cat.description, 155),
+    title,
+    description,
     alternates: {
       canonical: `${SITE_URL}/categories/${cat.slug}/`,
     },
