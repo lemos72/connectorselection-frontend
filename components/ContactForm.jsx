@@ -22,6 +22,17 @@ const initialFormState = {
   cs_verify_field: '',
 };
 
+// Fires a GA4 event for the contact form submission. Safe to call even
+// if gtag hasn't loaded (ad blockers, slow network, etc.) — just no-ops.
+function trackLeadConversion() {
+  if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+    window.gtag('event', 'generate_lead', {
+      event_category: 'contact_form',
+      event_label: 'Contact Form Submission',
+    });
+  }
+}
+
 export default function ContactForm() {
   const [formData, setFormData] = useState(initialFormState);
   const [status, setStatus] = useState('idle'); // idle | submitting | success | error
@@ -64,6 +75,7 @@ export default function ContactForm() {
 
       setStatus('success');
       setFormData(initialFormState);
+      trackLeadConversion();
     } catch (err) {
       console.error('Contact form submission failed:', err);
       setStatus('error');
@@ -171,8 +183,8 @@ export default function ContactForm() {
         <div className="cs-form-error">
           Something went wrong sending your message. Please try again, or
           email us directly at{' '}
-          <a href="mailto:sales@connectorselection.com">
-            sales@connectorselection.com
+          <a href="mailto:lemos@connectorselection.com">
+            lemos@connectorselection.com
           </a>
           .
         </div>
