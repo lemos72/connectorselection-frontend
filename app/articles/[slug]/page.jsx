@@ -10,6 +10,7 @@ import BlocksRenderer, {
   blocksToPlainText,
 } from '../../../components/BlocksRenderer';
 import ArticleCard from '../../../components/ArticleCard';
+import NewsletterSignup from '../../../components/NewsletterSignup';
 
 // Update if the canonical (indexed) domain form differs, e.g. non-www.
 const SITE_URL = 'https://www.connectorselection.com';
@@ -160,6 +161,8 @@ export default async function ArticlePage({ params }) {
             </div>
           )}
         </div>
+
+        <NewsletterSignup source="article-footer" />
 
         {relatedArticles.length > 0 && (
           <section className="cs-section cs-related">

@@ -8,6 +8,7 @@ import {
 import BlocksRenderer, {
   blocksToPlainText,
 } from '../../../components/BlocksRenderer';
+import NewsletterSignup from '../../../components/NewsletterSignup';
 
 
 export async function generateStaticParams() {
@@ -81,6 +82,8 @@ export default async function BlogPostPage({ params }) {
         <div className="cs-article-body">
           <BlocksRenderer content={post.content} />
         </div>
+
+        <NewsletterSignup source="blog-footer" />
       </div>
     </article>
   );
