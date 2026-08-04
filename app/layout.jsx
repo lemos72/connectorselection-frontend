@@ -8,11 +8,11 @@ const GA_ID = 'G-9DEPFJ6916';
 
 export const metadata = {
   title: {
-    default: 'connectorselection.com — Interconnect Knowledge Base',
+    default: 'Connector Selection Guides: High-Speed, Automotive & Cable Harness',
     template: '%s | connectorselection.com',
   },
   description:
-    'Technical articles and selection guidance for electronic connectors: high-speed, board-to-board, EV, and signal integrity.',
+    'Practical engineering guides for hardware engineers — connector selection, high-speed signal integrity, automotive, EV, FFC/FPC, AI server interconnects, and cable harness design.',
   metadataBase: new URL('https://connectorselection.com'),
 };
 

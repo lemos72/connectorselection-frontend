@@ -1,0 +1,6 @@
+Build on EC2
+
+cd ~/connector-frontend
+npm run build
+aws s3 sync out/ s3://connectorselection.com/ --delete
+aws cloudfront create-invalidation --distribution-id ERI4NFYVTW518 --paths "/*"
