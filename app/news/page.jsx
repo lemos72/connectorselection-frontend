@@ -1,3 +1,5 @@
+import { getRelatedArticlesForNewsItem } from '../../lib/strapi';
+import RelatedArticles from '../../components/RelatedArticles';
 import { getNewsItems } from '../../lib/strapi';
    import NewsCard from '../../components/NewsCard';
 
@@ -18,6 +20,10 @@ import { getNewsItems } from '../../lib/strapi';
 
    export default async function NewsPage() {
      const newsItems = await safe(getNewsItems, []);
+	const relatedByNewsItem = await safe(
+  () => Promise.all(newsItems.map((item) => getRelatedArticlesForNewsItem(item.category))),
+  newsItems.map(() => [])
+);
 
      return (
        <>
@@ -37,10 +43,13 @@ import { getNewsItems } from '../../lib/strapi';
            <div className="cs-container">
              {newsItems.length > 0 ? (
                <div className="cs-grid">
-                 {newsItems.map((item) => (
-                   <NewsCard key={item.id} item={item} />
-                 ))}
-               </div>
+  {newsItems.map((item, i) => (
+  <div key={item.id} className="cs-news-item">
+    <NewsCard item={item} />
+    <RelatedArticles articles={relatedByNewsItem[i]} />
+  </div>
+))}
+</div>
              ) : (
                <div className="cs-empty">
                  No news items yet. Check back soon.

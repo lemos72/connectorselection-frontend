@@ -388,7 +388,91 @@ a {
 .cs-section-head a:hover {
   text-decoration: underline;
 }
+/* Equal-height news items so Related Articles boxes line up across the row */
+.cs-news-item {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 
+.cs-news-item .cs-card {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+}
+
+.cs-news-item {
+  justify-content: flex-start;
+}
+.cs-news-item .cs-card-body h3 {
+  min-height: 2.6em; /* reserves space for 2 lines of title, even if it only wraps to 1 */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.cs-news-item .cs-card-body p {
+  min-height: 4em; /* reserves space for 3 lines of summary, even if shorter */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.cs-news-item .cs-card-foot {
+  min-height: 3.2em; /* bumped from 2.6em to fully cover 2-line footer wraps */
+  align-items: flex-start;
+}
+/* ==========================================================================
+   Related Articles (shown under News items for internal linking)
+   ========================================================================== */
+.cs-related-articles {
+  margin-top: 0.75rem;
+  padding: 0.85rem 1rem;
+  background: var(--paper, #f5f6f8);
+  border: 1px solid var(--line, #d9dee6);
+  border-radius: 8px;
+}
+
+.cs-related-articles h3 {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--muted, #5a6b7d);
+  margin: 0 0 0.5rem;
+  font-weight: 600;
+}
+
+.cs-related-articles ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.cs-related-articles li a {
+  color: var(--blueprint, #12355b);
+  text-decoration: none;
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+.cs-related-articles li a:hover {
+  text-decoration: underline;
+}
+.cs-related-articles ul {
+  min-height: 5.5em; /* reserves space for ~3 short entries, keeps box heights consistent */
+}
+
+.cs-related-articles li a {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 /* ==========================================================================
    Cards (component "spec card" treatment)
    ========================================================================== */
