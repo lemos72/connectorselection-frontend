@@ -101,7 +101,26 @@ export default async function ArticlePage({ params }) {
       item: item.url,
     })),
   };
-
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: article.title,
+  image: cover?.url ? [cover.url] : undefined,
+  author: {
+    '@type': 'Person',
+    name: author?.name || 'Connector Selection Team',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Connector Selection',
+  },
+  datePublished: article.published_date || article.publishedAt,
+  dateModified: article.updatedAt || article.published_date,
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': `${SITE_URL}/articles/${article.slug}/`,
+  },
+};
   return (
     <article className="cs-article">
       {/* Structured data: helps Google understand site hierarchy and can
@@ -111,7 +130,10 @@ export default async function ArticlePage({ params }) {
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
-
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+/>
       <div className="cs-container">
         <div className="cs-article-header">
           <nav className="cs-breadcrumb" aria-label="Breadcrumb">
