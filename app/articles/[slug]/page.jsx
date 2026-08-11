@@ -12,6 +12,16 @@ import BlocksRenderer, {
 import ArticleCard from '../../../components/ArticleCard';
 import NewsletterSignup from '../../../components/NewsletterSignup';
 
+// Articles where a relevant tool callout should appear. Add more slugs here
+// as new tools ship and more articles become relevant.
+const TOOL_CALLOUTS = {
+  'connector-current-voltage-ratings-explained': {
+    href: '/tools/voltage-drop-calculator/',
+    label: 'Try the Voltage Drop Calculator',
+    description: 'Calculate voltage drop for your specific wire gauge, length, and current.',
+  },
+};
+
 // Update if the canonical (indexed) domain form differs, e.g. non-www.
 const SITE_URL = 'https://www.connectorselection.com';
 
@@ -67,6 +77,7 @@ export default async function ArticlePage({ params }) {
   const category = article.category;
   const author = article.author;
   const date = fmtDate(article.published_date || article.publishedAt);
+  const toolCallout = TOOL_CALLOUTS[article.slug];
 
   // ---- Related Articles (same category, excluding this one) ----
   const relatedArticles = category?.slug
@@ -183,7 +194,14 @@ const articleJsonLd = {
             </div>
           )}
         </div>
-
+{toolCallout && (
+          <div className="cs-tool-callout">
+            <p>{toolCallout.description}</p>
+            <Link href={toolCallout.href} className="cs-btn">
+              {toolCallout.label} →
+            </Link>
+          </div>
+        )}
         <NewsletterSignup source="article-footer" />
 
         {relatedArticles.length > 0 && (

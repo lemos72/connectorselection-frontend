@@ -1079,7 +1079,7 @@ button:focus-visible {
    Added 8/4/26
    ========================================================================== */
 .cs-newsletter {
-  margin: 2.5rem 0;
+  margin: 0.75rem 0 2.5rem;
   padding: 2rem;
   background: var(--paper, #f5f6f8);
   border: 1px solid var(--line, #d9dee6);
@@ -1173,4 +1173,202 @@ button:focus-visible {
 
 .cs-ask-form button.cs-btn {
   align-self: flex-start;
+}
+/* ==========================================================================
+   Voltage Drop Calculator / shared calculator tool styling
+   ========================================================================== */
+.cs-calculator {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 2rem;
+  background: var(--paper, #f5f6f8);
+  border: 1px solid var(--line, #d9dee6);
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.cs-calc-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  align-content: start;
+}
+
+.cs-calc-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.cs-calc-field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--blueprint, #12355b);
+}
+
+.cs-calc-field input,
+.cs-calc-field select {
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--line-strong, #b7c0cc);
+  border-radius: 6px;
+  font-size: 1rem;
+  background: #fff;
+  color: inherit;
+}
+
+.cs-calc-field input:focus,
+.cs-calc-field select:focus {
+  outline: none;
+  border-color: var(--blueprint, #12355b);
+  box-shadow: 0 0 0 3px rgba(18, 53, 91, 0.12);
+}
+
+.cs-calc-length-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.cs-calc-length-row input {
+  flex: 1;
+  min-width: 0;
+}
+
+.cs-calc-length-row select {
+  width: 70px;
+  flex-shrink: 0;
+}
+
+.cs-calc-field-checkbox {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  align-items: center;
+}
+
+.cs-calc-field-checkbox label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  color: inherit;
+  cursor: pointer;
+}
+
+.cs-calc-field-checkbox input[type='checkbox'] {
+  width: auto;
+  accent-color: var(--blueprint, #12355b);
+}
+
+/* --- Results panel --- */
+.cs-calc-results {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.9rem;
+  background: #fff;
+  border: 1px solid var(--line, #d9dee6);
+  border-radius: 10px;
+  padding: 1.5rem;
+}
+
+.cs-calc-placeholder {
+  color: var(--muted, #5a6b7d);
+  font-size: 0.9rem;
+  text-align: center;
+  margin: 0;
+}
+
+.cs-calc-result-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--line, #d9dee6);
+  margin-bottom: 0.25rem;
+}
+
+.cs-calc-result-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--blueprint, #12355b);
+  line-height: 1.1;
+}
+
+.cs-calc-result-label {
+  font-size: 0.8rem;
+  color: var(--muted, #5a6b7d);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.cs-calc-result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+}
+
+.cs-calc-result-row span {
+  color: var(--muted, #5a6b7d);
+}
+
+.cs-calc-status {
+  text-align: center;
+  padding: 0.6rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.cs-calc-status-good {
+  background: #e6f4ea;
+  color: #1e7a34;
+}
+
+.cs-calc-status-caution {
+  background: #fdf3d8;
+  color: #92650a;
+}
+
+.cs-calc-status-poor {
+  background: #fce8e6;
+  color: #b3261e;
+}
+
+/* --- Disclaimer --- */
+.cs-calc-disclaimer {
+  grid-column: 1 / -1;
+  font-size: 0.8rem;
+  color: var(--muted, #5a6b7d);
+  border-top: 1px solid var(--line, #d9dee6);
+  padding-top: 1rem;
+  margin: 0.5rem 0 0;
+  line-height: 1.5;
+}
+
+/* --- Mobile: stack everything --- */
+@media (max-width: 700px) {
+  .cs-calculator {
+    grid-template-columns: 1fr;
+    padding: 1.5rem;
+    gap: 1.5rem;
+  }
+  .cs-calc-inputs {
+    grid-template-columns: 1fr;
+  }
+}
+.cs-tool-callout {
+  background: var(--paper, #f5f6f8);
+  border: 1px solid var(--line, #d9dee6);
+  border-radius: 8px;
+  padding: 1.5rem 2rem;
+  margin: 2rem 0 0.75rem;
+  text-align: center;
+}
+
+.cs-tool-callout p {
+  margin: 0 0 1rem;
+  color: var(--muted, #5a6b7d);
 }
