@@ -21,6 +21,7 @@ export default async function Header() {
           <NavCategoriesDropdown categories={categories} />
           <Link href="/blog/">Blog</Link>
           <Link href="/news/">News</Link>
+	  <Link href="/ask-the-engineer/">Ask</Link>
           <Link href="/products/">Products</Link>
         </nav>
 

@@ -1144,3 +1144,33 @@ button:focus-visible {
     width: 100%;
   }
 }
+/* Ask the Engineer form — stacked, labeled layout */
+.cs-ask-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  text-align: left;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.cs-ask-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.cs-ask-field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--blueprint, #12355b);
+}
+
+.cs-ask-form textarea.cs-newsletter-input,
+.cs-ask-form input.cs-newsletter-input {
+  width: 100%;
+}
+
+.cs-ask-form button.cs-btn {
+  align-self: flex-start;
+}
