@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getCategories } from '../lib/strapi';
 import NavCategoriesDropdown from './NavCategoriesDropdown';
 import NavSearch from './NavSearch';
+import NavToolsDropdown from './NavToolsDropdown';
 
 export default async function Header() {
   const categories = await getCategories().catch(() => []);
@@ -21,6 +22,7 @@ export default async function Header() {
           <NavCategoriesDropdown categories={categories} />
           <Link href="/blog/">Blog</Link>
           <Link href="/news/">News</Link>
+		<NavToolsDropdown />
 	  <Link href="/ask-the-engineer/">Ask</Link>
           <Link href="/products/">Products</Link>
         </nav>

@@ -1408,3 +1408,29 @@ button:focus-visible {
 .cs-calc-results-simple {
   justify-content: center;
 }
+.cs-tool-card {
+  display: block;
+  background: #fff;
+  border: 1px solid var(--line, #d9dee6);
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.cs-tool-card:hover {
+  border-color: var(--blueprint, #12355b);
+  box-shadow: 0 4px 12px rgba(18, 53, 91, 0.08);
+}
+
+.cs-tool-card h3 {
+  color: var(--blueprint, #12355b);
+  margin: 0 0 0.5rem;
+}
+
+.cs-tool-card p {
+  color: var(--muted, #5a6b7d);
+  margin: 0;
+  font-size: 0.9rem;
+}
