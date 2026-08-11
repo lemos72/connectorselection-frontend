@@ -14,14 +14,24 @@ import NewsletterSignup from '../../../components/NewsletterSignup';
 
 // Articles where a relevant tool callout should appear. Add more slugs here
 // as new tools ship and more articles become relevant.
+
 const TOOL_CALLOUTS = {
   'connector-current-voltage-ratings-explained': {
     href: '/tools/voltage-drop-calculator/',
     label: 'Try the Voltage Drop Calculator',
     description: 'Calculate voltage drop for your specific wire gauge, length, and current.',
   },
+  'cable-temperature-ratings-current-derating-voltage-drop': {
+    href: '/tools/voltage-drop-calculator/',
+    label: 'Try the Voltage Drop Calculator',
+    description: 'Calculate voltage drop for your specific wire gauge, length, and current.',
+  },
+  'wire-harness-management-testing-validation': {
+    href: '/tools/wire-weight-calculator/',
+    label: 'Try the Wire Weight Calculator',
+    description: 'Estimate wire weight for your harness based on gauge, length, and material.',
+  },
 };
-
 // Update if the canonical (indexed) domain form differs, e.g. non-www.
 const SITE_URL = 'https://www.connectorselection.com';
 

@@ -1,5 +1,18 @@
 import CmilConverter from '../../../components/CmilConverter';
 
+const SITE_URL = 'https://www.connectorselection.com';
+
+const toolJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Circular Mils to mm² Converter',
+  applicationCategory: 'UtilitiesApplication',
+  operatingSystem: 'Any (Web Browser)',
+  url: `${SITE_URL}/tools/circular-mils-mm2-converter/`,
+  description: 'Convert wire cross-sectional area between circular mils and square millimeters.',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+};
+
 export const metadata = {
   title: 'Circular Mils to mm² Converter',
   description:
@@ -9,6 +22,11 @@ export const metadata = {
 export default function CmilConverterPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(toolJsonLd) }}
+      />
+
       <section className="cs-band">
         <div className="cs-container">
           <span className="cs-eyebrow">Tools</span>

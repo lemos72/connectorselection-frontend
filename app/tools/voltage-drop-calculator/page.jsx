@@ -1,6 +1,24 @@
 import Link from 'next/link';
 import VoltageDropCalculator from '../../../components/VoltageDropCalculator';
 
+const SITE_URL = 'https://www.connectorselection.com';
+
+const toolJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Voltage Drop Calculator',
+  applicationCategory: 'UtilitiesApplication',
+  operatingSystem: 'Any (Web Browser)',
+  url: `${SITE_URL}/tools/voltage-drop-calculator/`,
+  description:
+    'Calculate voltage drop for a copper wire run based on gauge, length, and current.',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  },
+};
+
 export const metadata = {
   title: 'Voltage Drop Calculator — Wire Gauge Sizing Tool',
   description:
@@ -10,6 +28,11 @@ export const metadata = {
 export default function VoltageDropCalculatorPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(toolJsonLd) }}
+      />
+
       <section className="cs-band">
         <div className="cs-container">
           <span className="cs-eyebrow">Tools</span>
