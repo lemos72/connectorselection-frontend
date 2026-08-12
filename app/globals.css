@@ -1520,3 +1520,38 @@ button:focus-visible {
   color: var(--muted, #5a6b7d);
   font-size: 0.95rem;
 }
+.cs-key-terms {
+  background: var(--paper, #f5f6f8);
+  border: 1px solid var(--line, #d9dee6);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin: 2rem 0;
+}
+
+.cs-key-terms h3 {
+  font-size: 0.95rem;
+  margin: 0 0 0.75rem;
+  color: var(--blueprint, #12355b);
+}
+
+.cs-key-terms-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.cs-key-term-chip {
+  display: inline-block;
+  padding: 0.35rem 0.8rem;
+  background: #fff;
+  border: 1px solid var(--line-strong, #b7c0cc);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  color: var(--blueprint, #12355b);
+  text-decoration: none;
+}
+
+.cs-key-term-chip:hover {
+  background: var(--blueprint, #12355b);
+  color: #fff;
+}

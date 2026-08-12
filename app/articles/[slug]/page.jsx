@@ -4,6 +4,8 @@ import {
   getArticles,
   getArticleBySlug,
   getArticlesByCategorySlug,
+  getGlossaryTerms,
+  matchGlossaryTerms,
   imageFrom,
 } from '../../../lib/strapi';
 import BlocksRenderer, {
@@ -11,12 +13,12 @@ import BlocksRenderer, {
 } from '../../../components/BlocksRenderer';
 import ArticleCard from '../../../components/ArticleCard';
 import NewsletterSignup from '../../../components/NewsletterSignup';
+import KeyTerms from '../../../components/KeyTerms';
 
 // Articles where a relevant tool callout should appear. Add more slugs here
 // as new tools ship and more articles become relevant.
-
 const TOOL_CALLOUTS = {
-'wire-gauge-awg-explained-selecting-the-right-conductor-size': {
+  'wire-gauge-awg-explained-selecting-the-right-conductor-size': {
     href: '/tools/awg-mm2-converter/',
     label: 'Try the AWG to mm² Converter',
     description: 'Convert between AWG sizes and metric cross-sectional area.',
@@ -46,12 +48,42 @@ const TOOL_CALLOUTS = {
     label: 'Try the Wire Weight Calculator',
     description: 'Estimate wire weight for your harness based on gauge, length, and material.',
   },
+  'connector-current-rating-explained-engineering-guide': {
+    href: '/tools/voltage-drop-calculator/',
+    label: 'Try the Voltage Drop Calculator',
+    description: 'Calculate voltage drop for your specific wire gauge, length, and current.',
+  },
+  'high-current-wire-to-wire-connections-power': {
+    href: '/tools/power-dissipation-calculator/',
+    label: 'Try the Power Dissipation Calculator',
+    description: 'Calculate heat loss in your wire run using P = I²R.',
+  },
+  'high-current-wire-to-board-connectors-power': {
+    href: '/tools/voltage-drop-calculator/',
+    label: 'Try the Voltage Drop Calculator',
+    description: 'Calculate voltage drop for your specific wire gauge, length, and current.',
+  },
+  'connector-contact-resistance-explained-design-guide': {
+    href: '/tools/ohms-law-calculator/',
+    label: "Try the Ohm's Law Calculator",
+    description: 'Solve for voltage, current, or resistance given any two values.',
+  },
+  'electrical-connector-basics': {
+    href: '/tools/ohms-law-calculator/',
+    label: "Try the Ohm's Law Calculator",
+    description: 'Solve for voltage, current, or resistance given any two values.',
+  },
+  'custom-cable-harness-manufacturing-design-considerations': {
+    href: '/tools/wire-weight-calculator/',
+    label: 'Try the Wire Weight Calculator',
+    description: 'Estimate wire weight for your harness based on gauge, length, and material.',
+  },
 };
+
 // Update if the canonical (indexed) domain form differs, e.g. non-www.
 const SITE_URL = 'https://www.connectorselection.com';
 
 // Static export needs the full list of slugs to pre-render at build time.
-
 export async function generateStaticParams() {
   try {
     const articles = await getArticles();
@@ -104,6 +136,10 @@ export default async function ArticlePage({ params }) {
   const date = fmtDate(article.published_date || article.publishedAt);
   const toolCallout = TOOL_CALLOUTS[article.slug];
 
+  // ---- Key Terms (auto-matched glossary terms mentioned in this article) ----
+  const allGlossaryTerms = await getGlossaryTerms().catch(() => []);
+  const matchedTerms = matchGlossaryTerms(article.content, allGlossaryTerms);
+
   // ---- Related Articles (same category, excluding this one) ----
   const relatedArticles = category?.slug
     ? (await getArticlesByCategorySlug(category.slug).catch(() => []))
@@ -137,26 +173,28 @@ export default async function ArticlePage({ params }) {
       item: item.url,
     })),
   };
-const articleJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'Article',
-  headline: article.title,
-  image: cover?.url ? [cover.url] : undefined,
-  author: {
-    '@type': 'Person',
-    name: author?.name || 'Connector Selection Team',
-  },
-  publisher: {
-    '@type': 'Organization',
-    name: 'Connector Selection',
-  },
-  datePublished: article.published_date || article.publishedAt,
-  dateModified: article.updatedAt || article.published_date,
-  mainEntityOfPage: {
-    '@type': 'WebPage',
-    '@id': `${SITE_URL}/articles/${article.slug}/`,
-  },
-};
+
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.title,
+    image: cover?.url ? [cover.url] : undefined,
+    author: {
+      '@type': 'Person',
+      name: author?.name || 'Connector Selection Team',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Connector Selection',
+    },
+    datePublished: article.published_date || article.publishedAt,
+    dateModified: article.updatedAt || article.published_date,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${SITE_URL}/articles/${article.slug}/`,
+    },
+  };
+
   return (
     <article className="cs-article">
       {/* Structured data: helps Google understand site hierarchy and can
@@ -166,10 +204,12 @@ const articleJsonLd = {
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
-<script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
-/>
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
+
       <div className="cs-container">
         <div className="cs-article-header">
           <nav className="cs-breadcrumb" aria-label="Breadcrumb">
@@ -219,7 +259,10 @@ const articleJsonLd = {
             </div>
           )}
         </div>
-{toolCallout && (
+
+        <KeyTerms terms={matchedTerms} />
+
+        {toolCallout && (
           <div className="cs-tool-callout">
             <p>{toolCallout.description}</p>
             <Link href={toolCallout.href} className="cs-btn">
@@ -227,6 +270,7 @@ const articleJsonLd = {
             </Link>
           </div>
         )}
+
         <NewsletterSignup source="article-footer" />
 
         {relatedArticles.length > 0 && (
