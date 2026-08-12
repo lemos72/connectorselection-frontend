@@ -47,6 +47,10 @@ export default function ToolsIndexPage() {
           <span className="cs-eyebrow">Tools</span>
           <h1>Engineering Tools & Calculators</h1>
           <p>Free interactive tools for wire and connector engineering.</p>
+<p>
+  Looking for definitions instead? Check the{' '}
+  <Link href="/glossary/">Connector & Cable Glossary</Link>.
+</p>
         </div>
       </section>
 

@@ -51,7 +51,16 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
-
+{/* Quick links: Tools + Glossary */}
+<section className="cs-section cs-home-quicklinks">
+  <div className="cs-container">
+    <p>
+      Need a quick answer instead? Try our{' '}
+      <Link href="/tools/">Engineering Tools</Link> or the{' '}
+      <Link href="/glossary/">Connector & Cable Glossary</Link>.
+    </p>
+  </div>
+</section>
       {/* Top Stories + News — front and center, directly below the hero */}
       {(topStories.length > 0 || newsItems.length > 0) && (
         <section className="cs-section cs-home-top-band">

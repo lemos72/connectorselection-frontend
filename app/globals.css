@@ -1434,3 +1434,89 @@ button:focus-visible {
   margin: 0;
   font-size: 0.9rem;
 }
+/* ==========================================================================
+   Glossary page
+   ========================================================================== */
+.cs-glossary-jumpnav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--line, #d9dee6);
+}
+
+.cs-glossary-jumpnav a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  background: var(--paper, #f5f6f8);
+  border: 1px solid var(--line, #d9dee6);
+  border-radius: 6px;
+  font-weight: 600;
+  color: var(--blueprint, #12355b);
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.cs-glossary-jumpnav a:hover {
+  background: var(--blueprint, #12355b);
+  color: #fff;
+}
+
+.cs-glossary-group {
+  margin-bottom: 3rem;
+  scroll-margin-top: 2rem;
+}
+
+.cs-glossary-group h2 {
+  font-size: 2rem;
+  color: var(--blueprint, #12355b);
+  border-bottom: 2px solid var(--line, #d9dee6);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.cs-glossary-term {
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--line, #d9dee6);
+}
+
+.cs-glossary-term:last-child {
+  border-bottom: none;
+}
+
+.cs-glossary-term h3 {
+  font-size: 1.15rem;
+  color: var(--ink, #1a1a1a);
+  margin: 0 0 0.4rem;
+}
+
+.cs-glossary-term p {
+  color: var(--muted, #5a6b7d);
+  margin: 0 0 0.5rem;
+  line-height: 1.5;
+}
+
+.cs-glossary-term a {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--blueprint, #12355b);
+  text-decoration: none;
+}
+
+.cs-glossary-term a:hover {
+  text-decoration: underline;
+}
+.cs-home-quicklinks {
+  padding-top: 0;
+  padding-bottom: 0.5rem;
+}
+
+.cs-home-quicklinks p {
+  text-align: center;
+  color: var(--muted, #5a6b7d);
+  font-size: 0.95rem;
+}
