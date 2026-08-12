@@ -16,6 +16,21 @@ import NewsletterSignup from '../../../components/NewsletterSignup';
 // as new tools ship and more articles become relevant.
 
 const TOOL_CALLOUTS = {
+'wire-gauge-awg-explained-selecting-the-right-conductor-size': {
+    href: '/tools/awg-mm2-converter/',
+    label: 'Try the AWG to mm² Converter',
+    description: 'Convert between AWG sizes and metric cross-sectional area.',
+  },
+  'what-is-a-wire-harness-complete-guide-for-engineers': {
+    href: '/tools/wire-weight-calculator/',
+    label: 'Try the Wire Weight Calculator',
+    description: 'Estimate wire weight for your harness based on gauge, length, and material.',
+  },
+  'what-is-raw-cable-bulk-cable-vs-cable-assemblies-explained': {
+    href: '/tools/wire-weight-calculator/',
+    label: 'Try the Wire Weight Calculator',
+    description: 'Estimate wire weight based on gauge, length, and material.',
+  },
   'connector-current-voltage-ratings-explained': {
     href: '/tools/voltage-drop-calculator/',
     label: 'Try the Voltage Drop Calculator',
