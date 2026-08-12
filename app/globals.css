@@ -97,9 +97,10 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 68px;
+  min-height: 68px;
   gap: 1.5rem;
   flex-wrap: wrap;
+  padding: 0.5rem 0;
 }
 .cs-brand {
   display: flex;
@@ -631,13 +632,14 @@ a {
   padding: 12px 0;
 }
 .cs-article-cover {
-  max-width: 900px;
+  max-width: 700px;
   margin: 0 auto 36px;
   border: 1px solid var(--line);
 }
 .cs-article-cover img {
   width: 100%;
-  height: auto;
+  height: 320px;
+  object-fit: cover;
   display: block;
 }
 .cs-article-body {
