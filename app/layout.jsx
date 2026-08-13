@@ -1,7 +1,22 @@
 import './globals.css';
 import Script from 'next/script';
+import { IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+
+const ibmPlexSans = IBM_Plex_Sans({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-ibm-sans',
+  display: 'swap',
+});
+
+const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-ibm-mono',
+  display: 'swap',
+});
 
 // Google Analytics 4 Measurement ID
 const GA_ID = 'G-9DEPFJ6916';
@@ -18,20 +33,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${ibmPlexSans.variable} ${ibmPlexMono.variable}`}>
       <head>
-        {/* IBM Plex Sans + Mono — technical, precise, not a generic default */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
-
         {/* Google Analytics 4 */}
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}

@@ -22,9 +22,9 @@
   --muted: #5a6b7b;        /* secondary text */
   --grid: #e7ebf0;         /* faint grid lines */
 
-  --font-display: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-body: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --font-display: var(--font-ibm-sans), system-ui, -apple-system, 'Segoe UI', sans-serif;
+--font-body: var(--font-ibm-sans), system-ui, -apple-system, 'Segoe UI', sans-serif;
+--font-mono: var(--font-ibm-mono), ui-monospace, 'SFMono-Regular', Menlo, monospace;
 
   --maxw: 1200px;
 }
