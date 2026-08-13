@@ -6,6 +6,7 @@ import {
   getArticlesByCategorySlug,
   getGlossaryTerms,
   matchGlossaryTerms,
+  getRelatedArticlesByTermOverlap,
   imageFrom,
 } from '../../../lib/strapi';
 import BlocksRenderer, {
@@ -140,12 +141,14 @@ export default async function ArticlePage({ params }) {
   const allGlossaryTerms = await getGlossaryTerms().catch(() => []);
   const matchedTerms = matchGlossaryTerms(article.content, allGlossaryTerms);
 
-  // ---- Related Articles (same category, excluding this one) ----
-  const relatedArticles = category?.slug
-    ? (await getArticlesByCategorySlug(category.slug).catch(() => []))
-        .filter((a) => a.slug !== article.slug)
-        .slice(0, 4)
-    : [];
+  // ---- Related Articles: term-overlap first, same-category as fallback ----
+  let relatedArticles = await getRelatedArticlesByTermOverlap(article.slug, 4).catch(() => []);
+
+  if (relatedArticles.length === 0 && category?.slug) {
+    relatedArticles = (await getArticlesByCategorySlug(category.slug).catch(() => []))
+      .filter((a) => a.slug !== article.slug)
+      .slice(0, 4);
+  }
 
   // ---- Breadcrumb structured data (schema.org BreadcrumbList) ----
   const breadcrumbItems = [
