@@ -37,6 +37,7 @@ export default function NavCategoriesDropdown({ categories }) {
             className="cs-nav-dropdown-item cs-nav-dropdown-all"
             role="menuitem"
             onClick={() => setOpen(false)}
+            prefetch={false}
           >
             All Categories
           </Link>
@@ -47,6 +48,7 @@ export default function NavCategoriesDropdown({ categories }) {
               className="cs-nav-dropdown-item"
               role="menuitem"
               onClick={() => setOpen(false)}
+              prefetch={false}
             >
               {cat.Name || cat.name}
             </Link>

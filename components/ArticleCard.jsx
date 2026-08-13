@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { imageFrom } from '../lib/strapi';
 
-// Formats an ISO date -> "08 JUL 2026"
 function fmtDate(d) {
   if (!d) return '';
   try {
@@ -18,17 +17,16 @@ function fmtDate(d) {
   }
 }
 
-export default function ArticleCard({ article, basePath = '/articles' }) {
+export default function ArticleCard({ article, basePath = '/articles', prefetch = false }) {
   if (!article) return null;
   const img = imageFrom(article.cover_image, 'small');
   const category = article.category?.Name || article.category?.name;
   const date = fmtDate(article.published_date || article.publishedAt);
 
   return (
-    <Link href={`${basePath}/${article.slug}/`} className="cs-card">
+    <Link href={`${basePath}/${article.slug}/`} className="cs-card" prefetch={prefetch}>
       {img?.url && (
         <div className="cs-card-media">
-          {/* Plain <img>: static export, images served from Strapi */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={img.url} alt={img.alt || article.title} loading="lazy" />
         </div>

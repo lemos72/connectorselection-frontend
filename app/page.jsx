@@ -42,25 +42,27 @@ export default async function HomePage() {
             board-to-board, EV, and data-center applications.
           </p>
           <div className="cs-hero-actions">
-            <Link href="/categories/" className="cs-btn cs-btn-ghost">
+            <Link href="/categories/" className="cs-btn cs-btn-ghost" prefetch={false}>
               Explore Categories
             </Link>
-            <Link href="/contact/" className="cs-btn">
+            <Link href="/contact/" className="cs-btn" prefetch={false}>
               Contact Us
             </Link>
           </div>
         </div>
       </section>
-{/* Quick links: Tools + Glossary */}
-<section className="cs-section cs-home-quicklinks">
-  <div className="cs-container">
-    <p>
-      Need a quick answer instead? Try our{' '}
-      <Link href="/tools/">Engineering Tools</Link> or the{' '}
-      <Link href="/glossary/">Connector & Cable Glossary</Link>.
-    </p>
-  </div>
-</section>
+
+      {/* Quick links: Tools + Glossary */}
+      <section className="cs-section cs-home-quicklinks">
+        <div className="cs-container">
+          <p>
+            Need a quick answer instead? Try our{' '}
+            <Link href="/tools/" prefetch={false}>Engineering Tools</Link> or the{' '}
+            <Link href="/glossary/" prefetch={false}>Connector &amp; Cable Glossary</Link>.
+          </p>
+        </div>
+      </section>
+
       {/* Top Stories + News — front and center, directly below the hero */}
       {(topStories.length > 0 || newsItems.length > 0) && (
         <section className="cs-section cs-home-top-band">
@@ -89,7 +91,7 @@ export default async function HomePage() {
               <div className="cs-home-news">
                 <div className="cs-section-head">
                   <h2>News</h2>
-                  <Link href="/news/">All news →</Link>
+                  <Link href="/news/" prefetch={false}>All news →</Link>
                 </div>
                 {newsItems.length > 0 ? (
                   <ul className="cs-home-news-list">
@@ -126,7 +128,7 @@ export default async function HomePage() {
           <div className="cs-container">
             <div className="cs-section-head">
               <h2>Categories</h2>
-              <Link href="/categories/">All categories →</Link>
+              <Link href="/categories/" prefetch={false}>All categories →</Link>
             </div>
             <div className="cs-cat-grid">
               {categories.map((cat, i) => (
@@ -134,6 +136,7 @@ export default async function HomePage() {
                   key={cat.id}
                   href={`/categories/${cat.slug}/`}
                   className="cs-cat"
+                  prefetch={false}
                 >
                   <span className="cs-cat-num">
                     {String(i + 1).padStart(2, '0')}
@@ -151,7 +154,7 @@ export default async function HomePage() {
         <div className="cs-container">
           <div className="cs-section-head">
             <h2>Latest Articles</h2>
-            <Link href="/articles/">All articles →</Link>
+            <Link href="/articles/" prefetch={false}>All articles →</Link>
           </div>
           {featured.length > 0 ? (
             <div className="cs-grid">

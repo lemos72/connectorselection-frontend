@@ -46,6 +46,7 @@ export default function NavToolsDropdown() {
             className="cs-nav-dropdown-item cs-nav-dropdown-all"
             role="menuitem"
             onClick={() => setOpen(false)}
+            prefetch={false}
           >
             All Tools
           </Link>
@@ -56,6 +57,7 @@ export default function NavToolsDropdown() {
               className="cs-nav-dropdown-item"
               role="menuitem"
               onClick={() => setOpen(false)}
+              prefetch={false}
             >
               {tool.name}
             </Link>

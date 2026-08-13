@@ -19,16 +19,16 @@ export default function Footer() {
           <div className="cs-footer-cols">
             <div className="cs-footer-col">
               <h5>Browse</h5>
-              <Link href="/articles/">Articles</Link>
-              <Link href="/categories/">Categories</Link>
-              <Link href="/blog/">Blog</Link>
-              <Link href="/products/">Products</Link>
-              <Link href="/contact/">Contact</Link>
+              <Link href="/articles/" prefetch={false}>Articles</Link>
+              <Link href="/categories/" prefetch={false}>Categories</Link>
+              <Link href="/blog/" prefetch={false}>Blog</Link>
+              <Link href="/products/" prefetch={false}>Products</Link>
+              <Link href="/contact/" prefetch={false}>Contact</Link>
             </div>
             <div className="cs-footer-col">
               <h5>Resource</h5>
-              <Link href="/">Home</Link>
-              <Link href="/articles/">Knowledge Base</Link>
+              <Link href="/" prefetch={false}>Home</Link>
+              <Link href="/articles/" prefetch={false}>Knowledge Base</Link>
             </div>
           </div>
         </div>
