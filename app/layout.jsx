@@ -35,6 +35,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${ibmPlexSans.variable} ${ibmPlexMono.variable}`}>
       <head>
+        {/* Bing Webmaster Tools verification */}
+        <meta name="msvalidate.01" content="4E91EAE86E95F01D2BA34C42F746B962" />
+
         {/* Google Analytics 4 */}
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
