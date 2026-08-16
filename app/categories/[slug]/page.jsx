@@ -7,6 +7,7 @@ import {
 } from '../../../lib/strapi';
 import { blocksToPlainText } from '../../../components/BlocksRenderer';
 import ArticleCard from '../../../components/ArticleCard';
+import LeadMagnetForm from '../../../components/LeadMagnetForm';
 
 // Keep in sync with the same constant in the article page template.
 const SITE_URL = 'https://www.connectorselection.com';
@@ -109,6 +110,14 @@ export default async function CategoryPage({ params }) {
           {cat.description && <p>{blocksToPlainText(cat.description, 260)}</p>}
         </div>
       </section>
+
+      {slug === 'fpc-ffc-connectors' && (
+        <section className="cs-section">
+          <div className="cs-container">
+            <LeadMagnetForm />
+          </div>
+        </section>
+      )}
 
       <section className="cs-section">
         <div className="cs-container">

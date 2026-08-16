@@ -14,6 +14,7 @@ import BlocksRenderer, {
 } from '../../../components/BlocksRenderer';
 import ArticleCard from '../../../components/ArticleCard';
 import NewsletterSignup from '../../../components/NewsletterSignup';
+import LeadMagnetForm from '../../../components/LeadMagnetForm';
 import KeyTerms from '../../../components/KeyTerms';
 
 // Articles where a relevant tool callout should appear. Add more slugs here
@@ -81,6 +82,17 @@ const TOOL_CALLOUTS = {
   },
 };
 
+// Articles that are source material for the FPC/FFC Connector Selection
+// Guide lead magnet — these get the gated PDF form instead of the regular
+// newsletter signup in the footer.
+const FPC_GUIDE_SLUGS = [
+  'ffc-vs-fpc-cables-key-differences-costs-and-selection-guide',
+  'fpc-connector-selection-guide-for-engineers',
+  'fpc-connector-pitch-explained-03mm-04mm-05mm-comparison',
+  'zif-vs-non-zif-fpc-ffc-mechanics',
+  'how-to-design-reliable-fpc-cable-connections',
+];
+
 // Update if the canonical (indexed) domain form differs, e.g. non-www.
 const SITE_URL = 'https://www.connectorselection.com';
 
@@ -136,6 +148,7 @@ export default async function ArticlePage({ params }) {
   const author = article.author;
   const date = fmtDate(article.published_date || article.publishedAt);
   const toolCallout = TOOL_CALLOUTS[article.slug];
+  const isFpcGuideArticle = FPC_GUIDE_SLUGS.includes(article.slug);
 
   // ---- Key Terms (auto-matched glossary terms mentioned in this article) ----
   const allGlossaryTerms = await getGlossaryTerms().catch(() => []);
@@ -274,7 +287,11 @@ export default async function ArticlePage({ params }) {
           </div>
         )}
 
-        <NewsletterSignup source="article-footer" />
+        {isFpcGuideArticle ? (
+          <LeadMagnetForm />
+        ) : (
+          <NewsletterSignup source="article-footer" />
+        )}
 
         {relatedArticles.length > 0 && (
           <section className="cs-section cs-related">

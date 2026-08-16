@@ -1177,6 +1177,72 @@ button:focus-visible {
   align-self: flex-start;
 }
 /* ==========================================================================
+   Lead magnet form (gated PDF downloads)
+   Extends .cs-newsletter with a stronger visual treatment
+   ========================================================================== */
+.cs-leadmagnet {
+  background: linear-gradient(135deg, #12355b 0%, #1a4a7a 100%);
+  border: none;
+  padding: 2.5rem 2rem;
+}
+
+.cs-leadmagnet-eyebrow {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  margin-bottom: 1rem;
+}
+
+.cs-leadmagnet h3 {
+  color: #ffffff;
+  font-size: 1.5rem;
+}
+
+.cs-leadmagnet p {
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cs-leadmagnet .cs-newsletter-input {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.cs-leadmagnet-btn {
+  background: #e8622c;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.75rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+  white-space: nowrap;
+}
+
+.cs-leadmagnet-btn:hover {
+  background: #d1541f;
+  transform: translateY(-1px);
+}
+
+.cs-leadmagnet-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+  transform: none;
+}
+
+.cs-leadmagnet.cs-newsletter-success {
+  background: linear-gradient(135deg, #12355b 0%, #1a4a7a 100%);
+}
+/* ==========================================================================
    Voltage Drop Calculator / shared calculator tool styling
    ========================================================================== */
 .cs-calculator {
