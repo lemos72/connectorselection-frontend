@@ -25,6 +25,15 @@ const TOOL_CALLOUTS = {
     label: 'Try the AWG to mm² Converter',
     description: 'Convert between AWG sizes and metric cross-sectional area.',
   },
+'skin-effect-ac-loss-high-frequency-cables': {
+
+  href: '/tools/skin-effect-calculator/',
+
+  label: 'Try the Skin Effect Calculator',
+
+  description: 'Calculate skin depth for copper and aluminum at any frequency — see how skin effect limits conductor efficiency as frequency increases.',
+
+},
   'what-is-a-wire-harness-complete-guide-for-engineers': {
     href: '/tools/wire-weight-calculator/',
     label: 'Try the Wire Weight Calculator',

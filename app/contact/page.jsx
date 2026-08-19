@@ -74,12 +74,12 @@ export default function ContactPage() {
             <div className="cs-contact-method-card">
               <span className="cs-eyebrow">X / Twitter</span>
               <a
-                href="https://x.com/tech_talkclub"
+                href="https://x.com/getconnectors"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="cs-contact-method-value"
               >
-                @tech_talkclub
+                @getconnectors
               </a>
               <p className="cs-contact-method-note">
                 Follow for updates, or send a quick message.

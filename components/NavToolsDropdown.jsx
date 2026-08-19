@@ -9,6 +9,7 @@ const TOOLS = [
   { href: '/tools/circular-mils-mm2-converter/', name: 'Circular Mils to mm² Converter' },
   { href: '/tools/wire-weight-calculator/', name: 'Wire Weight Calculator' },
   { href: '/tools/power-dissipation-calculator/', name: 'Power Dissipation Calculator' },
+{ href: '/tools/skin-effect-calculator/', name: 'Skin Effect Calculator' },
   { href: '/tools/ohms-law-calculator/', name: "Ohm's Law Calculator" },
 ];
 

@@ -32,6 +32,11 @@ const TOOLS = [
     name: 'Power Dissipation Calculator',
     description: 'Calculate heat loss in a wire run using P = I²R.',
   },
+{
+  href: '/tools/skin-effect-calculator/',
+  name: 'Skin Effect Calculator',
+  description: 'Calculate skin depth for copper and aluminum conductors at any frequency.',
+},
   {
     href: '/tools/ohms-law-calculator/',
     name: "Ohm's Law Calculator",

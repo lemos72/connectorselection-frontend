@@ -422,7 +422,7 @@ a {
 }
 .cs-news-item .cs-card-foot {
   min-height: 3.2em; /* bumped from 2.6em to fully cover 2-line footer wraps */
-  align-items: flex-start;
+  align-items: center;
 }
 /* ==========================================================================
    Related Articles (shown under News items for internal linking)
@@ -710,7 +710,7 @@ a {
   padding: 22px 24px;
   display: flex;
   gap: 16px;
-  align-items: flex-start;
+  align-items: center;
 }
 .cs-author-label {
   font-family: var(--font-mono);
@@ -988,7 +988,7 @@ button:focus-visible {
 .cs-form-success {
   border: 1px solid #12355b;
   border-radius: 8px;
-  padding: 32px;
+  padding: 26px 30px;
   background: #f0f4f8;
 }
 
@@ -1622,4 +1622,118 @@ button:focus-visible {
 .cs-key-term-chip:hover {
   background: var(--blueprint, #12355b);
   color: #fff;
+}
+/* ==========================================================================
+   Homepage quicklinks (Tools + Glossary) — clear clickable cards
+   ========================================================================== */
+.cs-quicklink-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 640px) {
+  .cs-quicklink-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cs-quicklink-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 26px 30px;
+  
+  background: #FFFFFF;
+  border: 1px solid #E4E9F0;
+  border-radius: 14px;
+  text-decoration: none;
+  box-shadow: 0 1px 2px rgba(15, 42, 74, 0.04);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.cs-quicklink-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(15, 42, 74, 0.08);
+}
+
+.cs-quicklink-icon {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  margin-top: 2px;
+}
+
+.cs-quicklink-icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+/* Distinct accent per card */
+.cs-quicklink-tools .cs-quicklink-icon {
+  background: #FFF3EC;
+  color: #E8622C;
+}
+.cs-quicklink-tools:hover {
+  border-color: #F3C4AA;
+}
+.cs-quicklink-tools .cs-quicklink-arrow {
+  color: #E8622C;
+}
+
+.cs-quicklink-glossary .cs-quicklink-icon {
+  background: #EAF1FC;
+  color: #1F6FEB;
+}
+.cs-quicklink-glossary:hover {
+  border-color: #BBD3F7;
+}
+.cs-quicklink-glossary .cs-quicklink-arrow {
+  color: #1F6FEB;
+}
+
+.cs-quicklink-text {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+  padding-right: 8px;
+}
+
+.cs-quicklink-text h3 {
+  margin: 0 0 8px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #0F2A4A;
+  text-align: left;
+}
+
+.cs-quicklink-text p {
+  margin: 0;
+  font-size: 0.94rem;
+  line-height: 1.5;
+  color: #5A6472;
+  text-align: left;
+}
+
+.cs-quicklink-arrow {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 6px;
+  margin-left: auto;
+  transition: transform 0.18s ease;
+}
+
+.cs-quicklink-arrow svg {
+  width: 20px;
+  height: 20px;
+}
+
+.cs-quicklink-card:hover .cs-quicklink-arrow {
+  transform: translateX(4px);
 }
