@@ -23,6 +23,7 @@ export default async function Header() {
           <Link href="/blog/" prefetch={false}>Blog</Link>
           <Link href="/news/" prefetch={false}>News</Link>
           <NavToolsDropdown />
+	  <Link href="/compare/" prefetch={false}>Compare</Link>
           <Link href="/ask-the-engineer/" prefetch={false}>Ask</Link>
           <Link href="/products/" prefetch={false}>Products</Link>
         </nav>

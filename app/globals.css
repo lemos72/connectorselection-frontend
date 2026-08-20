@@ -1737,3 +1737,19 @@ button:focus-visible {
 .cs-quicklink-card:hover .cs-quicklink-arrow {
   transform: translateX(4px);
 }
+.cs-tool-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+.cs-tool-table th,
+.cs-tool-table td {
+  padding: 0.5rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+}
+.cs-tool-table th {
+  font-weight: 600;
+  color: var(--blueprint);
+}
