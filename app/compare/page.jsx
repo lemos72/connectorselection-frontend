@@ -1,19 +1,19 @@
-import Link from 'next/link';
 import { getComparisons } from '../../lib/strapi';
-
-const SITE_URL = 'https://www.connectorselection.com';
+import ComparisonCard from '../../components/ComparisonCard';
 
 export const metadata = {
   title: 'Connector Comparison Guides — Side-by-Side Technical Breakdowns',
   description:
     'Side-by-side connector comparisons for hardware engineers — FPC vs FFC, FAKRA vs Mini-FAKRA, ZIF vs Non-ZIF, PCIe generations, and more.',
-  alternates: {
-    canonical: `${SITE_URL}/compare/`,
-  },
 };
 
+async function safe(fn, fallback) {
+  try { return await fn(); }
+  catch (e) { console.warn('[build] fetch failed:', e.message); return fallback; }
+}
+
 export default async function ComparePage() {
-  const comparisons = await getComparisons();
+  const comparisons = await safe(getComparisons, []);
 
   return (
     <>
@@ -30,28 +30,15 @@ export default async function ComparePage() {
 
       <section className="cs-section">
         <div className="cs-container">
-          {comparisons.length === 0 ? (
-            <p>No comparisons published yet.</p>
-          ) : (
-            <div className="cs-article-grid">
-              {comparisons.map((comparison) => (
-                <Link
-                  key={comparison.id}
-                  href={`/compare/${comparison.slug}/`}
-                  className="cs-article-card"
-                  prefetch={false}
-                >
-                  <div className="cs-article-card__body">
-                    <span className="cs-eyebrow">
-                      {comparison.connector_a} vs {comparison.connector_b}
-                    </span>
-                    <h2 className="cs-article-card__title">{comparison.title}</h2>
-                    {comparison.verdict && (
-                      <p className="cs-article-card__excerpt">{comparison.verdict}</p>
-                    )}
-                  </div>
-                </Link>
+          {comparisons.length > 0 ? (
+            <div className="cs-grid">
+              {comparisons.map((c) => (
+                <ComparisonCard key={c.id} comparison={c} />
               ))}
+            </div>
+          ) : (
+            <div className="cs-empty">
+              No comparisons published yet.
             </div>
           )}
         </div>
