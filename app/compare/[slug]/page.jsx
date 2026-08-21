@@ -2,53 +2,49 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getComparisons, getComparisonBySlug } from '../../../lib/strapi';
 import BlocksRenderer from '../../../components/BlocksRenderer';
+import NewsletterSignup from '../../../components/NewsletterSignup';
 
 const SITE_URL = 'https://www.connectorselection.com';
 
 export async function generateStaticParams() {
-  const comparisons = await getComparisons();
-  return comparisons.map((c) => ({ slug: c.slug }));
+  try {
+    const comparisons = await getComparisons();
+    return comparisons.map((c) => ({ slug: c.slug }));
+  } catch (e) {
+    console.warn('[build] generateStaticParams (comparisons) failed:', e.message);
+    return [];
+  }
 }
 
 export async function generateMetadata({ params }) {
-  const comparison = await getComparisonBySlug(params.slug);
-  if (!comparison) return {};
-
-  const title = comparison.seo_title || comparison.title;
-  const description = comparison.seo_description || comparison.verdict || '';
-
+  const { slug } = await params;
+  const comparison = await getComparisonBySlug(slug).catch(() => null);
+  if (!comparison) return { title: 'Comparison not found' };
   return {
-    title,
-    description,
+    title: comparison.seo_title || comparison.title,
+    description: comparison.seo_description || comparison.verdict || '',
     alternates: {
       canonical: `${SITE_URL}/compare/${comparison.slug}/`,
-    },
-    openGraph: {
-      title,
-      description,
-      url: `${SITE_URL}/compare/${comparison.slug}/`,
-      type: 'article',
     },
   };
 }
 
+function fmtDate(d) {
+  if (!d) return '';
+  try {
+    return new Date(d)
+      .toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
+      .toUpperCase();
+  } catch { return ''; }
+}
+
 export default async function ComparisonPage({ params }) {
-  const comparison = await getComparisonBySlug(params.slug);
+  const { slug } = await params;
+  const comparison = await getComparisonBySlug(slug).catch(() => null);
   if (!comparison) notFound();
 
-  const articleJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: comparison.seo_title || comparison.title,
-    description: comparison.seo_description || comparison.verdict || '',
-    url: `${SITE_URL}/compare/${comparison.slug}/`,
-    datePublished: comparison.published_date,
-    publisher: {
-      '@type': 'Organization',
-      name: 'Connector Selection',
-      url: SITE_URL,
-    },
-  };
+  const category = comparison.category;
+  const date = fmtDate(comparison.published_date || comparison.publishedAt);
 
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
@@ -56,59 +52,67 @@ export default async function ComparisonPage({ params }) {
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
       { '@type': 'ListItem', position: 2, name: 'Compare', item: `${SITE_URL}/compare/` },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: comparison.title,
-        item: `${SITE_URL}/compare/${comparison.slug}/`,
-      },
+      { '@type': 'ListItem', position: 3, name: comparison.title, item: `${SITE_URL}/compare/${comparison.slug}/` },
     ],
   };
 
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: comparison.seo_title || comparison.title,
+    description: comparison.seo_description || comparison.verdict || '',
+    publisher: { '@type': 'Organization', name: 'Connector Selection' },
+    datePublished: comparison.published_date || comparison.publishedAt,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${SITE_URL}/compare/${comparison.slug}/`,
+    },
+  };
+
   return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
+    <article className="cs-article">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
 
-      <section className="cs-band">
-        <div className="cs-container">
-          <span className="cs-eyebrow">
-            {comparison.connector_a} vs {comparison.connector_b}
-          </span>
-          <h1>{comparison.title}</h1>
-          {comparison.verdict && (
-            <p className="cs-article-intro">{comparison.verdict}</p>
-          )}
-        </div>
-      </section>
-
-      <section className="cs-section">
-        <div className="cs-container cs-article-body">
+      <div className="cs-container">
+        <div className="cs-article-header">
           <nav className="cs-breadcrumb" aria-label="Breadcrumb">
-            <ol>
-              <li><Link href="/">Home</Link></li>
-              <li><Link href="/compare/">Compare</Link></li>
-              <li aria-current="page">{comparison.title}</li>
-            </ol>
+            <Link href="/">Home</Link>
+            <span>/</span>
+            <Link href="/compare/">Compare</Link>
+            {category && (
+              <>
+                <span>/</span>
+                <Link href={`/categories/${category.slug}/`}>
+                  {category.Name || category.name}
+                </Link>
+              </>
+            )}
           </nav>
 
-          {comparison.content && (
-            <BlocksRenderer content={comparison.content} />
-          )}
+          <h1>{comparison.title}</h1>
 
-          <div className="cs-article-footer">
-            <Link href="/compare/" className="cs-back-link">
-              ← All Comparisons
-            </Link>
+          <div className="cs-article-meta">
+            {comparison.connector_a && comparison.connector_b && (
+              <span>{comparison.connector_a} vs {comparison.connector_b}</span>
+            )}
+            {date && <span>{date}</span>}
           </div>
         </div>
-      </section>
-    </>
+
+        {comparison.verdict && (
+          <div className="cs-article-body">
+            <p><strong>{comparison.verdict}</strong></p>
+          </div>
+        )}
+
+        <div className="cs-article-body">
+          <BlocksRenderer content={comparison.content} />
+        </div>
+
+        <NewsletterSignup source="compare-footer" />
+
+      </div>
+    </article>
   );
 }
