@@ -1073,8 +1073,13 @@ button:focus-visible {
   display: block;
 }
 .cs-home-top-stories .cs-grid {
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
+}
+@media (max-width: 1100px) {
+  .cs-home-top-stories .cs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 /* ==========================================================================
    Newsletter signup (article/blog/product page footer)
