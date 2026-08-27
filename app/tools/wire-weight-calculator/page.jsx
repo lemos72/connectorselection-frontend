@@ -1,6 +1,8 @@
 import WireWeightCalculator from '../../../components/WireWeightCalculator';
 
-const SITE_URL = 'https://www.connectorselection.com';
+// NOTE: as of Aug 2026, www.connectorselection.com does not resolve —
+// confirmed broken, not just missing content. Using the bare domain.
+const SITE_URL = 'https://connectorselection.com';
 
 const toolJsonLd = {
   '@context': 'https://schema.org',

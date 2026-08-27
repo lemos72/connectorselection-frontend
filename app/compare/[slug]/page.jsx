@@ -4,7 +4,9 @@ import { getComparisons, getComparisonBySlug } from '../../../lib/strapi';
 import BlocksRenderer from '../../../components/BlocksRenderer';
 import NewsletterSignup from '../../../components/NewsletterSignup';
 
-const SITE_URL = 'https://www.connectorselection.com';
+// NOTE: as of Aug 2026, www.connectorselection.com does not resolve —
+// confirmed broken, not just missing content. Using the bare domain.
+const SITE_URL = 'https://connectorselection.com';
 
 export async function generateStaticParams() {
   try {

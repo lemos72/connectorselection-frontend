@@ -10,7 +10,9 @@ import ArticleCard from '../../../components/ArticleCard';
 import LeadMagnetForm from '../../../components/LeadMagnetForm';
 
 // Keep in sync with the same constant in the article page template.
-const SITE_URL = 'https://www.connectorselection.com';
+// NOTE: as of Aug 2026, www.connectorselection.com does not resolve —
+// confirmed broken, not just missing content. Using the bare domain.
+const SITE_URL = 'https://connectorselection.com';
 
 export async function generateStaticParams() {
   try {
