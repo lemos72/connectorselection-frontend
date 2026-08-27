@@ -96,17 +96,24 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Top Stories — own full-width section */}
+      {/* Top Stories — own full-width section. NOTE: the cs-home-top-stories
+          wrapper below is required — .cs-home-top-stories .cs-grid in
+          globals.css overrides the generic auto-fill grid with a fixed
+          2-column layout. Without this wrapper, a 2-item grid in a
+          full-width section leaves an empty 3rd auto-fill column showing
+          the grid container's background color as a blank box. */}
       {topStories.length > 0 && (
         <section className="cs-section cs-home-top-band">
           <div className="cs-container">
             <div className="cs-section-head">
               <h2>Top Stories</h2>
             </div>
-            <div className="cs-grid">
-              {topStories.map((item) => (
-                <TopStoryCard key={`${item._type}-${item.id}`} item={item} />
-              ))}
+            <div className="cs-home-top-stories">
+              <div className="cs-grid">
+                {topStories.map((item) => (
+                  <TopStoryCard key={`${item._type}-${item.id}`} item={item} />
+                ))}
+              </div>
             </div>
           </div>
         </section>
