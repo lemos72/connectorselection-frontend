@@ -170,7 +170,9 @@ a {
 .cs-nav-dropdown-trigger {
   background: none;
   border: none;
-  font: inherit;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
