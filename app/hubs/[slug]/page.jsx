@@ -128,7 +128,7 @@ export default async function HubPage({ params }) {
       {/* Concept Introduction */}
       {hub.concept_intro && (
         <section className="cs-section">
-          <div className="cs-container cs-article-body">
+          <div className="cs-container cs-prose">
             <BlocksRenderer content={hub.concept_intro} />
           </div>
         </section>
@@ -141,7 +141,7 @@ export default async function HubPage({ params }) {
             <div className="cs-section-head">
               <h2>Related Products</h2>
             </div>
-            <div className="cs-grid">
+            <div className="cs-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
               {relatedProducts.map((p) => {
                 const cover = imageFrom(p.cover_image, 'medium');
                 return (
@@ -154,12 +154,12 @@ export default async function HubPage({ params }) {
                     {cover?.url && (
                       <div className="cs-card-media">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={cover.url} alt={cover.alt || p.title} />
+                        <img src={cover.url} alt={cover.alt || p.product_name} />
                       </div>
                     )}
                     <div className="cs-card-body">
-                      <h3>{p.title}</h3>
-                      {p.excerpt && <p>{p.excerpt}</p>}
+                      <h3>{p.product_name}</h3>
+                      {p.short_description && <p>{p.short_description}</p>}
                     </div>
                   </Link>
                 );
@@ -192,7 +192,7 @@ export default async function HubPage({ params }) {
             <div className="cs-section-head">
               <h2>Where This Shows Up</h2>
             </div>
-            <div className="cs-article-body">
+            <div className="cs-prose">
               <BlocksRenderer content={hub.case_study_content} />
             </div>
           </div>
