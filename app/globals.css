@@ -1760,3 +1760,50 @@ button:focus-visible {
   font-weight: 600;
   color: var(--blueprint);
 }
+
+/* ==========================================================================
+   Hub page: featured article hero card
+   Two-column layout (image left, text right) on desktop; stacks on mobile.
+   Reuses .cs-card/.cs-card-media/.cs-card-body internals, just changes
+   the outer flex direction so it reads as a hero, not an oversized tile.
+   ========================================================================== */
+.cs-card-featured {
+  flex-direction: row;
+  align-items: stretch;
+}
+.cs-card-featured .cs-card-media {
+  flex: 0 0 45%;
+  aspect-ratio: 4 / 3;
+  border-bottom: none;
+  border-right: 1px solid var(--line);
+}
+.cs-card-featured .cs-card-body {
+  flex: 1;
+  justify-content: center;
+  padding: 28px 32px;
+}
+.cs-card-featured h2 {
+  font-family: var(--font-display);
+  font-size: 26px;
+  line-height: 1.3;
+  font-weight: 600;
+  color: var(--blueprint);
+  margin: 0;
+}
+.cs-card-featured p {
+  font-size: 15px;
+  color: var(--muted);
+}
+@media (max-width: 860px) {
+  .cs-card-featured {
+    flex-direction: column;
+  }
+  .cs-card-featured .cs-card-media {
+    flex: none;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+  }
+}
+

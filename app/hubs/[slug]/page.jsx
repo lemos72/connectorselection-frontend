@@ -135,15 +135,16 @@ export default async function HubPage({ params }) {
         </div>
       </section>
 
-      {/* Featured Article — full-width, image-forward. This is the visual
-          hook for the page; its own dedicated article URL is untouched
-          and keeps earning its own SEO/search equity independently. */}
+      {/* Featured Article — two-column hero card (image left, text right).
+          This is the visual hook for the page; its own dedicated article
+          URL is untouched and keeps earning its own SEO/search equity
+          independently. */}
       {featuredArticle && (
         <section className="cs-section">
           <div className="cs-container">
             <Link
               href={`/articles/${featuredArticle.slug}/`}
-              className="cs-card"
+              className="cs-card cs-card-featured"
               prefetch={false}
             >
               {featuredCover?.url && (
@@ -170,14 +171,16 @@ export default async function HubPage({ params }) {
         </section>
       )}
 
-      {/* Key Articles — the rest of the curated set, in the standard grid */}
+      {/* Key Articles — the rest of the curated set, in the standard grid.
+          auto-fit (not auto-fill) so a partial row doesn't leave an empty
+          phantom column showing the grid container's background color. */}
       {remainingArticles.length > 0 && (
         <section className="cs-section">
           <div className="cs-container">
             <div className="cs-section-head">
               <h2>More Key Articles</h2>
             </div>
-            <div className="cs-grid">
+            <div className="cs-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
               {remainingArticles.map((a) => (
                 <ArticleCard key={a.id} article={a} />
               ))}
