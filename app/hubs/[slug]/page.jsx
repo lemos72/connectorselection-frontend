@@ -66,9 +66,19 @@ export default async function HubPage({ params }) {
   if (!hub) notFound();
 
   const relatedProducts = hub.related_products || [];
-  const relatedArticles = hub.related_articles || [];
+  const allRelatedArticles = hub.related_articles || [];
+  // First related article gets the big featured treatment up top;
+  // the rest fill out the standard Key Articles grid below.
+  const featuredArticle = allRelatedArticles[0] || null;
+  const remainingArticles = allRelatedArticles.slice(1);
   const toolLinks = hub.related_tool_links || [];
   const otherHubs = ALL_HUBS.filter((h) => h.slug !== slug);
+
+  const featuredCover = featuredArticle
+    ? imageFrom(featuredArticle.cover_image, 'large')
+    : null;
+  const featuredCategory =
+    featuredArticle?.category?.Name || featuredArticle?.category?.name;
 
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
@@ -89,7 +99,7 @@ export default async function HubPage({ params }) {
     name: hub.seo_title || hub.title,
     description: hub.seo_description || hub.intro_paragraph || '',
     url: `${SITE_URL}/hubs/${hub.slug}/`,
-    hasPart: relatedArticles.map((a) => ({
+    hasPart: allRelatedArticles.map((a) => ({
       '@type': 'Article',
       headline: a.title,
       url: `${SITE_URL}/articles/${a.slug}/`,
@@ -125,6 +135,57 @@ export default async function HubPage({ params }) {
         </div>
       </section>
 
+      {/* Featured Article — full-width, image-forward. This is the visual
+          hook for the page; its own dedicated article URL is untouched
+          and keeps earning its own SEO/search equity independently. */}
+      {featuredArticle && (
+        <section className="cs-section">
+          <div className="cs-container">
+            <Link
+              href={`/articles/${featuredArticle.slug}/`}
+              className="cs-card"
+              prefetch={false}
+            >
+              {featuredCover?.url && (
+                <div className="cs-card-media">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={featuredCover.url}
+                    alt={featuredCover.alt || featuredArticle.title}
+                  />
+                </div>
+              )}
+              <div className="cs-card-body">
+                <div className="cs-card-eyebrow">
+                  <span className="cs-eyebrow">{featuredCategory || 'Featured'}</span>
+                </div>
+                <h2>{featuredArticle.title}</h2>
+                {featuredArticle.excerpt && <p>{featuredArticle.excerpt}</p>}
+                <div className="cs-card-foot">
+                  <span>Read →</span>
+                </div>
+              </div>
+            </Link>
+          </div>
+        </section>
+      )}
+
+      {/* Key Articles — the rest of the curated set, in the standard grid */}
+      {remainingArticles.length > 0 && (
+        <section className="cs-section">
+          <div className="cs-container">
+            <div className="cs-section-head">
+              <h2>More Key Articles</h2>
+            </div>
+            <div className="cs-grid">
+              {remainingArticles.map((a) => (
+                <ArticleCard key={a.id} article={a} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Concept Introduction */}
       {hub.concept_intro && (
         <section className="cs-section">
@@ -134,7 +195,22 @@ export default async function HubPage({ params }) {
         </section>
       )}
 
-      {/* Product Introduction */}
+      {/* Case Studies / Applications */}
+      {hub.case_study_content && (
+        <section className="cs-section">
+          <div className="cs-container">
+            <div className="cs-section-head">
+              <h2>Where This Shows Up</h2>
+            </div>
+            <div className="cs-prose">
+              <BlocksRenderer content={hub.case_study_content} />
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Product Introduction — deliberately placed lower on the page;
+          supporting context rather than a primary draw. */}
       {relatedProducts.length > 0 && (
         <section className="cs-section">
           <div className="cs-container">
@@ -164,36 +240,6 @@ export default async function HubPage({ params }) {
                   </Link>
                 );
               })}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Key Articles */}
-      {relatedArticles.length > 0 && (
-        <section className="cs-section">
-          <div className="cs-container">
-            <div className="cs-section-head">
-              <h2>Key Articles</h2>
-            </div>
-            <div className="cs-grid">
-              {relatedArticles.map((a) => (
-                <ArticleCard key={a.id} article={a} />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Case Studies / Applications */}
-      {hub.case_study_content && (
-        <section className="cs-section">
-          <div className="cs-container">
-            <div className="cs-section-head">
-              <h2>Where This Shows Up</h2>
-            </div>
-            <div className="cs-prose">
-              <BlocksRenderer content={hub.case_study_content} />
             </div>
           </div>
         </section>
