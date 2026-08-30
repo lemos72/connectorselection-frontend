@@ -4,6 +4,7 @@ import {
   getCategories,
   getTopStories,
   getNewsItems,
+  getHubPages,
 } from '../lib/strapi';
 import ArticleCard from '../components/ArticleCard';
 import TopStoryCard from '../components/TopStoryCard';
@@ -27,6 +28,7 @@ export default async function HomePage() {
   const newsItemsRaw = await safe(getNewsItems, []);
   const newsItems = newsItemsRaw.slice(0, 6);
   const featured = articles.slice(0, 6);
+  const hubs = await safe(getHubPages, []);
 
   return (
     <>
@@ -114,6 +116,50 @@ export default async function HomePage() {
                   <TopStoryCard key={`${item._type}-${item.id}`} item={item} />
                 ))}
               </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Explore by Topic — promotes hub pages (topical landing pages
+          aggregating articles, products, tools, and case studies under
+          one URL). Auto-fit so 1 hub today renders full-width cleanly,
+          and it'll arrange into more columns automatically as more
+          hubs go live — no code change needed later. */}
+      {hubs.length > 0 && (
+        <section className="cs-section">
+          <div className="cs-container">
+            <div className="cs-section-head">
+              <span className="cs-eyebrow">Deep Dives</span>
+              <h2>Explore by Topic</h2>
+            </div>
+            <div
+              className="cs-quicklink-grid"
+              style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}
+            >
+              {hubs.map((hub) => (
+                <Link
+                  key={hub.id}
+                  href={`/hubs/${hub.slug}/`}
+                  prefetch={false}
+                  className="cs-quicklink-card cs-quicklink-tools"
+                >
+                  <span className="cs-quicklink-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </span>
+                  <div className="cs-quicklink-text">
+                    <h3>{hub.title}</h3>
+                    {hub.intro_paragraph && <p>{hub.intro_paragraph}</p>}
+                  </div>
+                  <span className="cs-quicklink-arrow" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </span>
+                </Link>
+              ))}
             </div>
           </div>
         </section>
