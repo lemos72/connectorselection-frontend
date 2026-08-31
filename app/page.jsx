@@ -104,7 +104,11 @@ export default async function HomePage() {
                 >
                   <span className="cs-quicklink-icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                      <rect x="3" y="4" width="18" height="6" rx="1" stroke="currentColor" strokeWidth="1.8"/>
+                      <rect x="3" y="14" width="18" height="6" rx="1" stroke="currentColor" strokeWidth="1.8"/>
+                      <circle cx="7" cy="7" r="0.9" fill="currentColor"/>
+                      <circle cx="7" cy="17" r="0.9" fill="currentColor"/>
+                      <path d="M11 7h7M11 17h7" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
                     </svg>
                   </span>
                   <div className="cs-quicklink-text">
