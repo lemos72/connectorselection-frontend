@@ -220,7 +220,12 @@ export default async function HubPage({ params }) {
             <div className="cs-section-head">
               <h2>Related Products</h2>
             </div>
-            <div className="cs-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 360px))' }}>
+            <div
+              className="cs-grid"
+              style={{
+                gridTemplateColumns: `repeat(${Math.min(relatedProducts.length, 3)}, minmax(280px, 360px))`,
+              }}
+            >
               {relatedProducts.map((p) => {
                 const cover = imageFrom(p.cover_image, 'medium');
                 return (
