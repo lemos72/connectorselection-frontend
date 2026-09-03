@@ -8,6 +8,11 @@ export const metadata = {
 
 const TOOLS = [
   {
+    href: '/tools/connector-selector-wizard/',
+    name: 'Connector Selector Wizard',
+    description: 'Answer a few quick questions to get a tailored connector type recommendation with links to relevant guides.',
+  },
+  {
     href: '/tools/voltage-drop-calculator/',
     name: 'Voltage Drop Calculator',
     description: 'Calculate voltage drop for a wire run based on gauge, length, and current.',

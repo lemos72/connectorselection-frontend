@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 
 const TOOLS = [
+  { href: '/tools/connector-selector-wizard/', name: 'Connector Selector Wizard' },
   { href: '/tools/voltage-drop-calculator/', name: 'Voltage Drop Calculator' },
   { href: '/tools/awg-mm2-converter/', name: 'AWG to mm² Converter' },
   { href: '/tools/circular-mils-mm2-converter/', name: 'Circular Mils to mm² Converter' },
