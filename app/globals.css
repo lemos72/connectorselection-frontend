@@ -1931,3 +1931,62 @@ button:focus-visible {
   color: var(--blueprint);
 }
 
+
+/* =========================================================================
+   Ask the Engineer — new classes only. Reuses existing tokens (--copper,
+   --muted, --line, --card, --ink, --blueprint) and existing .cs-card/
+   .cs-form/.cs-article-meta base styles already defined above.
+   ========================================================================= */
+
+.cs-ask-engineer-form-wrap {
+  max-width: 640px;
+  margin: 0 auto;
+  background: var(--card);
+  border: 1px solid var(--line);
+  padding: 2rem;
+}
+
+.cs-question-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.cs-question-excerpt {
+  color: var(--muted);
+  font-style: italic;
+  font-size: 0.95rem;
+  flex-grow: 1;
+}
+
+.cs-question-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  padding-top: 0.75rem;
+  margin-top: auto;
+}
+
+.cs-question-quote {
+  border-left: 3px solid var(--copper);
+  padding-left: 18px;
+  margin: 0 0 32px;
+  max-width: 760px;
+}
+
+.cs-question-quote p {
+  color: var(--ink);
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin: 0 0 8px;
+}
+
+.cs-question-quote cite {
+  display: block;
+  font-style: normal;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
