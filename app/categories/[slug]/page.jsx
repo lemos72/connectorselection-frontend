@@ -8,6 +8,8 @@ import {
 import { blocksToPlainText } from '../../../components/BlocksRenderer';
 import ArticleCard from '../../../components/ArticleCard';
 import LeadMagnetForm from '../../../components/LeadMagnetForm';
+import RFIForm from '../../../components/RFIForm';
+import { RFI_FIELD_CONFIGS } from '../../../lib/rfiFieldConfigs';
 
 // Keep in sync with the same constant in the article page template.
 // NOTE: as of Aug 2026, www.connectorselection.com does not resolve —
@@ -142,6 +144,20 @@ export default async function CategoryPage({ params }) {
           )}
         </div>
       </section>
+
+      {/* RFI (Request for Information) pilot — only renders on categories
+          with a spec-field config defined in lib/rfiFieldConfigs.js
+          (currently fpc-ffc-connectors and
+          high-speed-connectors-signal-integrity). Adding a third pilot
+          category later is a config-only change, no page-template edit
+          needed. */}
+      {RFI_FIELD_CONFIGS[slug] && (
+        <section className="cs-section cs-rfi-section">
+          <div className="cs-container">
+            <RFIForm category={slug} />
+          </div>
+        </section>
+      )}
 
       {otherCategories.length > 0 && (
         <section className="cs-section cs-related">
