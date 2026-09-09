@@ -155,7 +155,10 @@ export default async function CategoryPage({ params }) {
         <section className="cs-section cs-rfi-cta">
           <div className="cs-container">
             <div className="cs-section-head">
-              <h2>Need Pricing or Availability for {categoryName}?</h2>
+              <h2>
+                Need Pricing or Availability for{' '}
+                {RFI_FIELD_CONFIGS[slug].shortLabel}?
+              </h2>
               <p>
                 Share your requirements and I&apos;ll personally follow up
                 with pricing and availability info — no obligation.

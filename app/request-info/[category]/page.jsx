@@ -21,11 +21,9 @@ export async function generateMetadata({ params }) {
   const config = RFI_FIELD_CONFIGS[category];
   if (!config) return { title: 'Request Info' };
 
-  const shortLabel = config.label.replace(/ RFI$/, '');
-
   return {
     title: `${config.label} — Request Info & Pricing`,
-    description: `Submit your ${shortLabel} requirements and get a personal follow-up with pricing and availability — no obligation.`,
+    description: `Submit your ${config.shortLabel} requirements and get a personal follow-up with pricing and availability — no obligation.`,
     alternates: {
       canonical: `${SITE_URL}/request-info/${category}/`,
     },
@@ -38,8 +36,11 @@ export default async function RequestInfoPage({ params }) {
   if (!config) notFound();
 
   const cat = await getCategoryBySlug(category).catch(() => null);
-  const categoryName =
-    cat?.Name || cat?.name || config.label.replace(/ RFI$/, '');
+  // Use the raw Strapi category name for the breadcrumb link (matches
+  // what the category page itself shows), but the controlled shortLabel
+  // for the page heading — the Strapi Name/seo_title is long SEO copy
+  // that reads badly in a heading like "X: Request Info & Pricing".
+  const categoryName = cat?.Name || cat?.name || config.shortLabel;
 
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
@@ -87,7 +88,7 @@ export default async function RequestInfoPage({ params }) {
             <span>Request Info</span>
           </nav>
           <span className="cs-eyebrow">Request Info</span>
-          <h1>{categoryName}: Request Info &amp; Pricing</h1>
+          <h1>{config.shortLabel}: Request Info &amp; Pricing</h1>
         </div>
       </section>
 
