@@ -8,7 +8,6 @@ import {
 import { blocksToPlainText } from '../../../components/BlocksRenderer';
 import ArticleCard from '../../../components/ArticleCard';
 import LeadMagnetForm from '../../../components/LeadMagnetForm';
-import RFIForm from '../../../components/RFIForm';
 import { RFI_FIELD_CONFIGS } from '../../../lib/rfiFieldConfigs';
 
 // Keep in sync with the same constant in the article page template.
@@ -145,16 +144,26 @@ export default async function CategoryPage({ params }) {
         </div>
       </section>
 
-      {/* RFI (Request for Information) pilot — only renders on categories
-          with a spec-field config defined in lib/rfiFieldConfigs.js
-          (currently fpc-ffc-connectors and
-          high-speed-connectors-signal-integrity). Adding a third pilot
-          category later is a config-only change, no page-template edit
-          needed. */}
+      {/* RFI (Request for Information) pilot — a compact CTA linking to a
+          dedicated /request-info/[slug]/ page, rather than the full form
+          embedded here. Only renders on categories with a spec-field
+          config defined in lib/rfiFieldConfigs.js (currently
+          fpc-ffc-connectors and high-speed-connectors-signal-integrity).
+          Adding a third pilot category later is a config-only change —
+          no edit needed here or in the request-info page template. */}
       {RFI_FIELD_CONFIGS[slug] && (
-        <section className="cs-section cs-rfi-section">
+        <section className="cs-section cs-rfi-cta">
           <div className="cs-container">
-            <RFIForm category={slug} />
+            <div className="cs-section-head">
+              <h2>Need Pricing or Availability for {categoryName}?</h2>
+              <p>
+                Share your requirements and I&apos;ll personally follow up
+                with pricing and availability info — no obligation.
+              </p>
+            </div>
+            <Link href={`/request-info/${slug}/`} className="cs-btn">
+              Request Info &amp; Pricing →
+            </Link>
           </div>
         </section>
       )}
