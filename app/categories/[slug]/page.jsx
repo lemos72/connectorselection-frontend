@@ -159,10 +159,6 @@ export default async function CategoryPage({ params }) {
                 Need Pricing or Availability for{' '}
                 {RFI_FIELD_CONFIGS[slug].shortLabel}?
               </h2>
-              <p>
-                Share your requirements and I&apos;ll personally follow up
-                with pricing and availability info — no obligation.
-              </p>
             </div>
             <Link href={`/request-info/${slug}/`} className="cs-btn">
               Request Info &amp; Pricing →
