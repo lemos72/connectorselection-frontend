@@ -2,8 +2,9 @@ import Link from 'next/link';
 import { getProductIntroductions, imageFrom } from '../../lib/strapi';
 
 export const metadata = {
-  title: 'Products',
-  description: 'Connector product introductions and interconnect solutions.',
+  title: 'Connector Product Introductions: FAKRA, ZIF, CXL & More',
+  description:
+    'Browse connector product introductions across FAKRA, ZIF, CXL, overmolded cable assemblies, and FFC/FPC hardware — engineering specs and selection guidance for hardware designers.',
 };
 
 async function safe(fn, fallback) {

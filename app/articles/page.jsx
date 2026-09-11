@@ -2,9 +2,9 @@ import { getArticles } from '../../lib/strapi';
 import ArticleCard from '../../components/ArticleCard';
 
 export const metadata = {
-  title: 'Articles',
+  title: 'Connector & Interconnect Engineering Articles',
   description:
-    'Knowledge-base articles on connector selection, signal integrity, and interconnect design.',
+    'Technical articles on connector selection, high-speed signal integrity, automotive and EV interconnects, FPC/FFC, and cable harness design — written for hardware engineers.',
 };
 
 async function safe(fn, fallback) {

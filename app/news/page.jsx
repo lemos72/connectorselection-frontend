@@ -4,9 +4,9 @@ import { getNewsItems } from '../../lib/strapi';
    import NewsCard from '../../components/NewsCard';
 
    export const metadata = {
-     title: 'Industry News',
+     title: 'Connector & Electronics Industry News',
      description:
-       'Curated industry news on connectors, FFC/FPC, board-to-board, EV, and data center interconnect topics.',
+       'Curated news on connectors, FFC/FPC, board-to-board interconnects, EV, semiconductor, and data center hardware — sourced from trusted electronics industry publications.',
    };
 
    async function safe(fn, fallback) {
