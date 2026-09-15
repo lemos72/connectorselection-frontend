@@ -9,6 +9,7 @@ import { blocksToPlainText } from '../../../components/BlocksRenderer';
 import ArticleCard from '../../../components/ArticleCard';
 import LeadMagnetForm from '../../../components/LeadMagnetForm';
 import { RFI_FIELD_CONFIGS } from '../../../lib/rfiFieldConfigs';
+import { LEAD_MAGNET_CONFIGS } from '../../../lib/leadMagnetConfigs';
 
 // Keep in sync with the same constant in the article page template.
 // NOTE: as of Aug 2026, www.connectorselection.com does not resolve —
@@ -69,6 +70,7 @@ export default async function CategoryPage({ params }) {
 
   const categoryName = cat.Name || cat.name;
   const otherCategories = allCategories.filter((c) => c.slug !== slug);
+  const leadMagnet = LEAD_MAGNET_CONFIGS[slug];
 
   // ---- Breadcrumb structured data (schema.org BreadcrumbList) ----
   const breadcrumbJsonLd = {
@@ -114,10 +116,19 @@ export default async function CategoryPage({ params }) {
         </div>
       </section>
 
-      {slug === 'fpc-ffc-connectors' && (
+      {/* Gated PDF lead magnet — only renders on categories with an entry
+          in lib/leadMagnetConfigs.js (currently fpc-ffc-connectors and
+          automotive-connectors). Adding a third guide later is a
+          config-only change — no edit needed here. */}
+      {leadMagnet && (
         <section className="cs-section">
           <div className="cs-container">
-            <LeadMagnetForm />
+            <LeadMagnetForm
+              pdfUrl={leadMagnet.pdfUrl}
+              source={leadMagnet.source}
+              title={leadMagnet.title}
+              description={leadMagnet.description}
+            />
           </div>
         </section>
       )}

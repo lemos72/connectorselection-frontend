@@ -16,6 +16,7 @@ import ArticleCard from '../../../components/ArticleCard';
 import NewsletterSignup from '../../../components/NewsletterSignup';
 import LeadMagnetForm from '../../../components/LeadMagnetForm';
 import KeyTerms from '../../../components/KeyTerms';
+import { LEAD_MAGNET_CONFIGS } from '../../../lib/leadMagnetConfigs';
 
 // Articles where a relevant tool callout should appear. Add more slugs here
 // as new tools ship and more articles become relevant.
@@ -91,17 +92,6 @@ const TOOL_CALLOUTS = {
   },
 };
 
-// Articles that are source material for the FPC/FFC Connector Selection
-// Guide lead magnet — these get the gated PDF form instead of the regular
-// newsletter signup in the footer.
-const FPC_GUIDE_SLUGS = [
-  'ffc-vs-fpc-cables-key-differences-costs-and-selection-guide',
-  'fpc-connector-selection-guide-for-engineers',
-  'fpc-connector-pitch-explained-03mm-04mm-05mm-comparison',
-  'zif-vs-non-zif-fpc-ffc-mechanics',
-  'how-to-design-reliable-fpc-cable-connections',
-];
-
 // Update if the canonical (indexed) domain form differs, e.g. non-www.
 const SITE_URL = 'https://www.connectorselection.com';
 
@@ -157,7 +147,15 @@ export default async function ArticlePage({ params }) {
   const author = article.author;
   const date = fmtDate(article.published_date || article.publishedAt);
   const toolCallout = TOOL_CALLOUTS[article.slug];
-  const isFpcGuideArticle = FPC_GUIDE_SLUGS.includes(article.slug);
+
+  // Which gated PDF guide (if any) this article is source material for —
+  // checked against every entry's articleSlugs list in
+  // lib/leadMagnetConfigs.js. Adding a new guide's articles to that config
+  // is enough to make them start using the lead magnet form here; no
+  // change needed in this file.
+  const leadMagnet = Object.values(LEAD_MAGNET_CONFIGS).find((cfg) =>
+    cfg.articleSlugs.includes(article.slug)
+  );
 
   // ---- Key Terms (auto-matched glossary terms mentioned in this article) ----
   const allGlossaryTerms = await getGlossaryTerms().catch(() => []);
@@ -296,8 +294,13 @@ export default async function ArticlePage({ params }) {
           </div>
         )}
 
-        {isFpcGuideArticle ? (
-          <LeadMagnetForm />
+        {leadMagnet ? (
+          <LeadMagnetForm
+            pdfUrl={leadMagnet.pdfUrl}
+            source={leadMagnet.source}
+            title={leadMagnet.title}
+            description={leadMagnet.description}
+          />
         ) : (
           <NewsletterSignup source="article-footer" />
         )}
