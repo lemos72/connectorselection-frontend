@@ -92,6 +92,50 @@ const TOOL_CALLOUTS = {
   },
 };
 
+// Anchor articles that should cross-link up to their topical hub page.
+const HUB_CALLOUTS = {
+  'ocp-interconnect-frameworks-nic3-open-compute': {
+    href: '/hubs/ocp-server-interconnects/',
+    label: 'Explore the OCP Server Interconnects Hub',
+    description: 'The full guide to Open Compute connector architecture — NIC 3.0, DC-SCM, OAM, Open Rack, CRPS, and EDSFF in one place.',
+  },
+  'ocp-dc-scm-connector-interface-explained': {
+    href: '/hubs/ocp-server-interconnects/',
+    label: 'Explore the OCP Server Interconnects Hub',
+    description: 'The full guide to Open Compute connector architecture — NIC 3.0, DC-SCM, OAM, Open Rack, CRPS, and EDSFF in one place.',
+  },
+  'ocp-open-rack-busbar-power-connectors-orv2-orv3': {
+    href: '/hubs/ocp-server-interconnects/',
+    label: 'Explore the OCP Server Interconnects Hub',
+    description: 'The full guide to Open Compute connector architecture — NIC 3.0, DC-SCM, OAM, Open Rack, CRPS, and EDSFF in one place.',
+  },
+  'ocp-oam-connectors-accelerator-module-interconnect-design': {
+    href: '/hubs/ocp-server-interconnects/',
+    label: 'Explore the OCP Server Interconnects Hub',
+    description: 'The full guide to Open Compute connector architecture — NIC 3.0, DC-SCM, OAM, Open Rack, CRPS, and EDSFF in one place.',
+  },
+  'crps-ocp-common-redundant-power-supply-connector-standard': {
+    href: '/hubs/ocp-server-interconnects/',
+    label: 'Explore the OCP Server Interconnects Hub',
+    description: 'The full guide to Open Compute connector architecture — NIC 3.0, DC-SCM, OAM, Open Rack, CRPS, and EDSFF in one place.',
+  },
+  'edsff-connectors-explained-e1s-e3s-ocp-server-storage': {
+    href: '/hubs/ocp-server-interconnects/',
+    label: 'Explore the OCP Server Interconnects Hub',
+    description: 'The full guide to Open Compute connector architecture — NIC 3.0, DC-SCM, OAM, Open Rack, CRPS, and EDSFF in one place.',
+  },
+  'what-is-a-cem-slot-pcie-card-electromechanical-connector-explained': {
+    href: '/hubs/pcie-cem-connectors/',
+    label: 'Explore the PCIe CEM Connectors Hub',
+    description: 'CEM slot mechanics, PCIe generations, and card edge connector specs — the full PCIe interconnect guide.',
+  },
+  'pcie-connectors-explained-gen4-vs-gen5-vs-gen6': {
+    href: '/hubs/pcie-cem-connectors/',
+    label: 'Explore the PCIe CEM Connectors Hub',
+    description: 'CEM slot mechanics, PCIe generations, and card edge connector specs — the full PCIe interconnect guide.',
+  },
+};
+
 // Update if the canonical (indexed) domain form differs, e.g. non-www.
 const SITE_URL = 'https://www.connectorselection.com';
 
@@ -147,6 +191,7 @@ export default async function ArticlePage({ params }) {
   const author = article.author;
   const date = fmtDate(article.published_date || article.publishedAt);
   const toolCallout = TOOL_CALLOUTS[article.slug];
+  const hubCallout = HUB_CALLOUTS[article.slug];
 
   // Which gated PDF guide (if any) this article is source material for —
   // checked against every entry's articleSlugs list in
@@ -290,6 +335,15 @@ export default async function ArticlePage({ params }) {
             <p>{toolCallout.description}</p>
             <Link href={toolCallout.href} className="cs-btn">
               {toolCallout.label} →
+            </Link>
+          </div>
+        )}
+
+        {hubCallout && (
+          <div className="cs-tool-callout">
+            <p>{hubCallout.description}</p>
+            <Link href={hubCallout.href} className="cs-btn">
+              {hubCallout.label} →
             </Link>
           </div>
         )}

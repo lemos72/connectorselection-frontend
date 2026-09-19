@@ -10,6 +10,19 @@ import BlocksRenderer, {
 } from '../../../components/BlocksRenderer';
 import NewsletterSignup from '../../../components/NewsletterSignup';
 
+const HUB_CALLOUTS = {
+  'ai-server-architecture-explained-where-connectors-are-used': {
+    href: '/hubs/ai-data-center-interconnects/',
+    label: 'Explore the AI/Data Center Interconnects Hub',
+    description: 'CXL, GPU interconnects, and AI server architecture — the full guide to data center connector design.',
+  },
+  'why-ai-infrastructure-needs-better-connectors': {
+    href: '/hubs/ai-data-center-interconnects/',
+    label: 'Explore the AI/Data Center Interconnects Hub',
+    description: 'CXL, GPU interconnects, and AI server architecture — the full guide to data center connector design.',
+  },
+};
+
 
 export async function generateStaticParams() {
   try {
@@ -52,6 +65,7 @@ export default async function BlogPostPage({ params }) {
   const category = post.category;
   const author = post.author;
   const date = fmtDate(post.published_date || post.publishedAt);
+  const hubCallout = HUB_CALLOUTS[post.slug];
 
   return (
     <article className="cs-article">
@@ -82,6 +96,15 @@ export default async function BlogPostPage({ params }) {
         <div className="cs-article-body">
           <BlocksRenderer content={post.content} />
         </div>
+
+        {hubCallout && (
+          <div className="cs-tool-callout">
+            <p>{hubCallout.description}</p>
+            <Link href={hubCallout.href} className="cs-btn">
+              {hubCallout.label} →
+            </Link>
+          </div>
+        )}
 
         <NewsletterSignup source="blog-footer" />
       </div>
