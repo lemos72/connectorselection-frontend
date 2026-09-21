@@ -2007,3 +2007,37 @@ button:focus-visible {
   font-size: 0.85rem;
   color: var(--muted);
 }
+
+/* ==========================================================================
+   Tool page explainer ("How This Works") — e.g. Connector Selector Wizard
+   Matches .cs-section-head (h2 + rule) and .cs-prose body text.
+   Sits on the same element as .cs-container, so only the children are
+   width-limited; the block itself stays left-aligned with the page H1.
+   ========================================================================== */
+.cs-tool-explainer h2 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: var(--blueprint);
+  max-width: 720px;
+  margin: 0 0 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line-strong);
+}
+.cs-tool-explainer p {
+  font-size: 17px;
+  line-height: 1.7;
+  color: #22303c;
+  max-width: 720px;
+  margin: 0 0 20px;
+}
+.cs-tool-explainer p:last-child {
+  margin-bottom: 0;
+}
+@media (max-width: 640px) {
+  .cs-tool-explainer p {
+    font-size: 16px;
+  }
+}
