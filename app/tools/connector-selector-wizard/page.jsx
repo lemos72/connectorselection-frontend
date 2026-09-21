@@ -15,9 +15,9 @@ const toolJsonLd = {
 };
 
 export const metadata = {
-  title: 'Connector Selector Wizard — Find the Right Connector Type',
+  title: 'Electrical Connector Selector Tool: Find the Right Type',
   description:
-    'Answer a few quick questions about your connection type, signal requirements, and operating environment to get a tailored connector recommendation with links to relevant engineering guides.',
+    'Free connector selector tool: answer 3-4 questions on connection type, requirement and environment to get a recommended connector and matching guides.',
   alternates: {
     canonical: `${SITE_URL}/tools/connector-selector-wizard/`,
   },
