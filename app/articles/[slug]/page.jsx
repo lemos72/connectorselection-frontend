@@ -136,6 +136,32 @@ const HUB_CALLOUTS = {
   },
 };
 
+// Automotive articles that should cross-link down to the sealed vs
+// unsealed compare page — these are the same four articles the
+// automotive lead magnet is built from.
+const COMPARE_CALLOUTS = {
+  'automotive-connector-standards-a-beginners-guide': {
+    href: '/compare/sealed-vs-unsealed-automotive-connectors/',
+    label: 'Compare Sealed vs Unsealed Connectors',
+    description: 'Sealed or unsealed — see which one fits your application, from IP ratings to where each belongs on the vehicle.',
+  },
+  'hvil-connector-design-high-voltage-interlock-loop-ev-battery': {
+    href: '/compare/sealed-vs-unsealed-automotive-connectors/',
+    label: 'Compare Sealed vs Unsealed Connectors',
+    description: 'Sealed or unsealed — see which one fits your application, from IP ratings to where each belongs on the vehicle.',
+  },
+  'high-voltage-ev-connectors-explained': {
+    href: '/compare/sealed-vs-unsealed-automotive-connectors/',
+    label: 'Compare Sealed vs Unsealed Connectors',
+    description: 'Sealed or unsealed — see which one fits your application, from IP ratings to where each belongs on the vehicle.',
+  },
+  'environmental-sealing-ip-ratings-external-adas-sensors': {
+    href: '/compare/sealed-vs-unsealed-automotive-connectors/',
+    label: 'Compare Sealed vs Unsealed Connectors',
+    description: 'Sealed or unsealed — see which one fits your application, from IP ratings to where each belongs on the vehicle.',
+  },
+};
+
 // Update if the canonical (indexed) domain form differs, e.g. non-www.
 const SITE_URL = 'https://www.connectorselection.com';
 
@@ -192,6 +218,7 @@ export default async function ArticlePage({ params }) {
   const date = fmtDate(article.published_date || article.publishedAt);
   const toolCallout = TOOL_CALLOUTS[article.slug];
   const hubCallout = HUB_CALLOUTS[article.slug];
+  const compareCallout = COMPARE_CALLOUTS[article.slug];
 
   // Which gated PDF guide (if any) this article is source material for —
   // checked against every entry's articleSlugs list in
@@ -344,6 +371,15 @@ export default async function ArticlePage({ params }) {
             <p>{hubCallout.description}</p>
             <Link href={hubCallout.href} className="cs-btn">
               {hubCallout.label} →
+            </Link>
+          </div>
+        )}
+
+        {compareCallout && (
+          <div className="cs-tool-callout">
+            <p>{compareCallout.description}</p>
+            <Link href={compareCallout.href} className="cs-btn">
+              {compareCallout.label} →
             </Link>
           </div>
         )}
