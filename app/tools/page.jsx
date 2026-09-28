@@ -37,6 +37,11 @@ const TOOLS = [
     name: 'Power Dissipation Calculator',
     description: 'Calculate heat loss in a wire run using P = I²R.',
   },
+  {
+    href: '/tools/connector-derating-calculator/',
+    name: 'Connector Derating Calculator',
+    description: 'Estimate a connector’s derated current rating for your actual operating ambient temperature.',
+  },
 {
   href: '/tools/skin-effect-calculator/',
   name: 'Skin Effect Calculator',
