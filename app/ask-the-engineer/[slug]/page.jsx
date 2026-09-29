@@ -13,7 +13,7 @@ import NewsletterSignup from '../../../components/NewsletterSignup';
 
 // Update if the canonical (indexed) domain form differs, e.g. non-www —
 // keep this in sync with the same constant in app/articles/[slug]/page.jsx.
-const SITE_URL = 'https://www.connectorselection.com';
+const SITE_URL = 'https://connectorselection.com';
 
 export async function generateStaticParams() {
   try {

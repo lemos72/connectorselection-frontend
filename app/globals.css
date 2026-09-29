@@ -1190,32 +1190,76 @@ button:focus-visible {
 .cs-leadmagnet {
   background: linear-gradient(135deg, #12355b 0%, #1a4a7a 100%);
   border: none;
-  padding: 2.5rem 2rem;
+  padding: 1.35rem 2rem;
+  margin: 0.75rem 0 2rem;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  column-gap: 1.75rem;
+  row-gap: 0.25rem;
+  align-items: center;
+  text-align: left;
 }
 
 .cs-leadmagnet-eyebrow {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  align-self: center;
+  justify-self: start;
   display: inline-block;
   background: rgba(255, 255, 255, 0.15);
   color: #ffffff;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  padding: 0.35rem 0.9rem;
-  border-radius: 999px;
-  margin-bottom: 1rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 6px;
+  text-align: center;
+  line-height: 1.25;
+  max-width: 96px;
+  margin: 0;
 }
 
 .cs-leadmagnet h3 {
+  grid-column: 2;
+  grid-row: 1;
   color: #ffffff;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
+  line-height: 1.3;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .cs-leadmagnet p {
-  color: rgba(255, 255, 255, 0.85);
-  max-width: 480px;
-  margin-left: auto;
-  margin-right: auto;
+  grid-column: 2;
+  grid-row: 2;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: none;
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.35;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cs-leadmagnet .cs-newsletter-form {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+}
+
+.cs-leadmagnet .cs-newsletter-error {
+  grid-column: 1 / -1;
+  margin: 0.4rem 0 0;
+  font-size: 0.8rem;
+  color: #ffd7c2;
+  text-align: center;
 }
 
 /* FIX (Sept 2026): the input had no explicit color/background, so Tailwind
@@ -1228,6 +1272,10 @@ button:focus-visible {
   border: 1px solid rgba(255, 255, 255, 0.3);
   background: rgba(255, 255, 255, 0.08);
   color: #ffffff;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.95rem;
+  width: 220px;
+  min-width: 0;
 }
 
 .cs-leadmagnet .cs-newsletter-input::placeholder {
@@ -1244,8 +1292,8 @@ button:focus-visible {
   color: #ffffff;
   border: none;
   border-radius: 6px;
-  padding: 0.75rem 1.75rem;
-  font-size: 1rem;
+  padding: 0.65rem 1.4rem;
+  font-size: 0.95rem;
   font-weight: 700;
   cursor: pointer;
   transition: background 0.15s ease, transform 0.15s ease;
@@ -1264,7 +1312,64 @@ button:focus-visible {
 }
 
 .cs-leadmagnet.cs-newsletter-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.35rem;
   background: linear-gradient(135deg, #12355b 0%, #1a4a7a 100%);
+}
+
+.cs-leadmagnet.cs-newsletter-success .cs-leadmagnet-eyebrow {
+  max-width: none;
+  border-radius: 999px;
+  padding: 0.3rem 0.75rem;
+}
+
+.cs-leadmagnet.cs-newsletter-success h3,
+.cs-leadmagnet.cs-newsletter-success p {
+  white-space: normal;
+  text-align: center;
+}
+
+@media (max-width: 860px) {
+  .cs-leadmagnet {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 1.5rem 1.5rem;
+    row-gap: 0.5rem;
+  }
+  .cs-leadmagnet-eyebrow {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: center;
+    max-width: none;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+  }
+  .cs-leadmagnet h3 {
+    grid-column: 1;
+    grid-row: 2;
+    white-space: normal;
+    font-size: 1.15rem;
+  }
+  .cs-leadmagnet p {
+    grid-column: 1;
+    grid-row: 3;
+    white-space: normal;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .cs-leadmagnet .cs-newsletter-form {
+    grid-column: 1;
+    grid-row: 4;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .cs-leadmagnet .cs-newsletter-input {
+    width: 100%;
+    max-width: 320px;
+  }
 }
 /* ==========================================================================
    Voltage Drop Calculator / shared calculator tool styling
