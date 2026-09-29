@@ -163,7 +163,7 @@ const COMPARE_CALLOUTS = {
 };
 
 // Update if the canonical (indexed) domain form differs, e.g. non-www.
-const SITE_URL = 'https://www.connectorselection.com';
+const SITE_URL = 'https://connectorselection.com';
 
 // Static export needs the full list of slugs to pre-render at build time.
 export async function generateStaticParams() {
