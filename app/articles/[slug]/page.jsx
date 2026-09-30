@@ -17,6 +17,7 @@ import NewsletterSignup from '../../../components/NewsletterSignup';
 import LeadMagnetForm from '../../../components/LeadMagnetForm';
 import KeyTerms from '../../../components/KeyTerms';
 import { LEAD_MAGNET_CONFIGS } from '../../../lib/leadMagnetConfigs';
+import { RFI_FIELD_CONFIGS } from '../../../lib/rfiFieldConfigs';
 
 // Articles where a relevant tool callout should appear. Add more slugs here
 // as new tools ship and more articles become relevant.
@@ -220,6 +221,14 @@ export default async function ArticlePage({ params }) {
   const hubCallout = HUB_CALLOUTS[article.slug];
   const compareCallout = COMPARE_CALLOUTS[article.slug];
 
+  // RFI callout — unlike the three lookups above, this isn't a manually
+  // curated per-slug map. Any article whose category is one of the two
+  // RFI-pilot categories (fpc-ffc-connectors, high-speed-connectors-signal-
+  // integrity) gets the callout automatically, since relevance here is
+  // just "is this article in an RFI category," not a per-article judgment
+  // call. Covers new articles in those categories with no code change.
+  const rfiConfig = category?.slug ? RFI_FIELD_CONFIGS[category.slug] : null;
+
   // Which gated PDF guide (if any) this article is source material for —
   // checked against every entry's articleSlugs list in
   // lib/leadMagnetConfigs.js. Adding a new guide's articles to that config
@@ -380,6 +389,18 @@ export default async function ArticlePage({ params }) {
             <p>{compareCallout.description}</p>
             <Link href={compareCallout.href} className="cs-btn">
               {compareCallout.label} →
+            </Link>
+          </div>
+        )}
+
+        {rfiConfig && (
+          <div className="cs-tool-callout">
+            <p>
+              Need pricing or availability for {rfiConfig.shortLabel}? Tell us
+              your specs and we&rsquo;ll follow up directly.
+            </p>
+            <Link href={`/request-info/${category.slug}/`} className="cs-btn">
+              Request Info &amp; Pricing →
             </Link>
           </div>
         )}
