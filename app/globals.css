@@ -2146,3 +2146,443 @@ button:focus-visible {
     font-size: 16px;
   }
 }
+/* ==========================================================================
+   HOMEPAGE REDESIGN — paste at the very END of app/globals.css
+   Every rule is scoped under .cs-hp or a .cs-hp-* class, so no other page
+   (articles, categories, hubs, tools, contact...) is affected.
+   Uses only your existing colors and fonts (--blueprint, --copper, IBM Plex).
+   ========================================================================== */
+
+/* ---- Section rhythm and headings (homepage only) ---- */
+.cs-hp .cs-section {
+  padding: 64px 0;
+}
+.cs-hp .cs-section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  column-gap: 24px;
+  row-gap: 6px;
+  margin-bottom: 36px;
+  padding-bottom: 14px;
+}
+.cs-hp .cs-section-head .cs-eyebrow {
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+.cs-hp .cs-section-head h2 {
+  grid-column: 1;
+  font-size: clamp(28px, 3.4vw, 36px);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--blueprint);
+}
+.cs-hp .cs-section-head a {
+  grid-column: 2;
+  align-self: end;
+  white-space: nowrap;
+}
+.cs-hp .cs-home-quicklinks {
+  padding-top: 0;
+  padding-bottom: 0.5rem;
+}
+
+/* ---- Hero ---- */
+.cs-hp-hero {
+  background: var(--blueprint);
+  color: #fff;
+  border-bottom: 1px solid #0d2a4a;
+  padding: 72px 0 80px;
+}
+.cs-hp-hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: 56px;
+  align-items: center;
+}
+.cs-hp-hero-solo {
+  grid-template-columns: minmax(0, 1fr);
+}
+.cs-hp-hero-copy {
+  min-width: 0;
+}
+.cs-hp-hero .cs-eyebrow {
+  color: #f2b48b;
+}
+.cs-hp-hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 4.6vw, 56px);
+  line-height: 1.05;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin: 0 0 20px;
+  max-width: 15ch;
+}
+.cs-hp-hero p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #c9d6e6;
+  max-width: 46ch;
+  margin: 0 0 30px;
+}
+.cs-hp-hero .cs-btn {
+  background: var(--copper);
+  border-color: var(--copper);
+  color: #fff;
+}
+.cs-hp-hero .cs-btn:hover {
+  background: var(--copper-600);
+  border-color: var(--copper-600);
+}
+.cs-hp-hero .cs-btn.cs-btn-ghost {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.55);
+  color: #fff;
+}
+.cs-hp-hero .cs-btn.cs-btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.cs-hp-hero a:focus-visible {
+  outline-color: #fff;
+}
+
+/* Photo mosaic (right side of the hero) */
+.cs-hp-mosaic {
+  display: grid;
+  gap: 12px;
+  height: 440px;
+  min-width: 0;
+}
+.cs-hp-mosaic-1 {
+  grid-template-columns: minmax(0, 1fr);
+}
+.cs-hp-mosaic-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.cs-hp-mosaic-3 {
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+}
+.cs-hp-mosaic-3 .cs-hp-mosaic-tile:first-child {
+  grid-row: 1 / span 2;
+}
+.cs-hp-mosaic-tile {
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+  background: var(--blueprint-700);
+  min-height: 0;
+}
+.cs-hp-mosaic-tile img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.cs-hp-mosaic-tile::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+  pointer-events: none;
+}
+
+/* ---- Top Stories: one large lead + three beside it ---- */
+.cs-hp-top .cs-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: 0 48px;
+  align-items: start;
+  background: none;
+  border: 0;
+}
+.cs-hp-top .cs-card {
+  background: transparent;
+}
+.cs-hp-top .cs-card:hover {
+  box-shadow: none;
+}
+.cs-hp-top .cs-card:hover h3 {
+  color: var(--copper);
+}
+.cs-hp-top .cs-card:only-child {
+  grid-column: 1 / -1;
+}
+.cs-hp-top .cs-card:first-child {
+  grid-column: 1;
+  grid-row: 1 / span 3;
+}
+.cs-hp-top .cs-card:first-child .cs-card-image {
+  border-radius: 6px;
+}
+.cs-hp-top .cs-card:first-child .cs-card-body {
+  padding: 22px 0 0;
+  gap: 12px;
+}
+.cs-hp-top .cs-card:first-child h3 {
+  font-size: clamp(26px, 3vw, 38px);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--blueprint);
+}
+.cs-hp-top .cs-card:first-child:hover h3 {
+  color: var(--copper);
+}
+.cs-hp-top .cs-card:first-child p {
+  font-size: 17px;
+  line-height: 1.6;
+}
+.cs-hp-top .cs-card:not(:first-child) {
+  grid-column: 2;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 20px 0;
+  border-top: 1px solid var(--line-strong);
+}
+.cs-hp-top .cs-card:nth-child(2) {
+  padding-top: 0;
+  border-top: 0;
+}
+.cs-hp-top .cs-card:not(:first-child) .cs-card-image {
+  flex: 0 0 144px;
+  width: 144px;
+  border-radius: 4px;
+}
+.cs-hp-top .cs-card:not(:first-child) .cs-card-body {
+  padding: 0;
+  gap: 6px;
+  min-width: 0;
+}
+.cs-hp-top .cs-card:not(:first-child) h3 {
+  font-size: 20px;
+}
+.cs-hp-top .cs-card:not(:first-child) p {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ---- Explore by Topic: photo + title + full description per row ---- */
+.cs-hp-hubs {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid var(--line-strong);
+}
+.cs-hp-hub {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr) auto;
+  column-gap: 32px;
+  align-items: start;
+  padding: 28px 0;
+  border-top: 1px solid var(--line-strong);
+}
+.cs-hp-hub-nopic {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+.cs-hp-hub-media {
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--grid);
+}
+.cs-hp-hub-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.cs-hp-hub-text {
+  min-width: 0;
+}
+.cs-hp-hub h3 {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.4vw, 28px);
+  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--blueprint);
+  margin: 0 0 10px;
+}
+.cs-hp-hub p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 70ch;
+}
+.cs-hp-hub:hover h3 {
+  color: var(--copper);
+}
+.cs-hp-hub-arrow {
+  align-self: center;
+  color: var(--copper);
+  transition: transform 0.18s ease;
+}
+.cs-hp-hub-arrow svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+.cs-hp-hub:hover .cs-hp-hub-arrow {
+  transform: translateX(4px);
+}
+
+/* ---- News: same cards, separated instead of a hairline grid ---- */
+.cs-hp-news .cs-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  gap: 20px;
+  background: none;
+  border: 0;
+}
+.cs-hp-news .cs-card {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+.cs-hp-news .cs-card h3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.cs-hp-news .cs-card p {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ---- Categories: tinted band with a ruled index ---- */
+.cs-hp-cats {
+  background: #e9eef4;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  margin-top: 40px;
+}
+.cs-hp-cats .cs-cat-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  column-gap: 48px;
+  row-gap: 0;
+}
+.cs-hp-cats .cs-cat {
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--line-strong);
+  padding: 16px 0;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 14px;
+}
+.cs-hp-cats .cs-cat:hover {
+  border-top-color: var(--copper);
+}
+.cs-hp-cats .cs-cat h3 {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+.cs-hp-cats .cs-cat:hover h3 {
+  color: var(--copper);
+}
+
+/* ---- Latest Articles: thumbnail left, text right, two columns ---- */
+.cs-hp-latest .cs-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 480px), 1fr));
+  gap: 0 56px;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--line-strong);
+}
+.cs-hp-latest .cs-card {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 22px;
+  background: transparent;
+  padding: 22px 0;
+  border-top: 1px solid var(--line-strong);
+}
+.cs-hp-latest .cs-card:hover {
+  box-shadow: none;
+}
+.cs-hp-latest .cs-card-media {
+  flex: 0 0 176px;
+  border: 0;
+  border-radius: 4px;
+}
+.cs-hp-latest .cs-card-body {
+  padding: 0;
+  min-width: 0;
+}
+.cs-hp-latest .cs-card h3 {
+  font-size: 21px;
+  line-height: 1.2;
+}
+.cs-hp-latest .cs-card:hover h3 {
+  color: var(--copper);
+}
+
+/* ---- Tablet / phone ---- */
+@media (max-width: 900px) {
+  .cs-hp-hero {
+    padding: 56px 0 64px;
+  }
+  .cs-hp-hero-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 36px;
+  }
+  .cs-hp-mosaic {
+    height: 280px;
+  }
+  .cs-hp-top .cs-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cs-hp-top .cs-card:first-child,
+  .cs-hp-top .cs-card:not(:first-child) {
+    grid-column: 1;
+    grid-row: auto;
+  }
+  .cs-hp-top .cs-card:first-child {
+    margin-bottom: 8px;
+  }
+  .cs-hp-top .cs-card:nth-child(2) {
+    padding-top: 20px;
+    border-top: 1px solid var(--line-strong);
+  }
+}
+@media (max-width: 760px) {
+  .cs-hp-hub,
+  .cs-hp-hub-nopic {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 16px;
+  }
+  .cs-hp-hub-arrow {
+    display: none;
+  }
+}
+@media (max-width: 560px) {
+  .cs-hp .cs-section {
+    padding: 48px 0;
+  }
+  .cs-hp-mosaic {
+    height: 220px;
+    gap: 8px;
+  }
+  .cs-hp-top .cs-card:not(:first-child) .cs-card-image {
+    flex-basis: 108px;
+    width: 108px;
+  }
+  .cs-hp-latest .cs-card {
+    flex-direction: column;
+    gap: 14px;
+  }
+  .cs-hp-latest .cs-card-media {
+    flex: none;
+    width: 100%;
+  }
+}
