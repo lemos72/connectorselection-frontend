@@ -2,9 +2,8 @@ import { getArticles } from '../../lib/strapi';
 import ArticleCard from '../../components/ArticleCard';
 
 export const metadata = {
-  title: 'Connector & Interconnect Engineering Articles',
-  description:
-    'Technical articles on connector selection, high-speed signal integrity, automotive and EV interconnects, FPC/FFC, and cable harness design — written for hardware engineers.',
+  title: "Connector Engineering Articles: Selection Guides, Signal Integrity & Automotive",
+  description: "100+ technical articles on connector selection, signal integrity, automotive/EV and ADAS connectors, data center interconnects (OCP, PCIe, EDSFF), and FPC/FFC design — a working reference for engineers.",
 };
 
 async function safe(fn, fallback) {

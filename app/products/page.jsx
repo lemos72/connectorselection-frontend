@@ -2,9 +2,8 @@ import Link from 'next/link';
 import { getProductIntroductions, imageFrom } from '../../lib/strapi';
 
 export const metadata = {
-  title: 'Connector Product Introductions: FAKRA, ZIF, CXL & More',
-  description:
-    'Browse connector product introductions across FAKRA, ZIF, CXL, overmolded cable assemblies, and FFC/FPC hardware — engineering specs and selection guidance for hardware designers.',
+  title: "Connector Products: FPC/FFC, FAKRA, CXL & High-Speed Interconnect Guides",
+  description: "Browse connector product guides covering FPC/FFC, FAKRA and HSD automotive RF, CXL for AI systems, and overmolded cable assemblies — specs, applications, and selection guidance for each.",
 };
 
 async function safe(fn, fallback) {

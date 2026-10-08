@@ -5,7 +5,9 @@ import {
   getTopStories,
   getNewsItems,
   getHubPages,
+  getHubBySlug,
 } from '../lib/strapi';
+import { imageSet } from '../lib/images';
 import ArticleCard from '../components/ArticleCard';
 import TopStoryCard from '../components/TopStoryCard';
 import NewsCard from '../components/NewsCard';
@@ -21,6 +23,9 @@ async function safe(fn, fallback) {
   }
 }
 
+// Strapi v5 entries carry a documentId; fall back to id.
+const keyOf = (x) => x?.documentId ?? x?.id;
+
 export default async function HomePage() {
   const articles = await safe(getArticles, []);
   const categories = await safe(getCategories, []);
@@ -30,105 +35,168 @@ export default async function HomePage() {
   const featured = articles.slice(0, 6);
   const hubs = await safe(getHubPages, []);
 
+  // ---------------------------------------------------------------------------
+  // Pictures for the hero and the topic rows. They reuse cover images that are
+  // already in Strapi (nothing new to upload) and are picked from articles that
+  // are NOT already shown in Top Stories / Latest Articles, so the same photo
+  // never appears twice on the page.
+  // ---------------------------------------------------------------------------
+  const shown = new Set([
+    ...topStories.filter((s) => s._type === 'article').map(keyOf),
+    ...featured.map(keyOf),
+  ]);
+
+  const heroArticles = articles
+    .filter((a) => a.cover_image && !shown.has(keyOf(a)))
+    .slice(0, 3);
+  heroArticles.forEach((a) => shown.add(keyOf(a)));
+  const heroPics = heroArticles
+    .map((a, i) => imageSet(a.cover_image, i === 0 ? 'large' : 'medium'))
+    .filter(Boolean);
+
+  // Each topic hub borrows the cover image of one of its related articles.
+  const hubDetails = await Promise.all(
+    hubs.map((hub) => safe(() => getHubBySlug(hub.slug), null))
+  );
+  const hubPics = hubDetails.map((detail) => {
+    const withImage = (detail?.related_articles || []).filter((a) => a.cover_image);
+    const pick = withImage.find((a) => !shown.has(keyOf(a))) || withImage[0];
+    if (pick) shown.add(keyOf(pick));
+    return pick ? imageSet(pick.cover_image, 'small') : null;
+  });
+
   return (
-    <>
-      {/* Hero */}
-      <section className="cs-hero">
-        <div className="cs-container">
-          <div className="cs-hero-eyebrow cs-eyebrow">
-            Interconnect Knowledge Base
+    <div className="cs-hp">
+      {/* Hero — text on the left, photo mosaic on the right. The photos are
+          decorative (alt=""), so they add no new text for search engines.
+          The first photo is the largest thing above the fold, so it loads
+          eagerly with high priority; the other two load lazily. */}
+      <section className="cs-hp-hero">
+        <div
+          className={`cs-container cs-hp-hero-inner${
+            heroPics.length ? '' : ' cs-hp-hero-solo'
+          }`}
+        >
+          <div className="cs-hp-hero-copy">
+            <div className="cs-hero-eyebrow cs-eyebrow">
+              Interconnect Knowledge Base
+            </div>
+            <h1>Select the right connector with confidence.</h1>
+            <p>
+              Practical, engineer-written guidance on connector technologies,
+              signal integrity, and interconnect design — for high-speed,
+              board-to-board, EV, and data-center applications.
+            </p>
+            <div className="cs-hero-actions">
+              <Link href="/categories/" className="cs-btn" prefetch={false}>
+                Explore Categories
+              </Link>
+              <Link href="/contact/" className="cs-btn cs-btn-ghost" prefetch={false}>
+                Contact Us
+              </Link>
+            </div>
           </div>
-          <h1>Select the right connector with confidence.</h1>
-          <p>
-            Practical, engineer-written guidance on connector technologies,
-            signal integrity, and interconnect design — for high-speed,
-            board-to-board, EV, and data-center applications.
-          </p>
-          <div className="cs-hero-actions">
-            <Link href="/categories/" className="cs-btn cs-btn-ghost" prefetch={false}>
-              Explore Categories
-            </Link>
-            <Link href="/contact/" className="cs-btn" prefetch={false}>
-              Contact Us
-            </Link>
-          </div>
+
+          {heroPics.length > 0 && (
+            <div
+              className={`cs-hp-mosaic cs-hp-mosaic-${heroPics.length}`}
+              aria-hidden="true"
+            >
+              {heroPics.map((pic, i) => (
+                <div className="cs-hp-mosaic-tile" key={pic.src}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={pic.src}
+                    srcSet={pic.srcSet}
+                    sizes={
+                      i === 0
+                        ? '(max-width: 900px) 60vw, 560px'
+                        : '(max-width: 900px) 40vw, 320px'
+                    }
+                    width={pic.width}
+                    height={pic.height}
+                    alt=""
+                    decoding="async"
+                    loading={i === 0 ? 'eager' : 'lazy'}
+                    fetchPriority={i === 0 ? 'high' : undefined}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
-
-      {/* Top Stories — own full-width section. NOTE: the cs-home-top-stories
-          wrapper below is required — .cs-home-top-stories .cs-grid in
-          globals.css overrides the generic auto-fill grid with a fixed
-          2-column layout. Without this wrapper, a 2-item grid in a
-          full-width section leaves an empty 3rd auto-fill column showing
-          the grid container's background color as a blank box. */}
+      {/* Top Stories — first story is the large lead, the rest sit beside it.
+          Layout is done entirely in CSS (.cs-hp-top in globals.css). */}
       {topStories.length > 0 && (
-        <section className="cs-section cs-home-top-band">
+        <section className="cs-section cs-home-top-band cs-hp-top">
           <div className="cs-container">
             <div className="cs-section-head">
               <h2>Top Stories</h2>
             </div>
-            <div className="cs-home-top-stories">
-              <div className="cs-grid">
-                {topStories.map((item) => (
-                  <TopStoryCard key={`${item._type}-${item.id}`} item={item} />
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Explore by Topic — promotes hub pages (topical landing pages
-          aggregating articles, products, tools, and case studies under
-          one URL). Auto-fit so 1 hub today renders full-width cleanly,
-          and it'll arrange into more columns automatically as more
-          hubs go live — no code change needed later. */}
-      {hubs.length > 0 && (
-        <section className="cs-section">
-          <div className="cs-container">
-            <div className="cs-section-head">
-              <span className="cs-eyebrow">Deep Dives</span>
-              <h2>Explore by Topic</h2>
-            </div>
-            <div
-              className="cs-quicklink-grid"
-              style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}
-            >
-              {hubs.map((hub) => (
-                <Link
-                  key={hub.id}
-                  href={`/hubs/${hub.slug}/`}
-                  prefetch={false}
-                  className="cs-quicklink-card cs-quicklink-tools"
-                >
-                  <span className="cs-quicklink-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <rect x="3" y="4" width="18" height="6" rx="1" stroke="currentColor" strokeWidth="1.8"/>
-                      <rect x="3" y="14" width="18" height="6" rx="1" stroke="currentColor" strokeWidth="1.8"/>
-                      <circle cx="7" cy="7" r="0.9" fill="currentColor"/>
-                      <circle cx="7" cy="17" r="0.9" fill="currentColor"/>
-                      <path d="M11 7h7M11 17h7" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
-                    </svg>
-                  </span>
-                  <div className="cs-quicklink-text">
-                    <h3>{hub.title}</h3>
-                    {hub.intro_paragraph && <p>{hub.intro_paragraph}</p>}
-                  </div>
-                  <span className="cs-quicklink-arrow" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </span>
-                </Link>
+            <div className="cs-grid">
+              {topStories.map((item) => (
+                <TopStoryCard key={`${item._type}-${item.id}`} item={item} />
               ))}
             </div>
           </div>
         </section>
       )}
 
-      {/* Industry News — bigger, card-based, own full-width section */}
-      <section className="cs-section cs-home-news-band">
+      {/* Explore by Topic — promotes hub pages. Each row shows a photo (from a
+          related article), the hub title, and its full intro paragraph. */}
+      {hubs.length > 0 && (
+        <section className="cs-section cs-hp-topics">
+          <div className="cs-container">
+            <div className="cs-section-head">
+              <span className="cs-eyebrow">Deep Dives</span>
+              <h2>Explore by Topic</h2>
+            </div>
+            <div className="cs-hp-hubs">
+              {hubs.map((hub, i) => {
+                const pic = hubPics[i];
+                return (
+                  <Link
+                    key={hub.id}
+                    href={`/hubs/${hub.slug}/`}
+                    prefetch={false}
+                    className={`cs-hp-hub${pic ? '' : ' cs-hp-hub-nopic'}`}
+                  >
+                    {pic && (
+                      <span className="cs-hp-hub-media" aria-hidden="true">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={pic.src}
+                          srcSet={pic.srcSet}
+                          sizes="(max-width: 760px) 100vw, 260px"
+                          width={pic.width}
+                          height={pic.height}
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </span>
+                    )}
+                    <div className="cs-hp-hub-text">
+                      <h3>{hub.title}</h3>
+                      {hub.intro_paragraph && <p>{hub.intro_paragraph}</p>}
+                    </div>
+                    <span className="cs-hp-hub-arrow" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Industry News — card-based, own full-width section */}
+      <section className="cs-section cs-home-news-band cs-hp-news">
         <div className="cs-container">
           <div className="cs-section-head">
             <span className="cs-eyebrow">Industry Updates</span>
@@ -150,9 +218,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Quick links: Tools + Glossary — evergreen utility links, moved
-          below the fresher content sections (Top Stories, Explore by
-          Topic, News) and right above Categories per request. */}
+      {/* Quick links: Tools + Glossary — unchanged, still above Categories. */}
       <section className="cs-section cs-home-quicklinks">
         <div className="cs-container">
           <div className="cs-quicklink-grid">
@@ -197,7 +263,7 @@ export default async function HomePage() {
 
       {/* Categories */}
       {categories.length > 0 && (
-        <section className="cs-section">
+        <section className="cs-section cs-hp-cats">
           <div className="cs-container">
             <div className="cs-section-head">
               <h2>Categories</h2>
@@ -223,7 +289,7 @@ export default async function HomePage() {
       )}
 
       {/* Recent articles */}
-      <section className="cs-section">
+      <section className="cs-section cs-hp-latest">
         <div className="cs-container">
           <div className="cs-section-head">
             <h2>Latest Articles</h2>
@@ -242,6 +308,6 @@ export default async function HomePage() {
           )}
         </div>
       </section>
-    </>
+    </div>
   );
 }

@@ -10,6 +10,14 @@ import BlocksRenderer, {
 } from '../../../components/BlocksRenderer';
 import NewsletterSignup from '../../../components/NewsletterSignup';
 
+const HUB_CALLOUTS = {
+  'cxl-connectors-explained-for-ai-systems': {
+    href: '/hubs/ai-data-center-interconnects/',
+    label: 'Explore the AI/Data Center Interconnects Hub',
+    description: 'CXL, GPU interconnects, and AI server architecture — the full guide to data center connector design.',
+  },
+};
+
 
 export async function generateStaticParams() {
   try {
@@ -41,6 +49,7 @@ export default async function ProductPage({ params }) {
 
   const cover = imageFrom(p.cover_image, 'large');
   const category = p.category;
+  const hubCallout = HUB_CALLOUTS[p.slug];
 
   return (
     <article className="cs-article">
@@ -70,6 +79,15 @@ export default async function ProductPage({ params }) {
         <div className="cs-article-body">
           <BlocksRenderer content={p.content} />
         </div>
+
+        {hubCallout && (
+          <div className="cs-tool-callout">
+            <p>{hubCallout.description}</p>
+            <Link href={hubCallout.href} className="cs-btn">
+              {hubCallout.label} →
+            </Link>
+          </div>
+        )}
 
         <NewsletterSignup source="product-footer" />
       </div>

@@ -52,8 +52,13 @@ const CURRENT_QUESTION = {
 
 // -----------------------------------------------------------------------------
 // Recommendation engine — priority-ordered rules, first match wins. Each rule
-// links to real existing site content (articles, categories, hubs, tools)
-// rather than generic advice.
+// links to real existing site content (articles, categories, hubs, compare
+// pages, tools) rather than generic advice. No manufacturer/brand comparison
+// content is ever linked from here.
+//
+// Each recommendation returns `actions`: an ordered list of buttons, first one
+// styled primary (cs-btn), the rest ghost (cs-btn-ghost) — up to 3 total so
+// the result stays scannable.
 // -----------------------------------------------------------------------------
 function getRecommendation(answers) {
   const { connection, requirement, environment, current } = answers;
@@ -71,10 +76,11 @@ function getRecommendation(answers) {
           ? { title: 'OCP Open Rack Busbar Power Connectors: ORv2 vs. ORv3', href: '/articles/ocp-open-rack-busbar-power-connectors-orv2-orv3/' }
           : { title: 'PCIe Gen7 Connector Design: What Changes at 128 GT/s', href: '/articles/pcie-gen7-connector-design-what-changes-at-128-gt-s/' },
       ],
-      categoryHref: '/hubs/ai-data-center-interconnects/',
-      categoryLabel: 'Explore the AI / Data Center Hub',
-      toolHref: '/tools/power-dissipation-calculator/',
-      toolLabel: 'Power Dissipation Calculator',
+      actions: [
+        { href: '/hubs/ocp-server-interconnects/', label: 'Explore the OCP Server Interconnects Hub', style: 'primary' },
+        { href: '/hubs/pcie-cem-connectors/', label: 'PCIe & CEM Slot Connectors Hub', style: 'ghost' },
+        { href: '/tools/power-dissipation-calculator/', label: 'Power Dissipation Calculator', style: 'ghost' },
+      ],
     };
   }
 
@@ -89,20 +95,22 @@ function getRecommendation(answers) {
         { title: 'Non-ZIF FPC Connectors Explained: Retention Without a Latch Mechanism', href: '/articles/non-zif-fpc-connectors-explained-retention-without-latch-mechanism/' },
         { title: 'FPC Connector Selection Guide for Engineers', href: '/articles/fpc-connector-selection-guide-for-engineers/' },
       ],
-      categoryHref: '/categories/fpc-ffc-connectors/',
-      categoryLabel: 'Browse FPC/FFC Connectors',
+      actions: [
+        { href: '/categories/fpc-ffc-connectors/', label: 'Browse FPC/FFC Connectors', style: 'primary' },
+        { href: '/compare/flip-lock-vs-slider-lock-zif-actuators/', label: 'Flip-Lock vs. Slider-Lock Actuators', style: 'ghost' },
+      ],
     };
   }
 
   // Rule 3: RF/coax signal path
   if (requirement === 'rf-coax') {
+    const automotiveRf = environment === 'automotive';
     return {
       title: 'RF / Coaxial Connector',
-      description:
-        environment === 'automotive'
-          ? 'Automotive RF connections (radar, camera, telematics) typically call for FAKRA-family connectors sized to your frequency and space requirements.'
-          : 'RF signal paths need tight impedance control end-to-end — the right connector family depends on frequency, whether the connection needs to be blind-mate, and how often it gets serviced.',
-      articles: environment === 'automotive'
+      description: automotiveRf
+        ? 'Automotive RF connections (radar, camera, telematics) typically call for FAKRA-family connectors sized to your frequency and space requirements.'
+        : 'RF signal paths need tight impedance control end-to-end — the right connector family depends on frequency, whether the connection needs to be blind-mate, and how often it gets serviced.',
+      articles: automotiveRf
         ? [
             { title: 'FAKRA RF Connectors for Automotive Telematics', href: '/articles/fakra-rf-connectors-automotive-telematics/' },
             { title: 'Mini-FAKRA vs. FAKRA: What\'s the Difference?', href: '/articles/mini-fakra-vs-fakra-whats-the-difference/' },
@@ -113,8 +121,14 @@ function getRecommendation(answers) {
             { title: 'Blind-Mate RF Coaxial Connectors: Push-On vs. Threaded Interfaces', href: '/articles/blind-mate-rf-coaxial-connectors-push-on-vs-threaded/' },
             { title: 'SMA RF Coaxial Connectors: Microwave Impedance', href: '/articles/sma-rf-coaxial-connectors-microwave-impedance/' },
           ],
-      categoryHref: '/categories/high-speed-connectors-signal-integrity/',
-      categoryLabel: 'Browse High-Speed & Signal Integrity Connectors',
+      actions: automotiveRf
+        ? [
+            { href: '/categories/automotive-connectors/', label: 'Browse Automotive Connectors', style: 'primary' },
+            { href: '/compare/fakra-vs-hsd-connectors/', label: 'FAKRA vs. HSD Connectors', style: 'ghost' },
+          ]
+        : [
+            { href: '/categories/high-speed-connectors-signal-integrity/', label: 'Browse High-Speed & Signal Integrity Connectors', style: 'primary' },
+          ],
     };
   }
 
@@ -130,10 +144,11 @@ function getRecommendation(answers) {
           { title: 'High-Voltage EV Connectors Explained', href: '/articles/high-voltage-ev-connectors-explained/' },
           { title: 'Battery Connector Systems for Electric Vehicles', href: '/articles/battery-connector-systems-for-electric-vehicles/' },
         ],
-        categoryHref: '/categories/automotive-connectors/',
-        categoryLabel: 'Browse Automotive Connectors',
-        toolHref: '/tools/voltage-drop-calculator/',
-        toolLabel: 'Voltage Drop Calculator',
+        actions: [
+          { href: '/categories/automotive-connectors/', label: 'Browse Automotive Connectors', style: 'primary' },
+          { href: '/tools/voltage-drop-calculator/', label: 'Voltage Drop Calculator', style: 'ghost' },
+          { href: '/tools/connector-derating-calculator/', label: 'Derating Calculator', style: 'ghost' },
+        ],
       };
     }
     return {
@@ -145,15 +160,19 @@ function getRecommendation(answers) {
         { title: 'Single Pair Ethernet Connectors: M8 vs. M12 vs. Automotive-Specific Variants', href: '/articles/single-pair-ethernet-connectors-m8-m12-vs-automotive-variants/' },
         { title: 'LiDAR and Radar Sensor Connectors: IP Rating and Signal Integrity Requirements for ADAS', href: '/articles/lidar-and-radar-sensor-connectors-ip-rating-and-signal-integrity/' },
       ],
-      categoryHref: '/categories/automotive-connectors/',
-      categoryLabel: 'Browse Automotive Connectors',
+      actions: [
+        { href: '/categories/automotive-connectors/', label: 'Browse Automotive Connectors', style: 'primary' },
+        { href: '/compare/100base-t1-vs-1000base-t1-automotive-ethernet/', label: '100BASE-T1 vs. 1000BASE-T1', style: 'ghost' },
+        { href: '/compare/single-pair-ethernet-vs-traditional-automotive-ethernet/', label: 'Single Pair vs. Traditional Automotive Ethernet', style: 'ghost' },
+      ],
     };
   }
 
   // Rule 5: high-speed data, non-automotive
   if (requirement === 'high-speed-data') {
+    const isBoardToBoard = connection === 'board-to-board';
     return {
-      title: connection === 'board-to-board' ? 'High-Speed Board-to-Board Connector' : 'High-Speed Signal Connector',
+      title: isBoardToBoard ? 'High-Speed Board-to-Board Connector' : 'High-Speed Signal Connector',
       description:
         'High-speed digital signal paths need controlled impedance and low insertion loss across the whole connector interface — the specific family depends on your data rate and connection type.',
       articles: [
@@ -161,10 +180,13 @@ function getRecommendation(answers) {
         { title: 'PCIe Connectors Explained: Gen4 vs. Gen5 vs. Gen6', href: '/articles/pcie-connectors-explained-gen4-vs-gen5-vs-gen6/' },
         { title: 'Signal Integrity Problems in High-Speed Connectors', href: '/articles/signal-integrity-problems-in-high-speed-connectors/' },
       ],
-      categoryHref: '/categories/high-speed-connectors-signal-integrity/',
-      categoryLabel: 'Browse High-Speed & Signal Integrity Connectors',
-      toolHref: '/tools/skin-effect-calculator/',
-      toolLabel: 'Skin Effect Calculator',
+      actions: [
+        { href: '/categories/high-speed-connectors-signal-integrity/', label: 'Browse High-Speed & Signal Integrity Connectors', style: 'primary' },
+        { href: '/tools/skin-effect-calculator/', label: 'Skin Effect Calculator', style: 'ghost' },
+        isBoardToBoard
+          ? { href: '/compare/pcie-gen-5-vs-gen-6-vs-gen-7-connectors/', label: 'PCIe Gen5 vs. Gen6 vs. Gen7', style: 'ghost' }
+          : { href: '/compare/copper-vs-optical-interconnects/', label: 'Copper vs. Optical Interconnects', style: 'ghost' },
+      ],
     };
   }
 
@@ -179,8 +201,11 @@ function getRecommendation(answers) {
         { title: 'Connector IP Ratings: Environmental Sealing', href: '/articles/connector-ip-ratings-environmental-sealing/' },
         { title: 'Cable Harness Design for Harsh Environments', href: '/articles/cable-harness-design-for-harsh-environments/' },
       ],
-      categoryHref: '/categories/cable-harness-assemblies/',
-      categoryLabel: 'Browse Cable & Harness Assemblies',
+      actions: [
+        { href: '/categories/cable-harness-assemblies/', label: 'Browse Cable & Harness Assemblies', style: 'primary' },
+        { href: '/compare/pvc-vs-pur-vs-tpe-cable-jackets/', label: 'PVC vs. PUR vs. TPE Cable Jackets', style: 'ghost' },
+        { href: '/compare/stranded-vs-solid-conductor-wire/', label: 'Stranded vs. Solid Conductor Wire', style: 'ghost' },
+      ],
     };
   }
 
@@ -197,10 +222,11 @@ function getRecommendation(answers) {
         { title: 'How to Read Connector Thermal Derating Curves: A Practical Guide', href: '/articles/how-to-read-connector-thermal-derating-curves/' },
         { title: 'Connector Current Rating Explained: Engineering Guide', href: '/articles/connector-current-rating-explained-engineering-guide/' },
       ],
-      categoryHref: '/categories/board-to-board/',
-      categoryLabel: 'Browse Board-to-Board Connectors',
-      toolHref: '/tools/power-dissipation-calculator/',
-      toolLabel: 'Power Dissipation Calculator',
+      actions: [
+        { href: '/categories/board-to-board/', label: 'Browse Board-to-Board Connectors', style: 'primary' },
+        { href: '/tools/power-dissipation-calculator/', label: 'Power Dissipation Calculator', style: 'ghost' },
+        { href: '/tools/connector-derating-calculator/', label: 'Derating Calculator', style: 'ghost' },
+      ],
     };
   }
 
@@ -215,12 +241,39 @@ function getRecommendation(answers) {
         { title: 'Self-Securing Board-to-Board Connectors: How Auto-Latching Mechanisms Work', href: '/articles/self-securing-board-to-board-connectors-auto-latching-mechanics/' },
         { title: 'Micro-Pitch Board-to-Board Connectors: Design Constraints Below 0.4mm', href: '/articles/micro-pitch-board-to-board-connectors-design-constraints-below-0-4mm/' },
       ],
-      categoryHref: '/categories/board-to-board/',
-      categoryLabel: 'Browse Board-to-Board Connectors',
+      actions: [
+        { href: '/categories/board-to-board/', label: 'Browse Board-to-Board Connectors', style: 'primary' },
+        { href: '/compare/board-to-board-vs-wire-to-board-connectors/', label: 'Board-to-Board vs. Wire-to-Board', style: 'ghost' },
+        { href: '/compare/mezzanine-vs-backplane-connectors/', label: 'Mezzanine vs. Backplane Connectors', style: 'ghost' },
+      ],
     };
   }
 
-  // Default fallback
+  // Rule 9: indoor power delivery, not board-to-board (wire-to-board / wire-to-wire /
+  // panel-external) — previously fell through to the generic fallback below even
+  // though it's a common, specific combination.
+  if (requirement === 'power') {
+    return {
+      title: 'Wire-to-Board / Wire-to-Wire Power Connector',
+      description:
+        current === 'high'
+          ? 'High-current wire connections need real attention to contact current rating and thermal derating at your actual operating temperature, not just the headline datasheet rating.'
+          : 'For general power delivery over a wire connection, contact current rating and thermal derating behavior at your actual operating ambient are the main things to verify against a datasheet.',
+      articles: [
+        { title: 'High-Current Wire-to-Board Connectors: Power', href: '/articles/high-current-wire-to-board-connectors-power/' },
+        { title: 'Connector Current Rating Explained: Engineering Guide', href: '/articles/connector-current-rating-explained-engineering-guide/' },
+        { title: 'How to Read Connector Thermal Derating Curves: A Practical Guide', href: '/articles/how-to-read-connector-thermal-derating-curves/' },
+      ],
+      actions: [
+        { href: '/categories/connector-fundamentals/', label: 'Browse Connector Fundamentals', style: 'primary' },
+        { href: '/tools/power-dissipation-calculator/', label: 'Power Dissipation Calculator', style: 'ghost' },
+        { href: '/tools/connector-derating-calculator/', label: 'Derating Calculator', style: 'ghost' },
+      ],
+    };
+  }
+
+  // Default fallback — should be rare now that rule 9 covers the indoor+power gap,
+  // kept as a safety net for any unmatched combination.
   return {
     title: 'General-Purpose Connector',
     description:
@@ -230,8 +283,9 @@ function getRecommendation(answers) {
       { title: 'How to Select the Right Connector: Engineering Guide', href: '/articles/how-to-select-the-right-connector-engineering-guide/' },
       { title: 'Electrical Connector Basics', href: '/articles/electrical-connector-basics/' },
     ],
-    categoryHref: '/categories/connector-fundamentals/',
-    categoryLabel: 'Browse Connector Fundamentals',
+    actions: [
+      { href: '/categories/connector-fundamentals/', label: 'Browse Connector Fundamentals', style: 'primary' },
+    ],
   };
 }
 
@@ -323,14 +377,17 @@ export default function ConnectorSelectorWizard() {
           </div>
 
           <div className="cs-wizard-result-actions">
-            <Link href={recommendation.categoryHref} className="cs-btn" prefetch={false}>
-              {recommendation.categoryLabel}
-            </Link>
-            {recommendation.toolHref && (
-              <Link href={recommendation.toolHref} className="cs-btn cs-btn-ghost" prefetch={false}>
-                {recommendation.toolLabel} →
+            {recommendation.actions.map((action) => (
+              <Link
+                key={action.href}
+                href={action.href}
+                className={action.style === 'primary' ? 'cs-btn' : 'cs-btn cs-btn-ghost'}
+                prefetch={false}
+              >
+                {action.label}
+                {action.style !== 'primary' ? ' →' : ''}
               </Link>
-            )}
+            ))}
           </div>
 
           <button type="button" className="cs-wizard-restart" onClick={handleRestart}>
