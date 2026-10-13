@@ -5,7 +5,7 @@ import NavToolsDropdown from './NavToolsDropdown';
 import NavSearch from './NavSearch';
 
 export default async function Header() {
-  const categories = await getCategories().catch(() => []);
+  const categories = (await getCategories().catch(() => [])).map((c) => ({ id: c.id, slug: c.slug, Name: c.Name || c.name }));
 
   return (
     <header className="cs-header">
