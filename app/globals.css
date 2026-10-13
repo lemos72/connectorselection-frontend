@@ -2586,3 +2586,12 @@ button:focus-visible {
     width: 100%;
   }
 }
+/* Listing pages: a short list (1-2 entries) must not leave grey empty cells */
+.cs-grid:not(:where(.cs-hp-top, .cs-hp-news, .cs-hp-latest, .cs-home-top-stories) .cs-grid) {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+.cs-grid:not(:where(.cs-hp-top, .cs-hp-news, .cs-hp-latest, .cs-home-top-stories) .cs-grid):has(> .cs-card:only-child) {
+  grid-template-columns: minmax(0, 420px);
+  width: fit-content;
+  max-width: 100%;
+}
