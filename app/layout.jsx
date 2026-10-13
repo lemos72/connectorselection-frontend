@@ -3,6 +3,7 @@ import Script from 'next/script';
 import { IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import ContactClickTracker from '../components/ContactClickTracker';
 
 const ibmPlexSans = IBM_Plex_Sans({
   subsets: ['latin'],
@@ -53,6 +54,7 @@ export default function RootLayout({ children }) {
         </Script>
       </head>
       <body>
+        <ContactClickTracker />
         <Header />
         <main>{children}</main>
         <Footer />
