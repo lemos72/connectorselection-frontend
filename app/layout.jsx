@@ -25,7 +25,7 @@ const GA_ID = 'G-9DEPFJ6916';
 export const metadata = {
   title: {
     default: 'Connector Selection Guides: High-Speed, Automotive & Cable Harness',
-    template: '%s | connectorselection.com',
+    template: '%s',
   },
   description:
     'Practical engineering guides for hardware engineers — connector selection, high-speed signal integrity, automotive, EV, FFC/FPC, AI server interconnects, and cable harness design.',
