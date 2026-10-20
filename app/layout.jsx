@@ -39,6 +39,10 @@ export default function RootLayout({ children }) {
         {/* Bing Webmaster Tools verification */}
         <meta name="msvalidate.01" content="4E91EAE86E95F01D2BA34C42F746B962" />
 
+        {/* Site name for Google results */}
+        <meta property="og:site_name" content="Connector Selection" />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebSite', name: 'Connector Selection', alternateName: 'connectorselection.com', url: 'https://connectorselection.com/' }) }} />
+
         {/* Google Analytics 4 */}
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
