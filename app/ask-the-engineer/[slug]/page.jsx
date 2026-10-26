@@ -15,9 +15,15 @@ import NewsletterSignup from '../../../components/NewsletterSignup';
 // keep this in sync with the same constant in app/articles/[slug]/page.jsx.
 const SITE_URL = 'https://connectorselection.com';
 
+// A static export fails if a dynamic route has no pages to build. While there
+// are no published questions yet, build one hidden placeholder page instead
+// (noindex, left out of the sitemap). It disappears once a real question exists.
+const NO_QUESTIONS_SLUG = '_no-questions-yet';
+
 export async function generateStaticParams() {
   try {
     const questions = await getQuestions();
+    if (questions.length === 0) return [{ slug: NO_QUESTIONS_SLUG }];
     return questions.map((q) => ({ slug: q.slug }));
   } catch (e) {
     console.warn('[build] generateStaticParams (questions) failed:', e.message);
@@ -27,6 +33,9 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
+  if (slug === NO_QUESTIONS_SLUG) {
+    return { title: 'Ask the Engineer', robots: { index: false, follow: true } };
+  }
   const question = await getQuestionBySlug(slug).catch(() => null);
   if (!question) return { title: 'Question not found' };
   return {
@@ -57,6 +66,16 @@ function fmtDate(d) {
 
 export default async function QuestionPage({ params }) {
   const { slug } = await params;
+  if (slug === NO_QUESTIONS_SLUG) {
+    return (
+      <main className="cs-container">
+        <p>
+          No questions have been answered yet.{' '}
+          <Link href="/ask-the-engineer/">Back to Ask the Engineer</Link>
+        </p>
+      </main>
+    );
+  }
   const question = await getQuestionBySlug(slug).catch(() => null);
   if (!question) notFound();
 
