@@ -4,5 +4,5 @@ module.exports = {
   generateRobotsTxt: true,
   trailingSlash: true,
   outDir: './out',
-  exclude: ['/ask-the-engineer/_no-questions-yet/'],
+  exclude: ['/ask-the-engineer/_no-questions-yet*'],
 }
