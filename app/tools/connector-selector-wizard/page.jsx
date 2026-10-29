@@ -1,4 +1,5 @@
 import ConnectorSelectorWizard from '../../../components/ConnectorSelectorWizard';
+import NewsletterSignup from '../../../components/NewsletterSignup';
 
 const SITE_URL = 'https://connectorselection.com';
 
@@ -65,6 +66,12 @@ export default function ConnectorSelectorWizardPage() {
             specification tool. Always verify the specific connector part number against
             its manufacturer datasheet before finalizing a design.
           </p>
+        </div>
+      </section>
+
+      <section className="cs-section">
+        <div className="cs-container">
+          <NewsletterSignup source="tool-connector-selector-wizard" />
         </div>
       </section>
     </>

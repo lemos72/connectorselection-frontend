@@ -1,4 +1,5 @@
 import WireWeightCalculator from '../../../components/WireWeightCalculator';
+import NewsletterSignup from '../../../components/NewsletterSignup';
 
 // NOTE: as of Aug 2026, www.connectorselection.com does not resolve —
 // confirmed broken, not just missing content. Using the bare domain.
@@ -40,6 +41,12 @@ export default function WireWeightCalculatorPage() {
       <section className="cs-section">
         <div className="cs-container">
           <WireWeightCalculator />
+        </div>
+      </section>
+
+      <section className="cs-section">
+        <div className="cs-container">
+          <NewsletterSignup source="tool-wire-weight-calculator" />
         </div>
       </section>
     </>

@@ -1,4 +1,5 @@
 import PowerDissipationCalculator from '../../../components/PowerDissipationCalculator';
+import NewsletterSignup from '../../../components/NewsletterSignup';
 
 // NOTE: as of Aug 2026, www.connectorselection.com does not resolve —
 // confirmed broken, not just missing content. Using the bare domain.
@@ -40,6 +41,12 @@ export default function PowerDissipationCalculatorPage() {
       <section className="cs-section">
         <div className="cs-container">
           <PowerDissipationCalculator />
+        </div>
+      </section>
+
+      <section className="cs-section">
+        <div className="cs-container">
+          <NewsletterSignup source="tool-power-dissipation-calculator" />
         </div>
       </section>
     </>

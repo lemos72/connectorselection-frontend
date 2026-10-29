@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import SkinEffectCalculator from '../../../components/SkinEffectCalculator';
+import NewsletterSignup from '../../../components/NewsletterSignup';
 
 // NOTE: as of Aug 2026, www.connectorselection.com does not resolve —
 // confirmed broken, not just missing content. Using the bare domain.
@@ -122,6 +123,12 @@ export default function SkinEffectCalculatorPage() {
             </Link>
             .
           </p>
+        </div>
+      </section>
+
+      <section className="cs-section">
+        <div className="cs-container">
+          <NewsletterSignup source="tool-skin-effect-calculator" />
         </div>
       </section>
     </>

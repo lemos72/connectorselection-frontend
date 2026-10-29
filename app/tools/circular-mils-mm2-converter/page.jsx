@@ -1,4 +1,5 @@
 import CmilConverter from '../../../components/CmilConverter';
+import NewsletterSignup from '../../../components/NewsletterSignup';
 
 // NOTE: as of Aug 2026, www.connectorselection.com does not resolve —
 // confirmed broken, not just missing content. Using the bare domain.
@@ -40,6 +41,12 @@ export default function CmilConverterPage() {
       <section className="cs-section">
         <div className="cs-container">
           <CmilConverter />
+        </div>
+      </section>
+
+      <section className="cs-section">
+        <div className="cs-container">
+          <NewsletterSignup source="tool-circular-mils-mm2-converter" />
         </div>
       </section>
     </>
