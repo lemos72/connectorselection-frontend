@@ -2595,3 +2595,50 @@ button:focus-visible {
   width: fit-content;
   max-width: 100%;
 }
+
+/* ==========================================================================
+   Ask the Engineer: listing cards (2026-10-29)
+   Fixes: no inner padding, rows not lining up, long "Asked by" text colliding
+   with the category. Only affects .cs-question-card.
+   ========================================================================== */
+.cs-grid .cs-question-card {
+  align-self: stretch;
+  height: 100%;
+  min-width: 0;
+  padding: 18px 20px 16px;
+  gap: 10px;
+}
+
+.cs-grid .cs-question-card h3 {
+  min-height: 2.5em; /* room for a 2-line title so excerpts start at the same height */
+  overflow-wrap: anywhere;
+}
+
+.cs-grid .cs-question-card .cs-question-excerpt {
+  flex-grow: 1;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.cs-grid .cs-question-card .cs-question-meta {
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 2px;
+  margin-top: auto;
+  padding-top: 10px;
+  line-height: 1.4;
+}
+
+.cs-grid .cs-question-card .cs-question-meta span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* category on its own line, in the site's copper label style */
+.cs-grid .cs-question-card .cs-question-meta span:nth-child(2) {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--copper);
+}
