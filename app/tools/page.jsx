@@ -52,6 +52,21 @@ const TOOLS = [
     name: "Ohm's Law Calculator",
     description: 'Solve for voltage, current, or resistance given any two values.',
   },
+  {
+    href: '/tools/ip-code-decoder/',
+    name: 'IP Code Decoder',
+    description: 'Pick the two digits of an IP rating and see what dust and water protection each one means.',
+  },
+  {
+    href: '/tools/pcie-bandwidth-calculator/',
+    name: 'PCIe Bandwidth Calculator',
+    description: 'Estimate PCIe throughput by generation and lane count, or find the lanes needed for a target bandwidth.',
+  },
+  {
+    href: '/tools/insertion-loss-budget-calculator/',
+    name: 'Insertion Loss Budget Calculator',
+    description: 'Add up trace, connector, and cable loss and compare the total with your channel loss budget.',
+  },
 ];
 
 export default function ToolsIndexPage() {
@@ -83,4 +98,4 @@ export default function ToolsIndexPage() {
       </section>
     </>
   );
-}
+}
