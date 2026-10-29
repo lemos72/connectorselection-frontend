@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import NewsletterSignup from '../../../components/NewsletterSignup';
 import InsertionLossBudgetCalculator from '../../../components/InsertionLossBudgetCalculator';
 
 // Using the bare domain (www.connectorselection.com does not resolve).
@@ -80,6 +81,12 @@ export default function InsertionLossBudgetCalculatorPage() {
             </Link>
             .
           </p>
+        </div>
+      </section>
+
+      <section className="cs-section">
+        <div className="cs-container">
+          <NewsletterSignup source="tool-insertion-loss-budget-calculator" />
         </div>
       </section>
     </>

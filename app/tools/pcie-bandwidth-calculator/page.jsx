@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import NewsletterSignup from '../../../components/NewsletterSignup';
 import PcieBandwidthCalculator from '../../../components/PcieBandwidthCalculator';
 
 // Using the bare domain (www.connectorselection.com does not resolve).
@@ -82,6 +83,12 @@ export default function PcieBandwidthCalculatorPage() {
             </Link>
             .
           </p>
+        </div>
+      </section>
+
+      <section className="cs-section">
+        <div className="cs-container">
+          <NewsletterSignup source="tool-pcie-bandwidth-calculator" />
         </div>
       </section>
     </>

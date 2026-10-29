@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import NewsletterSignup from '../../../components/NewsletterSignup';
 import VoltageDropCalculator from '../../../components/VoltageDropCalculator';
 
 // NOTE: as of Aug 2026, www.connectorselection.com does not resolve —
@@ -78,6 +79,12 @@ export default function VoltageDropCalculatorPage() {
             </Link>
             .
           </p>
+        </div>
+      </section>
+
+      <section className="cs-section">
+        <div className="cs-container">
+          <NewsletterSignup source="tool-voltage-drop-calculator" />
         </div>
       </section>
     </>

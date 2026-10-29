@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import NewsletterSignup from '../../../components/NewsletterSignup';
 import IpCodeDecoder from '../../../components/IpCodeDecoder';
 
 // Using the bare domain (www.connectorselection.com does not resolve).
@@ -85,6 +86,12 @@ export default function IpCodeDecoderPage() {
             </Link>
             .
           </p>
+        </div>
+      </section>
+
+      <section className="cs-section">
+        <div className="cs-container">
+          <NewsletterSignup source="tool-ip-code-decoder" />
         </div>
       </section>
     </>
