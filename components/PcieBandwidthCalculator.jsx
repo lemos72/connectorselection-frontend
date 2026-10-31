@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import EmailResultBox from './EmailResultBox';
 import { PCIE_GENERATIONS, LANE_OPTIONS, calculatePcieBandwidth } from '../lib/pcieBandwidth';
 
 export default function PcieBandwidthCalculator() {
@@ -13,6 +14,19 @@ export default function PcieBandwidthCalculator() {
     lanes,
     targetGBps: parseFloat(target),
   });
+
+  const genLabel = (PCIE_GENERATIONS.find((g) => String(g.value) === String(generation)) || {}).label || `Gen ${generation}`;
+  const summary = result
+    ? [
+        `PCIe link: ${genLabel}, x${lanes}`,
+        `Bandwidth per direction: ${result.perDirection} GB/s`,
+        `Both directions combined: ${result.bothDirections} GB/s`,
+        `Raw rate per lane: ${result.rawRate}`,
+        `Line encoding: ${result.encoding}`,
+        result.lanesNeeded ? `Lanes needed for ${target} GB/s: ${result.lanesNeeded}` : '',
+        'Theoretical link bandwidth after line encoding, before protocol overhead.',
+      ].filter(Boolean).join('\n')
+    : '';
 
   return (
     <div className="cs-calculator">
@@ -89,6 +103,7 @@ export default function PcieBandwidthCalculator() {
         general planning purposes — always verify against the PCI-SIG
         specification and your device and connector manufacturers&apos; data.
       </p>
+      <EmailResultBox tool="pcie-bandwidth-calculator" toolName="PCIe Bandwidth Calculator" summary={summary} />
     </div>
   );
 }

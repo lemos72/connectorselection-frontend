@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import EmailResultBox from './EmailResultBox';
 import { AWG_OPTIONS, calculateVoltageDrop } from '../lib/wireGauge';
 
 const STATUS_LABELS = {
@@ -25,6 +26,16 @@ export default function VoltageDropCalculator() {
     systemVoltage: parseFloat(systemVoltage),
     roundTrip,
   });
+
+  const summary = result
+    ? [
+        `Voltage drop: ${result.voltageDrop} V (${result.percentDrop}%)`,
+        `Voltage at load: ${result.loadVoltage} V`,
+        `Status: ${STATUS_LABELS[result.statusLevel].label}`,
+        `Inputs: ${awg} AWG copper, ${currentAmps} A, ${length} ${lengthUnit === 'feet' ? 'ft' : 'm'} one-way, ${systemVoltage} V system, ${roundTrip ? 'round-trip' : 'one-way'} circuit`,
+        'DC copper estimate; verify against your wire and connector manufacturer data.',
+      ].join('\n')
+    : '';
 
   return (
     <div className="cs-calculator">
@@ -132,6 +143,7 @@ export default function VoltageDropCalculator() {
         verify against your specific application&apos;s standards and your
         wire/connector manufacturer&apos;s specifications.
       </p>
+      <EmailResultBox tool="voltage-drop-calculator" toolName="Voltage Drop Calculator" summary={summary} />
     </div>
   );
 }

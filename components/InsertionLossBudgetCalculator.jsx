@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import EmailResultBox from './EmailResultBox';
 import { calculateLossBudget } from '../lib/insertionLoss';
 
 const STATUS_LABELS = {
@@ -29,6 +30,19 @@ export default function InsertionLossBudgetCalculator() {
     cableLossPerM,
     otherLossDb,
   });
+
+  const summary = result
+    ? [
+        `Loss budget: ${budgetDb} dB`,
+        `Total channel loss: ${result.total} dB`,
+        `Margin: ${result.margin} dB (${STATUS_LABELS[result.statusLevel].label})`,
+        `PCB traces: ${result.trace} dB (${traceLengthIn || 0} in at ${traceLossPerIn || 0} dB/in)`,
+        `Connectors: ${result.connectors} dB (${connectorCount || 0} at ${connectorLossDb || 0} dB)`,
+        `Cable: ${result.cable} dB (${cableLengthM || 0} m at ${cableLossPerM || 0} dB/m)`,
+        `Other: ${result.other} dB`,
+        'Simple addition of the values entered; verify against your interface specification.',
+      ].join('\n')
+    : '';
 
   return (
     <div className="cs-calculator">
@@ -184,6 +198,7 @@ export default function InsertionLossBudgetCalculator() {
         against your interface specification and your connector and cable
         manufacturers&apos; data.
       </p>
+      <EmailResultBox tool="insertion-loss-budget-calculator" toolName="Insertion Loss Budget Calculator" summary={summary} />
     </div>
   );
 }

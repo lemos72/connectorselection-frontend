@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import EmailResultBox from './EmailResultBox';
 import { SOLID_OPTIONS, LIQUID_OPTIONS, decodeIpCode } from '../lib/ipCode';
 
 export default function IpCodeDecoder() {
@@ -8,6 +9,15 @@ export default function IpCodeDecoder() {
   const [liquid, setLiquid] = useState('7');
 
   const result = decodeIpCode({ solid, liquid });
+
+  const summary = result
+    ? [
+        `IP code: ${result.code}`,
+        `Solid particles: ${result.solidText}`,
+        `Water: ${result.liquidText}`,
+        result.note ? `Check: ${result.note}` : '',
+      ].filter(Boolean).join('\n')
+    : '';
 
   return (
     <div className="cs-calculator">
@@ -67,6 +77,7 @@ export default function IpCodeDecoder() {
         The IP code does not cover corrosion, chemicals or salt spray. Always
         verify against the manufacturer&apos;s datasheet and test report.
       </p>
+      <EmailResultBox tool="ip-code-decoder" toolName="IP Code Decoder" summary={summary} />
     </div>
   );
 }
