@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import EmailResultBox from './EmailResultBox';
 import { AWG_OPTIONS, calculateWireWeight } from '../lib/wireGauge';
 
 export default function WireWeightCalculator() {
@@ -15,6 +16,15 @@ export default function WireWeightCalculator() {
     lengthUnit,
     material,
   });
+
+  const summary =
+    weightKg !== null
+      ? [
+          `Estimated weight: ${weightKg} kg`,
+          `Inputs: ${awg} AWG ${material}, ${length} ${lengthUnit === 'feet' ? 'ft' : 'm'}`,
+          'Solid conductor only; insulation and stranding add weight.',
+        ].join('\n')
+      : '';
 
   return (
     <div className="cs-calculator">
@@ -74,6 +84,7 @@ export default function WireWeightCalculator() {
         (copper: 8.96 g/cm³, aluminum: 2.70 g/cm³). Stranded wire, insulation,
         and jacketing will add additional weight not included here.
       </p>
+      <EmailResultBox tool="wire-weight-calculator" toolName="Wire Weight Calculator" summary={summary} />
     </div>
   );
 }

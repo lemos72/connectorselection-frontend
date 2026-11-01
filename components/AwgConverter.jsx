@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import EmailResultBox from './EmailResultBox';
 import { AWG_OPTIONS, awgToMm2, mm2ToNearestAwg } from '../lib/wireGauge';
 
 export default function AwgConverter() {
@@ -10,6 +11,17 @@ export default function AwgConverter() {
 
   const awgResult = mode === 'awgToMm2' ? awgToMm2(awg) : null;
   const mm2Result = mode === 'mm2ToAwg' ? mm2ToNearestAwg(parseFloat(mm2Input)) : null;
+
+  const summary =
+    mode === 'awgToMm2' && awgResult
+      ? [`${awg} AWG = ${awgResult} mm²`, 'Standard AWG circular-mil values (NEC Chapter 9, Table 8).'].join('\n')
+      : mode === 'mm2ToAwg' && mm2Result
+      ? [
+          `${mm2Input} mm² is closest to ${mm2Result.awg} AWG`,
+          `Exact area for ${mm2Result.awg} AWG: ${mm2Result.mm2} mm²`,
+          'Closest standard size; confirm against manufacturer specifications.',
+        ].join('\n')
+      : '';
 
   return (
     <div className="cs-calculator cs-calculator-simple">
@@ -87,6 +99,7 @@ export default function AwgConverter() {
         Results shown for the closest standard wire size — always confirm
         against manufacturer specifications for precision applications.
       </p>
+      <EmailResultBox tool="awg-mm2-converter" toolName="AWG to mm² Converter" summary={summary} />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import EmailResultBox from './EmailResultBox';
 import { calculateSkinDepth, interpretSkinDepth, toHz, MATERIALS } from '../lib/skinEffect';
 
 export default function SkinEffectCalculator() {
@@ -36,6 +37,16 @@ export default function SkinEffectCalculator() {
     caution: { label: 'Moderate skin effect',   className: 'cs-calc-status-caution' },
     poor:    { label: 'Severe skin effect',      className: 'cs-calc-status-poor' },
   };
+
+  const summary = result
+    ? [
+        `Skin depth: ${result.skinDepthMm >= 1 ? result.skinDepthMm.toFixed(3) + ' mm' : result.skinDepthUm.toFixed(2) + ' um'}`,
+        `Status: ${STATUS_LABELS[status].label}`,
+        `Inputs: ${freqValue} ${freqUnit}, ${MATERIALS[material].label}`,
+        String(interpretation || ''),
+        'General engineering reference; assumes a non-magnetic conductor.',
+      ].join('\n')
+    : '';
 
   return (
     <div className="cs-calculator">
@@ -123,6 +134,7 @@ export default function SkinEffectCalculator() {
         For general engineering reference only. Assumes non-magnetic conductor — verify against
         manufacturer specifications for safety-critical or high-power applications.
       </p>
+      <EmailResultBox tool="skin-effect-calculator" toolName="Skin Effect Calculator" summary={summary} />
 
     </div>
   );

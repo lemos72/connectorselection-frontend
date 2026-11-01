@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import EmailResultBox from './EmailResultBox';
 import { cmilToMm2, mm2ToCmil } from '../lib/wireGauge';
 
 export default function CmilConverter() {
@@ -11,6 +12,13 @@ export default function CmilConverter() {
     mode === 'cmilToMm2'
       ? cmilToMm2(parseFloat(value))
       : mm2ToCmil(parseFloat(value));
+
+  const summary = result
+    ? [
+        mode === 'cmilToMm2' ? `${value} CM = ${result} mm²` : `${value} mm² = ${result} CM`,
+        'Standard conversion: 1 circular mil = 0.0005067 mm².',
+      ].join('\n')
+    : '';
 
   return (
     <div className="cs-calculator cs-calculator-simple">
@@ -66,6 +74,7 @@ export default function CmilConverter() {
         are the standard unit for wire cross-sectional area in AWG/NEC
         references.
       </p>
+      <EmailResultBox tool="circular-mils-mm2-converter" toolName="Circular Mils to mm² Converter" summary={summary} />
     </div>
   );
 }

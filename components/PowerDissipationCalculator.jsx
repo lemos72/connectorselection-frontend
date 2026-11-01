@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import EmailResultBox from './EmailResultBox';
 import { AWG_OPTIONS, calculatePowerDissipation } from '../lib/wireGauge';
 
 export default function PowerDissipationCalculator() {
@@ -17,6 +18,15 @@ export default function PowerDissipationCalculator() {
     lengthUnit,
     roundTrip,
   });
+
+  const summary = result
+    ? [
+        `Power dissipated: ${result.powerWatts} W`,
+        `Wire resistance: ${result.resistanceOhms} ohm`,
+        `Inputs: ${awg} AWG copper, ${currentAmps} A, ${length} ${lengthUnit === 'feet' ? 'ft' : 'm'} one-way, ${roundTrip ? 'round-trip' : 'one-way'} circuit`,
+        'Based on P = I^2 x R with standard copper AWG resistance values.',
+      ].join('\n')
+    : '';
 
   return (
     <div className="cs-calculator">
@@ -99,6 +109,7 @@ export default function PowerDissipationCalculator() {
         the power lost as heat in the wire itself — always verify total
         thermal load against your enclosure and insulation ratings.
       </p>
+      <EmailResultBox tool="power-dissipation-calculator" toolName="Power Dissipation Calculator" summary={summary} />
     </div>
   );
 }

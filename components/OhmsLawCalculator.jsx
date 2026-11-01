@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import EmailResultBox from './EmailResultBox';
 import { calculateOhmsLaw } from '../lib/ohmsLaw';
 
 export default function OhmsLawCalculator() {
@@ -17,6 +18,16 @@ export default function OhmsLawCalculator() {
     current: parsedCurrent,
     resistance: parsedResistance,
   });
+
+  const summary = result
+    ? [
+        `Solved for ${result.solvedFor}`,
+        ...['voltage', 'current', 'resistance']
+          .filter((k) => result[k] !== undefined && result[k] !== '' && result[k] !== null)
+          .map((k) => `${k === 'voltage' ? 'Voltage' : k === 'current' ? 'Current' : 'Resistance'}: ${result[k]} ${k === 'voltage' ? 'V' : k === 'current' ? 'A' : 'ohm'}`),
+        'Ohm\'s Law: V = I x R (DC circuit).',
+      ].join('\n')
+    : '';
 
   return (
     <div className="cs-calculator">
@@ -82,6 +93,7 @@ export default function OhmsLawCalculator() {
         Based on Ohm&apos;s Law (V = I × R), the foundational relationship
         between voltage, current, and resistance in a DC circuit.
       </p>
+      <EmailResultBox tool="ohms-law-calculator" toolName="Ohm's Law Calculator" summary={summary} />
     </div>
   );
 }
