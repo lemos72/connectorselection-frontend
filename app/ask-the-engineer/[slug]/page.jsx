@@ -119,6 +119,17 @@ export default async function QuestionPage({ params }) {
 
   // QAPage: Schema.org's dedicated type for a single question with a
   // curated answer (distinct from, and not deprecated like, FAQPage/HowTo).
+  const pageUrl = `${SITE_URL}/ask-the-engineer/${question.slug}/`;
+  const toIso = (d) => {
+    if (!d) return undefined;
+    const x = new Date(d);
+    return Number.isNaN(x.getTime()) ? undefined : x.toISOString();
+  };
+  const datePublished =
+    toIso(question.answered_date) ||
+    toIso(question.publishedAt) ||
+    toIso(question.createdAt);
+
   const qaPageJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'QAPage',
@@ -126,17 +137,23 @@ export default async function QuestionPage({ params }) {
       '@type': 'Question',
       name: question.answer_title,
       text: question.question_text,
+      url: pageUrl,
       answerCount: 1,
+      ...(datePublished && { datePublished }),
       author: {
         '@type': 'Person',
         name: askerName,
+        url: `${SITE_URL}/ask-the-engineer/`,
       },
       acceptedAnswer: {
         '@type': 'Answer',
         text: blocksToPlainText(question.answer_content, 5000),
+        url: pageUrl,
+        ...(datePublished && { datePublished }),
         author: {
           '@type': 'Person',
           name: 'Connector Selection Team',
+          url: `${SITE_URL}/`,
         },
       },
     },
