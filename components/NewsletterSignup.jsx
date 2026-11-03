@@ -77,17 +77,18 @@ export default function NewsletterSignup({ source = 'unknown' }) {
     return (
       <div className="cs-newsletter cs-newsletter-success">
         <h3>You&apos;re subscribed</h3>
-        <p>Thanks for signing up — we&apos;ll keep you posted on new guides and industry updates.</p>
+        <p>Thanks for signing up. Once a week you&apos;ll get connector and cable industry news, plus a practical answer or tool for your design work.</p>
       </div>
     );
   }
 
   return (
     <div className="cs-newsletter">
-      <h3>Get new guides in your inbox</h3>
+      <h3>Get the weekly connector briefing</h3>
       <p>
-        Occasional updates on connector selection, signal integrity, and
-        interconnect design — no spam.
+        One email a week: connector and cable industry news (OCP, data
+        center, automotive), plus a practical answer or tool for your
+        design work. No spam.
       </p>
       <form className="cs-newsletter-form" onSubmit={handleSubmit}>
         {/* Honeypot — hidden via inline styles so it's invisible to real
