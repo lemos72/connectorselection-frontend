@@ -9,7 +9,7 @@ export const metadata = {
 };
 
 const catName = (q) =>
-  (q && q.category && (q.category.name || q.category.title)) || '';
+  (q && q.category && (q.category.Name || q.category.name || q.category.title)) || '';
 
 const css = `
 .cs-ask-hero{display:grid;grid-template-columns:1.15fr .85fr;gap:36px;align-items:start}
