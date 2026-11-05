@@ -67,6 +67,11 @@ const TOOLS = [
     name: 'Insertion Loss Budget Calculator',
     description: 'Add up trace, connector, and cable loss and compare the total with your channel loss budget.',
   },
+  {
+    href: '/tools/return-loss-vswr-converter/',
+    name: 'Return Loss / VSWR Converter',
+    description: 'Convert between return loss, VSWR and reflection coefficient, and see reflected power and mismatch loss.',
+  },
 ];
 
 export default function ToolsIndexPage() {
@@ -98,4 +103,4 @@ export default function ToolsIndexPage() {
       </section>
     </>
   );
-}
+}
