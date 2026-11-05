@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import EmailResultBox from './EmailResultBox';
 import { calculateDerating, interpretDerating } from '../lib/connectorDerating';
 
 export default function ConnectorDeratingCalculator() {
@@ -28,6 +29,10 @@ export default function ConnectorDeratingCalculator() {
     if (result.ratioPct >= 60) return 'caution';
     return 'poor';
   }, [result]);
+
+  const summary = result && !result.error
+    ? `Rated ${iRatedValue} A at ${tRefValue}°C, max ${tMaxValue}°C, operating ambient ${tAmbientValue}°C → derated current ${result.deratedCurrent.toFixed(2)} A (${result.ratioPct.toFixed(0)}% of rated).`
+    : '';
 
   const STATUS_LABELS = {
     good:    { label: 'Minimal derating required',  className: 'cs-calc-status-good' },
@@ -128,6 +133,7 @@ export default function ConnectorDeratingCalculator() {
         only &mdash; verify against the manufacturer&rsquo;s published derating curve for your specific part
         number before finalizing a design.
       </p>
+      <EmailResultBox tool="connector-derating-calculator" toolName="Connector Derating Calculator" summary={summary} />
 
     </div>
   );
