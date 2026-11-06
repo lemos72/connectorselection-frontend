@@ -91,6 +91,26 @@ const TOOL_CALLOUTS = {
     label: 'Try the Wire Weight Calculator',
     description: 'Estimate wire weight for your harness based on gauge, length, and material.',
   },
+  'cable-derating-factor-explained': {
+    href: '/tools/connector-derating-calculator/',
+    label: 'Try the Connector Derating Calculator',
+    description: 'Estimate a connector’s safe current at your real operating temperature.',
+  },
+  'how-to-read-connector-thermal-derating-curves': {
+    href: '/tools/connector-derating-calculator/',
+    label: 'Try the Connector Derating Calculator',
+    description: 'Estimate a connector’s safe current at your real operating temperature.',
+  },
+  'impedance-matching-in-high-speed-connectors-explained': {
+    href: '/tools/return-loss-vswr-converter/',
+    label: 'Try the Return Loss / VSWR Converter',
+    description: 'Convert between return loss, VSWR and reflected power to see how good an impedance match really is.',
+  },
+  'demystifying-cable-impedance-50-75-100-ohms': {
+    href: '/tools/return-loss-vswr-converter/',
+    label: 'Try the Return Loss / VSWR Converter',
+    description: 'Convert between return loss, VSWR and reflected power to see how good an impedance match really is.',
+  },
 };
 
 // Anchor articles that should cross-link up to their topical hub page.
@@ -401,6 +421,18 @@ export default async function ArticlePage({ params }) {
             </p>
             <Link href={`/request-info/${category.slug}/`} className="cs-btn">
               Request Info &amp; Pricing →
+            </Link>
+          </div>
+        )}
+
+        {!toolCallout && !hubCallout && !compareCallout && !rfiConfig && (
+          <div className="cs-tool-callout">
+            <p>
+              Have a question about this topic? Browse answers from working
+              engineers, or ask your own.
+            </p>
+            <Link href="/ask-the-engineer/" className="cs-btn">
+              Ask the Engineer →
             </Link>
           </div>
         )}
