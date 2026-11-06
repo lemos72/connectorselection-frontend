@@ -21,9 +21,16 @@ function walk(dir, rel, acc) {
   return acc;
 }
 function fingerprint(file) {
-  let h = fs.readFileSync(file, 'utf8');
-  h = h.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<link[^>]*>/g, '').replace(/\/_next\/[^"'\s)]*/g, '');
-  return crypto.createHash('sha1').update(h).digest('hex');
+  // Compare only what visitors/search engines read: title, meta description, canonical, and visible text.
+  // (Build-specific markup such as chunk paths, class hashes and ids is ignored on purpose.)
+  const h = fs.readFileSync(file, 'utf8');
+  const title = (h.match(/<title[^>]*>([\s\S]*?)<\/title>/i) || [])[1] || '';
+  const desc = (h.match(/<meta[^>]+name="description"[^>]+content="([^"]*)"/i) || [])[1] || '';
+  const canon = (h.match(/<link[^>]+rel="canonical"[^>]+href="([^"]*)"/i) || [])[1] || '';
+  const body = (h.match(/<body[^>]*>([\s\S]*)<\/body>/i) || [])[1] || h;
+  const text = body.replace(/<script[\s\S]*?<\/script>/gi, ' ').replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  return crypto.createHash('sha1').update([title, desc, canon, text].join('||')).digest('hex');
 }
 
 (async () => {
@@ -32,9 +39,11 @@ function fingerprint(file) {
   const now = {};
   for (const d of dirs) now[d === '' ? '/' : '/' + d + '/'] = fingerprint(path.join(OUT, d, 'index.html'));
 
+  const VERSION = 'v2-text';
   let prev = null;
   try { prev = JSON.parse(fs.readFileSync(STATE, 'utf8')); } catch (e) {}
-  fs.writeFileSync(STATE, JSON.stringify(now));
+  if (prev && prev.__v !== VERSION) prev = null;
+  fs.writeFileSync(STATE, JSON.stringify(Object.assign({ __v: VERSION }, now)));
   if (!prev) { console.log('[indexnow] first run: baseline saved for ' + Object.keys(now).length + ' pages, nothing submitted'); return; }
 
   const changed = Object.keys(now).filter(u => prev[u] !== now[u]).slice(0, MAX);
