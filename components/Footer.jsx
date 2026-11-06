@@ -29,6 +29,7 @@ export default function Footer() {
               <h5>Resource</h5>
               <Link href="/" prefetch={false}>Home</Link>
               <Link href="/articles/" prefetch={false}>Knowledge Base</Link>
+              <Link href="/privacy/" prefetch={false}>Privacy Policy</Link>
             </div>
           </div>
         </div>
