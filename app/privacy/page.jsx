@@ -1,5 +1,13 @@
 const SITE_URL = 'https://connectorselection.com';
 
+// Links are unstyled site-wide, so make these clearly look clickable.
+const LINK_STYLE = {
+  color: 'var(--blueprint)',
+  textDecoration: 'underline',
+  textUnderlineOffset: '3px',
+  fontWeight: 500,
+};
+
 export const metadata = {
   title: 'Privacy Policy | Connector Selection',
   description:
@@ -45,23 +53,26 @@ export default function PrivacyPage() {
           </p>
 
           <h2>Analytics</h2>
-          <p>We use the following tools to understand how the site is used:</p>
-          <ul>
-            <li>
-              <strong>Google Analytics 4</strong> collects usage data such as pages viewed, approximate
-              location, device and browser type, and how you arrived at the site.
-            </li>
-            <li>
-              <strong>Microsoft Clarity</strong> collects usage data such as clicks, scrolling and mouse
-              movement, and may record anonymized session replays and heatmaps. Text you type into form
-              fields is masked and not recorded. Clarity data is processed by Microsoft in accordance
-              with the{' '}
-              <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener noreferrer">
-                Microsoft Privacy Statement
-              </a>
-              .
-            </li>
-          </ul>
+          <p>We use the following tools to understand how the site is used.</p>
+          <p>
+            <strong>Google Analytics 4</strong> collects usage data such as pages viewed, approximate
+            location, device and browser type, and how you arrived at the site. Google&rsquo;s use of
+            this data is described in the{' '}
+            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" style={LINK_STYLE}>
+              Google Privacy Policy
+            </a>
+            .
+          </p>
+          <p>
+            <strong>Microsoft Clarity</strong> collects usage data such as clicks, scrolling and mouse
+            movement, and may record anonymized session replays and heatmaps. Text you type into form
+            fields is masked and not recorded. Clarity data is processed by Microsoft in accordance
+            with the{' '}
+            <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener noreferrer" style={LINK_STYLE}>
+              Microsoft Privacy Statement
+            </a>
+            .
+          </p>
           <p>
             These tools use cookies or similar technologies. We use the information only to improve
             the site and its content.
@@ -83,20 +94,20 @@ export default function PrivacyPage() {
           </p>
 
           <h2>Your Choices</h2>
-          <ul>
-            <li>You can unsubscribe from the newsletter at any time using the link in any email.</li>
-            <li>
-              You can ask us to access, correct or delete the personal information you have given us by
-              contacting us through the site.
-            </li>
-            <li>
-              You can opt out of Google Analytics with the{' '}
-              <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">
-                Google Analytics opt-out browser add-on
-              </a>
-              , and block analytics cookies in your browser settings.
-            </li>
-          </ul>
+          <p>
+            You can unsubscribe from the newsletter at any time using the link in any email.
+          </p>
+          <p>
+            You can ask us to access, correct or delete the personal information you have given us by
+            contacting us through the site.
+          </p>
+          <p>
+            You can opt out of Google Analytics with the{' '}
+            <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer" style={LINK_STYLE}>
+              Google Analytics opt-out browser add-on
+            </a>
+            , and block analytics cookies in your browser settings.
+          </p>
 
           <h2>Changes to This Policy</h2>
           <p>
