@@ -94,6 +94,35 @@ export default async function RequestInfoPage({ params }) {
 
       <section className="cs-section">
         <div className="cs-container">
+          {/* Short reassurance block for visitors arriving from search or ads:
+              who we are, what they get, what happens next, what to include. */}
+          <div
+            style={{
+              border: '1px solid var(--line)',
+              background: 'var(--card)',
+              borderRadius: '8px',
+              padding: '20px 24px',
+              marginBottom: '32px',
+              maxWidth: '760px',
+            }}
+          >
+            <p style={{ margin: '0 0 10px' }}>
+              <strong>Who we are:</strong> Connector Selection is an independent
+              connector resource written by engineers.
+            </p>
+            <p style={{ margin: '0 0 10px' }}>
+              <strong>What you get:</strong> pricing, availability and
+              suitable alternatives for your {config.shortLabel} requirement.
+            </p>
+            <p style={{ margin: '0 0 10px' }}>
+              <strong>What happens next:</strong> an engineer reviews your
+              request and replies within 2 business days. No obligation.
+            </p>
+            <p style={{ margin: 0 }}>
+              <strong>To get a faster answer,</strong> include the pitch,
+              number of positions, quantity and timeline.
+            </p>
+          </div>
           <RFIForm category={category} />
         </div>
       </section>
