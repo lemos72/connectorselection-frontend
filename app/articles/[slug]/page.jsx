@@ -263,12 +263,21 @@ export default async function ArticlePage({ params }) {
   const matchedTerms = matchGlossaryTerms(article.content, allGlossaryTerms);
 
   // ---- Related Articles: term-overlap first, same-category as fallback ----
-  let relatedArticles = await getRelatedArticlesByTermOverlap(article.slug, 4).catch(() => []);
+  // The grid is 3 columns wide, so aim for 6 cards (two full rows). Start with
+  // term-overlap matches, top up from the same category, then trim to a
+  // multiple of 3 so the last row is never left with an empty block.
+  let relatedArticles = await getRelatedArticlesByTermOverlap(article.slug, 6).catch(() => []);
 
-  if (relatedArticles.length === 0 && category?.slug) {
-    relatedArticles = (await getArticlesByCategorySlug(category.slug).catch(() => []))
-      .filter((a) => a.slug !== article.slug)
-      .slice(0, 4);
+  if (relatedArticles.length < 6 && category?.slug) {
+    const have = new Set([article.slug, ...relatedArticles.map((a) => a.slug)]);
+    const fill = (await getArticlesByCategorySlug(category.slug).catch(() => []))
+      .filter((a) => !have.has(a.slug))
+      .slice(0, 6 - relatedArticles.length);
+    relatedArticles = relatedArticles.concat(fill);
+  }
+
+  if (relatedArticles.length > 3) {
+    relatedArticles = relatedArticles.slice(0, Math.floor(relatedArticles.length / 3) * 3);
   }
 
   // ---- Breadcrumb structured data (schema.org BreadcrumbList) ----
