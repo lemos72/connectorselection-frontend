@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { STRAPI_URL } from '../lib/strapi';
 import { RFI_FIELD_CONFIGS, TIMELINE_OPTIONS } from '../lib/rfiFieldConfigs';
 
@@ -25,6 +25,7 @@ function buildInitialState(category) {
     contact_email: '',
     contact_phone: '',
     application_industry: '',
+    country: '',
     quantity_volume: '',
     timeline: '',
     notes: '',
@@ -36,15 +37,67 @@ function buildInitialState(category) {
   };
 }
 
-// Fires a GA4 event on successful submission — same pattern as
-// ContactForm.jsx's trackLeadConversion(). Safe to call even if gtag
-// hasn't loaded (ad blockers, slow network, etc.) — just no-ops.
+// Where did this visitor come from? Captured from the landing URL (UTM tags,
+// Microsoft/Google click IDs) and kept in sessionStorage for the visit, so the
+// lead record shows which ad / keyword produced it. Stored inside the existing
+// spec_fields JSON, so no Strapi schema change is needed. Fully defensive:
+// any failure (private mode, blocked storage) just returns what it can.
+const ATTR_KEY = 'cs_attribution';
+
+function readAttribution() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'msclkid', 'gclid'];
+    const attr = {};
+    keys.forEach((k) => {
+      const v = params.get(k);
+      if (v) attr[k] = v;
+    });
+    if (document.referrer) attr.referrer = document.referrer;
+    attr.landing_path = window.location.pathname;
+    return attr;
+  } catch (e) {
+    return {};
+  }
+}
+
+function getAttribution() {
+  try {
+    const saved = window.sessionStorage.getItem(ATTR_KEY);
+    if (saved) return JSON.parse(saved);
+  } catch (e) {
+    // ignore and fall through
+  }
+  return readAttribution();
+}
+
+// Fires conversion events on successful submission. Each one is safe to call
+// even if its tool hasn't loaded (ad blockers, slow network, tag not installed
+// yet) — it just no-ops, or queues until the tag loads.
 function trackLeadConversion(category) {
-  if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+  if (typeof window === 'undefined') return;
+
+  // Google Analytics 4
+  if (typeof window.gtag === 'function') {
     window.gtag('event', 'generate_lead', {
       event_category: 'rfi_form',
       event_label: `RFI Form Submission - ${category}`,
     });
+  }
+
+  // Microsoft Advertising (UET). Pushing to the queue is how UET works, even
+  // before the tag has loaded. In Microsoft Ads, create an Event goal with
+  // Action = rfi_submit to count these.
+  window.uetq = window.uetq || [];
+  window.uetq.push('event', 'rfi_submit', {
+    event_category: 'rfi_form',
+    event_label: category,
+  });
+
+  // Microsoft Clarity: tag the session so recordings can be filtered by it.
+  if (typeof window.clarity === 'function') {
+    window.clarity('event', 'rfi_submitted');
+    window.clarity('set', 'rfi_category', category);
   }
 }
 
@@ -52,6 +105,17 @@ export default function RFIForm({ category }) {
   const config = RFI_FIELD_CONFIGS[category];
   const [formData, setFormData] = useState(() => buildInitialState(category));
   const [status, setStatus] = useState('idle'); // idle | submitting | success | error
+
+  // Remember where the visitor came from as soon as the form page loads.
+  useEffect(() => {
+    try {
+      if (!window.sessionStorage.getItem(ATTR_KEY)) {
+        window.sessionStorage.setItem(ATTR_KEY, JSON.stringify(readAttribution()));
+      }
+    } catch (e) {
+      // storage unavailable: attribution will be read from the URL at submit time
+    }
+  }, []);
 
   // No config for this category slug — render nothing rather than a
   // broken/empty form. Keeps this component safe to reuse on a category
@@ -98,7 +162,11 @@ export default function RFIForm({ category }) {
             quantity_volume: formData.quantity_volume,
             timeline: formData.timeline,
             notes: formData.notes,
-            spec_fields: formData.spec,
+            spec_fields: {
+              ...formData.spec,
+              country: formData.country,
+              _attribution: getAttribution(),
+            },
             submitted_at: new Date().toISOString(),
             // review_status is intentionally NOT sent — the Strapi schema
             // default ("new") is what governs this, not the client.
@@ -230,6 +298,22 @@ export default function RFIForm({ category }) {
             value={formData.application_industry}
             onChange={handleChange}
           />
+        </div>
+
+        <div className="cs-form-group">
+          <label htmlFor={`country_${category}`}>Country</label>
+          <select
+            id={`country_${category}`}
+            name="country"
+            value={formData.country}
+            onChange={handleChange}
+          >
+            <option value="">Select one (optional)</option>
+            <option value="United States">United States</option>
+            <option value="Canada">Canada</option>
+            <option value="Mexico">Mexico</option>
+            <option value="Other">Other</option>
+          </select>
         </div>
 
         <div className="cs-form-group">
