@@ -63,6 +63,11 @@ const TOOLS = [
     description: 'Estimate PCIe throughput by generation and lane count, or find the lanes needed for a target bandwidth.',
   },
   {
+    href: '/tools/pcie-channel-reach-retimer-checker/',
+    name: 'PCIe Channel Reach & Retimer Checker',
+    description: 'Check how much of the PCIe Gen 4, 5 or 6 loss budget your trace and connectors use, and whether a retimer is likely needed.',
+  },
+  {
     href: '/tools/insertion-loss-budget-calculator/',
     name: 'Insertion Loss Budget Calculator',
     description: 'Add up trace, connector, and cable loss and compare the total with your channel loss budget.',
