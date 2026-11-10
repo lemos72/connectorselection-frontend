@@ -111,6 +111,31 @@ const TOOL_CALLOUTS = {
     label: 'Try the Return Loss / VSWR Converter',
     description: 'Convert between return loss, VSWR and reflected power to see how good an impedance match really is.',
   },
+  'pcie-power-delivery-slot-power-limits-connectors': {
+    href: '/tools/connector-derating-calculator/',
+    label: 'Try the Connector Derating Calculator',
+    description: 'Estimate a connector’s safe current at your real operating temperature.',
+  },
+  'what-is-a-cem-slot-pcie-card-electromechanical-connector-explained': {
+    href: '/tools/pcie-bandwidth-calculator/',
+    label: 'Try the PCIe Bandwidth Calculator',
+    description: 'Estimate PCIe throughput by generation and lane count, or find the lanes needed for a target bandwidth.',
+  },
+  'm-xio-mcio-connectors-dc-mhs-cabled-pcie-explained': {
+    href: '/tools/pcie-bandwidth-calculator/',
+    label: 'Try the PCIe Bandwidth Calculator',
+    description: 'Estimate PCIe throughput by generation and lane count, or find the lanes needed for a target bandwidth.',
+  },
+  'sff-ta-1002-card-edge-connector-type-1-vs-type-2-sizes': {
+    href: '/tools/pcie-bandwidth-calculator/',
+    label: 'Try the PCIe Bandwidth Calculator',
+    description: 'Estimate PCIe throughput by generation and lane count, or find the lanes needed for a target bandwidth.',
+  },
+  'usfp-ultra-dense-small-form-factor-pluggable-explained': {
+    href: '/tools/insertion-loss-budget-calculator/',
+    label: 'Try the Insertion Loss Budget Calculator',
+    description: 'Add up trace, connector and cable loss and compare the total with your channel loss budget.',
+  },
 };
 
 // Anchor articles that should cross-link up to their topical hub page.
