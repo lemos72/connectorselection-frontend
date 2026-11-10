@@ -72,6 +72,11 @@ const TOOLS = [
     name: 'Return Loss / VSWR Converter',
     description: 'Convert between return loss, VSWR and reflection coefficient, and see reflected power and mismatch loss.',
   },
+  {
+    href: '/tools/ffc-fpc-pitch-calculator/',
+    name: 'FFC/FPC Pitch & Positions Calculator',
+    description: 'Get conductor span and nominal width from pitch and number of positions, or find how many positions fit in a given width.',
+  },
 ];
 
 export default function ToolsIndexPage() {
