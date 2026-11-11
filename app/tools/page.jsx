@@ -63,6 +63,11 @@ const TOOLS = [
     description: 'Estimate PCIe throughput by generation and lane count, or find the lanes needed for a target bandwidth.',
   },
   {
+    href: '/tools/connector-failure-diagnostic/',
+    name: 'Why Is My Connector Failing?',
+    description: 'Pick a symptom and connector type to see the most likely causes of a failing connector and what to check first.',
+  },
+  {
     href: '/tools/pcie-channel-reach-retimer-checker/',
     name: 'PCIe Channel Reach & Retimer Checker',
     description: 'Check how much of the PCIe Gen 4, 5 or 6 loss budget your trace and connectors use, and whether a retimer is likely needed.',
