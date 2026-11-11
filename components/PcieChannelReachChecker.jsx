@@ -28,6 +28,18 @@ const VERDICTS = {
   over: 'Over budget: a retimer or lower-loss design is likely needed',
 };
 
+const ROW_STYLE = { flexWrap: 'wrap', columnGap: '12px', rowGap: '2px' };
+const VALUE_STYLE = { marginLeft: 'auto', textAlign: 'right' };
+
+function ResultRow({ label, value }) {
+  return (
+    <div className="cs-calc-result-row" style={ROW_STYLE}>
+      <span>{label}</span>
+      <span style={VALUE_STYLE}>{value}</span>
+    </div>
+  );
+}
+
 export default function PcieChannelReachChecker() {
   const [gen, setGen] = useState('5');
   const [seg, setSeg] = useState(defaultsFor('5'));
@@ -74,6 +86,16 @@ export default function PcieChannelReachChecker() {
       : VERDICTS[result.status]
     : '';
 
+  const statusClass = !result
+    ? ''
+    : splitMissing
+    ? 'cs-calc-status-caution'
+    : result.status === 'fits'
+    ? 'cs-calc-status-good'
+    : result.status === 'tight'
+    ? 'cs-calc-status-caution'
+    : 'cs-calc-status-poor';
+
   let summary = '';
   if (result) {
     summary = [
@@ -88,7 +110,13 @@ export default function PcieChannelReachChecker() {
   }
 
   return (
-    <div className="cs-calculator">
+    <div className="cs-calculator cs-pcie-calc">
+      <style>{`.cs-pcie-calc .cs-calc-inputs { grid-template-columns: minmax(0, 1fr); }
+.cs-pcie-calc .cs-calc-inputs select, .cs-pcie-calc .cs-calc-inputs input { min-width: 0; max-width: 100%; }
+@media (min-width: 701px) {
+  .cs-pcie-calc { grid-template-columns: minmax(0, 1.2fr) minmax(280px, 1fr); }
+  .cs-pcie-calc .cs-calc-inputs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}`}</style>
       <div className="cs-calc-inputs">
         <div className="cs-calc-field">
           <label htmlFor="calc_pcie_gen">PCIe generation</label>
@@ -221,38 +249,21 @@ export default function PcieChannelReachChecker() {
           <>
             <div className="cs-calc-result-main">
               <span className="cs-calc-result-label">Estimated channel loss</span>
-              <span className="cs-calc-result-number">
-                {fmtDb(result.estimated)} dB of {result.total} dB
+              <span className="cs-calc-result-number">{fmtDb(result.estimated)} dB</span>
+              <span className="cs-calc-result-label" style={{ marginTop: '4px' }}>
+                of a {result.total} dB budget
               </span>
             </div>
-            <div className="cs-calc-result-row">
-              <span>Result</span>
-              <span
-                style={
-                  result.status === 'fits' && !splitMissing ? undefined : { color: 'var(--copper)' }
-                }
-              >
-                {verdictText}
-              </span>
+            <div className={`cs-calc-status ${statusClass}`} style={{ marginTop: 0 }}>
+              {verdictText}
             </div>
-            <div className="cs-calc-result-row">
-              <span>Margin held back ({reservePct}%)</span>
-              <span>{fmtDb(result.reserve)} dB</span>
-            </div>
-            <div className="cs-calc-result-row">
-              <span>Margin left after that reserve</span>
-              <span>{fmtDb(result.margin)} dB</span>
-            </div>
-            <div className="cs-calc-result-row">
-              <span>Board trace loss</span>
-              <span>{fmtDb(result.traceLoss)} dB</span>
-            </div>
-            <div className="cs-calc-result-row">
-              <span>Longest board trace that still fits</span>
-              <span>
-                {fmtIn(result.maxTraceIn)} in ({fmtMm(result.maxTraceIn)} mm)
-              </span>
-            </div>
+            <ResultRow label={`Margin held back (${reservePct}%)`} value={`${fmtDb(result.reserve)} dB`} />
+            <ResultRow label="Margin left after reserve" value={`${fmtDb(result.margin)} dB`} />
+            <ResultRow label="Board trace loss" value={`${fmtDb(result.traceLoss)} dB`} />
+            <ResultRow
+              label="Longest trace that fits"
+              value={`${fmtIn(result.maxTraceIn)} in (${fmtMm(result.maxTraceIn)} mm)`}
+            />
             {splitMissing && (
               <p style={{ fontSize: '0.85rem', color: 'var(--muted)', margin: '8px 0 0' }}>
                 No package or add-in card loss was entered, so this result counts only the board
