@@ -87,6 +87,11 @@ const TOOLS = [
     name: 'FFC/FPC Pitch & Positions Calculator',
     description: 'Get conductor span and nominal width from pitch and number of positions, or find how many positions fit in a given width.',
   },
+  {
+    href: '/tools/ffc-fpc-design-review-checklist/',
+    name: 'FFC/FPC Design Review Checklist (PDF)',
+    description: 'A free 3-page checklist for reviewing an FFC or FPC interface before release: cable match, routing, signal integrity, assembly and sourcing.',
+  },
 ];
 
 export default function ToolsIndexPage() {
