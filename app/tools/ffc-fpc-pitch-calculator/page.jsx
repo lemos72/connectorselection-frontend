@@ -77,7 +77,8 @@ export default function FfcFpcPitchCalculatorPage() {
           </p>
 
           <h2>Common FFC/FPC Pitches</h2>
-          <table>
+          <div style={{ overflowX: 'auto', maxWidth: '720px', marginBottom: '20px' }}>
+          <table className="cs-tool-table">
             <thead>
               <tr>
                 <th>Pitch</th>
@@ -107,6 +108,7 @@ export default function FfcFpcPitchCalculatorPage() {
               </tr>
             </tbody>
           </table>
+          </div>
 
           <h2>Related Reading</h2>
           <p>
@@ -116,7 +118,11 @@ export default function FfcFpcPitchCalculatorPage() {
             <Link href="/ask-the-engineer/zif-or-non-zif-fpc-connector/">
               ZIF vs non-ZIF FPC connectors
             </Link>
-            . If you have a specific requirement, you can{' '}
+            . Before you release a flex cable design, run through the{' '}
+            <Link href="/tools/ffc-fpc-design-review-checklist/">
+              FFC/FPC design review checklist
+            </Link>{' '}
+            (free PDF). If you have a specific requirement, you can{' '}
             <Link
               href="/request-info/fpc-ffc-connectors/?utm_source=site&utm_medium=tool&utm_campaign=ffc-fpc-pitch-calculator"
               prefetch={false}
