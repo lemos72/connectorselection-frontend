@@ -66,7 +66,8 @@ export default function ConnectorFailureDiagnosticPage() {
           </p>
 
           <h2>Common Connector Failure Modes</h2>
-          <table>
+          <div style={{ overflowX: 'auto' }}>
+          <table className="cs-tool-table">
             <thead>
               <tr>
                 <th>Failure mode</th>
@@ -107,6 +108,7 @@ export default function ConnectorFailureDiagnosticPage() {
               </tr>
             </tbody>
           </table>
+          </div>
 
           <h2>Related Tools</h2>
           <p>

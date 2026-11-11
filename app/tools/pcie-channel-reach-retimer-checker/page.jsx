@@ -77,7 +77,8 @@ export default function PcieChannelReachCheckerPage() {
           </p>
 
           <h2>Budgets Used</h2>
-          <table>
+          <div style={{ overflowX: 'auto' }}>
+          <table className="cs-tool-table">
             <thead>
               <tr>
                 <th>Generation</th>
@@ -118,6 +119,7 @@ export default function PcieChannelReachCheckerPage() {
               </tr>
             </tbody>
           </table>
+          </div>
           <p>
             The Gen 4 and Gen 5 allocations follow published guidance from Astera Labs, and the
             Gen 6 total follows Signal Integrity Journal. The loss-per-inch presets for Gen 5 and
