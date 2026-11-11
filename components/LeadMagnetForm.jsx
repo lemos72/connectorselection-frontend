@@ -62,8 +62,14 @@ export default function LeadMagnetForm({
     return (
       <div className="cs-newsletter cs-leadmagnet cs-newsletter-success">
         <span className="cs-leadmagnet-eyebrow">Download Started</span>
-        <h3>Check your inbox</h3>
-        <p>We also sent a copy of the guide to your email.</p>
+        <h3>Thanks, your download has started</h3>
+        <p>
+          If nothing happened, check your browser&apos;s downloads or{" "}
+          <a href={pdfUrl} download style={{ textDecoration: "underline" }}>
+            download the PDF again
+          </a>
+          .
+        </p>
       </div>
     );
   }
