@@ -2713,3 +2713,397 @@ button:focus-visible {
     width: 100%;
   }
 }
+/* ==========================================================================
+   Request-info page (guided FFC/FPC layout) — appended Nov 2026
+   Only used by app/request-info/[category]/page.jsx + components/RFIForm.jsx
+   ========================================================================== */
+
+.cs-band h1.cs-rfi-h1 {
+  max-width: 28ch;
+  line-height: 1.15;
+}
+.cs-band .cs-rfi-hero-sub {
+  color: var(--muted);
+  max-width: 62ch;
+  margin: 14px 0 0;
+  font-size: 17px;
+  line-height: 1.55;
+}
+.cs-rfi-trust {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  margin: 20px 0 0;
+  padding: 0;
+}
+.cs-rfi-trust li {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  color: var(--blueprint);
+  background: #f0f4f8;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 5px 12px 5px 28px;
+  position: relative;
+}
+.cs-rfi-trust li::before {
+  content: '';
+  position: absolute;
+  left: 11px;
+  top: 50%;
+  width: 6px;
+  height: 10px;
+  border: solid var(--copper);
+  border-width: 0 2px 2px 0;
+  transform: translateY(-62%) rotate(45deg);
+}
+
+/* ---- how it works ---- */
+.cs-rfi-steps {
+  list-style: none;
+  margin: 0 0 40px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.cs-rfi-step {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 16px 18px;
+}
+.cs-rfi-step-icon {
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: #fff3ec;
+  color: var(--copper);
+}
+.cs-rfi-step-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.cs-rfi-step-body strong {
+  color: var(--blueprint);
+  font-size: 15px;
+}
+.cs-rfi-step-body span {
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+@media (max-width: 860px) {
+  .cs-rfi-steps {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---- guided form ---- */
+.cs-rfi-guided {
+  gap: 28px;
+}
+.cs-rfi-fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.cs-rfi-legend {
+  padding: 0;
+  margin: 0 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--blueprint);
+}
+.cs-rfi-fieldset .cs-rfi-legend {
+  margin-bottom: 0;
+}
+.cs-rfi-stepnum {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--blueprint);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.cs-rfi-needs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+@media (max-width: 1000px) {
+  .cs-rfi-needs {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 560px) {
+  .cs-rfi-needs {
+    grid-template-columns: 1fr;
+  }
+}
+.cs-rfi-need {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 16px 14px;
+  background: var(--card);
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  color: var(--ink);
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease,
+    background 0.15s ease, transform 0.12s ease;
+}
+.cs-rfi-need:hover {
+  border-color: var(--copper);
+  transform: translateY(-1px);
+}
+.cs-rfi-need-selected,
+.cs-rfi-need-selected:hover {
+  border-color: var(--blueprint);
+  background: #f0f4f8;
+  box-shadow: 0 0 0 2px rgba(18, 53, 91, 0.16);
+}
+.cs-rfi-need-title {
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--blueprint);
+  line-height: 1.25;
+}
+.cs-rfi-need-desc {
+  font-size: 13.5px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+.cs-rfi-need-ex {
+  margin-top: auto;
+  padding-top: 4px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--copper);
+  line-height: 1.4;
+}
+.cs-rfi-hint {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14.5px;
+}
+
+.cs-rfi-after {
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  scroll-margin-top: 90px;
+}
+.cs-rfi-grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 20px;
+}
+@media (max-width: 640px) {
+  .cs-rfi-grid2 {
+    grid-template-columns: 1fr;
+  }
+}
+.cs-rfi-req {
+  color: var(--copper);
+  font-weight: 700;
+}
+.cs-rfi-guided .cs-form-group select {
+  font-family: inherit;
+  font-size: 1.05rem;
+  padding: 14px 16px;
+  border: 1px solid #c7d0da;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #1a1a1a;
+}
+.cs-rfi-guided .cs-form-group select:focus {
+  outline: none;
+  border-color: var(--blueprint, #12355b);
+  box-shadow: 0 0 0 3px rgba(18, 53, 91, 0.12);
+}
+
+.cs-rfi-more {
+  border: 1px dashed var(--line-strong);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.6);
+}
+.cs-rfi-more > summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 14px 18px;
+  font-weight: 600;
+  color: var(--blueprint);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.cs-rfi-more > summary::-webkit-details-marker {
+  display: none;
+}
+.cs-rfi-more > summary::before {
+  content: '+';
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid var(--blueprint);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  line-height: 1;
+}
+.cs-rfi-more[open] > summary::before {
+  content: '\2212';
+}
+.cs-rfi-more-body {
+  padding: 4px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.cs-rfi-submit-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.cs-rfi-submit-row .cs-btn {
+  margin-top: 0;
+}
+.cs-rfi-fineprint {
+  margin: 0;
+  flex: 1 1 260px;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ---- "Not sure which part?" diagrams ---- */
+.cs-rfi-learn {
+  margin-top: 64px;
+  padding-top: 40px;
+  border-top: 1px solid var(--line-strong);
+}
+.cs-rfi-learn h2 {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--blueprint);
+  margin: 0 0 6px;
+}
+.cs-rfi-learn > p {
+  color: var(--muted);
+  margin: 0 0 24px;
+}
+.cs-rfi-diagrams {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+@media (max-width: 960px) {
+  .cs-rfi-diagrams {
+    grid-template-columns: 1fr;
+  }
+}
+.cs-rfi-diagram-card {
+  margin: 0;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 16px 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.cs-rfi-diagram-card figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.cs-rfi-diagram-card figcaption strong {
+  color: var(--blueprint);
+  font-size: 15px;
+}
+.cs-rfi-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.cs-rfi-svg text {
+  font-family: var(--font-mono);
+}
+.cs-rfi-learn-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  margin-top: 22px;
+}
+.cs-rfi-learn-links a {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--copper);
+}
+.cs-rfi-learn-links a::after {
+  content: ' \2192';
+}
+.cs-rfi-learn-links a:hover {
+  text-decoration: underline;
+}
+/* ==========================================================================
+   Request-info page: two-column hero (headline left, steps right)
+   Nov 13 2026 — append AFTER the earlier request-info block in globals.css
+   ========================================================================== */
+.cs-rfi-hero {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 56px;
+  align-items: center;
+}
+.cs-rfi-hero .cs-rfi-steps {
+  grid-template-columns: 1fr;
+  margin: 0;
+  gap: 12px;
+}
+@media (max-width: 900px) {
+  .cs-rfi-hero {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
