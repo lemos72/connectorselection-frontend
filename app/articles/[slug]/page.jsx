@@ -136,6 +136,11 @@ const TOOL_CALLOUTS = {
     label: 'Try the Insertion Loss Budget Calculator',
     description: 'Add up trace, connector and cable loss and compare the total with your channel loss budget.',
   },
+  'ip-rating-chart-ip65-ip67-ip68-ip69k-explained': {
+    href: '/tools/ip-code-decoder/',
+    label: 'Try the IP Code Decoder',
+    description: 'Enter any IP code, such as IP67 or IP69K, and see what each digit means for dust and water protection.',
+  },
 };
 
 // Anchor articles that should cross-link up to their topical hub page.
@@ -472,12 +477,14 @@ export default async function ArticlePage({ params }) {
         )}
 
         {leadMagnet ? (
-          <LeadMagnetForm
-            pdfUrl={leadMagnet.pdfUrl}
-            source={leadMagnet.source}
-            title={leadMagnet.title}
-            description={leadMagnet.description}
-          />
+          <div id="free-guide" style={{ scrollMarginTop: '90px' }}>
+            <LeadMagnetForm
+              pdfUrl={leadMagnet.pdfUrl}
+              source={leadMagnet.source}
+              title={leadMagnet.title}
+              description={leadMagnet.description}
+            />
+          </div>
         ) : (
           <NewsletterSignup source="article-footer" />
         )}
