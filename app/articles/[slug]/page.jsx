@@ -92,9 +92,9 @@ const TOOL_CALLOUTS = {
     description: 'Estimate wire weight for your harness based on gauge, length, and material.',
   },
   'cable-derating-factor-explained': {
-    href: '/tools/connector-derating-calculator/',
-    label: 'Try the Connector Derating Calculator',
-    description: 'Estimate a connector’s safe current at your real operating temperature.',
+    href: '/tools/cable-derating-calculator/',
+    label: 'Try the Cable Derating Factor Calculator',
+    description: 'Enter your conductor count, insulation rating and ambient temperature to see the derated current of your cable.',
   },
   'how-to-read-connector-thermal-derating-curves': {
     href: '/tools/connector-derating-calculator/',
