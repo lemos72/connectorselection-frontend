@@ -77,65 +77,73 @@ export default function ConnectorSelectorWizardPage() {
           </p>
 
           <h2>What to Check After You Pick a Connector Type</h2>
-          <ul>
-            <li>
-              <strong>Current and voltage:</strong> see{' '}
-              <Link href="/articles/connector-current-voltage-ratings-explained/">
-                connector current and voltage ratings explained
-              </Link>
-              , and size the wire run with the{' '}
-              <Link href="/tools/voltage-drop-calculator/">Voltage Drop Calculator</Link>.
-            </li>
-            <li>
-              <strong>Durability:</strong> check the rated mating cycles. See{' '}
-              <Link href="/articles/connector-mating-cycles-explained-engineering-guide/">
-                connector mating cycles explained
-              </Link>
-              .
-            </li>
-            <li>
-              <strong>Plating and contacts:</strong> read{' '}
-              <Link href="/articles/connector-plating-technology-engineering-specifications/">
-                connector plating technology
-              </Link>
-              .
-            </li>
-            <li>
-              <strong>Sealing:</strong> match the rating to your environment with the{' '}
-              <Link href="/articles/ip-rating-chart-ip65-ip67-ip68-ip69k-explained/">
-                IP rating chart
-              </Link>
-              .
-            </li>
-            <li>
-              <strong>Flat flexible cable:</strong> compare{' '}
-              <Link href="/compare/zif-vs-non-zif-fpc-connectors/">ZIF vs non-ZIF connectors</Link>
-              , or browse{' '}
-              <Link href="/categories/fpc-ffc-connectors/">FPC and FFC connectors</Link>.
-            </li>
-          </ul>
+          <p>
+            <strong>Current and voltage:</strong> see{' '}
+            <Link href="/articles/connector-current-voltage-ratings-explained/">
+              connector current and voltage ratings explained
+            </Link>
+            , and size the wire run with the{' '}
+            <Link href="/tools/voltage-drop-calculator/">Voltage Drop Calculator</Link>.
+          </p>
+          <p>
+            <strong>Durability:</strong> check the rated mating cycles. See{' '}
+            <Link href="/articles/connector-mating-cycles-explained-engineering-guide/">
+              connector mating cycles explained
+            </Link>
+            .
+          </p>
+          <p>
+            <strong>Plating and contacts:</strong> read{' '}
+            <Link href="/articles/connector-plating-technology-engineering-specifications/">
+              connector plating technology
+            </Link>
+            .
+          </p>
+          <p>
+            <strong>Sealing:</strong> match the rating to your environment with the{' '}
+            <Link href="/articles/ip-rating-chart-ip65-ip67-ip68-ip69k-explained/">
+              IP rating chart
+            </Link>
+            .
+          </p>
+          <p>
+            <strong>Flat flexible cable:</strong> compare{' '}
+            <Link href="/compare/zif-vs-non-zif-fpc-connectors/">ZIF vs non-ZIF connectors</Link>
+            , or browse{' '}
+            <Link href="/categories/fpc-ffc-connectors/">FPC and FFC connectors</Link>.
+          </p>
 
           <h2>Frequently Asked Questions</h2>
-          <h3>Does the wizard give me a part number?</h3>
+          <p>
+            <strong>Does the wizard give me a part number?</strong>
+          </p>
           <p>
             No. It narrows down the connector type and points you to the right guides.
             Always verify the specific part number against the manufacturer datasheet
             before you finalize a design.
           </p>
-          <h3>What do I need to know before I start?</h3>
+          <p>
+            <strong>What do I need to know before I start?</strong>
+          </p>
           <p>
             What you are connecting, what the connection mainly carries (power,
             high-speed data, RF or flat flexible cable), and where it will operate.
           </p>
-          <h3>Do I need to install anything?</h3>
+          <p>
+            <strong>Do I need to install anything?</strong>
+          </p>
           <p>No. It is a free tool that works in your web browser.</p>
-          <h3>What should I do if a connector I already use is failing?</h3>
+          <p>
+            <strong>What should I do if a connector I already use is failing?</strong>
+          </p>
           <p>
             Try{' '}
             <Link href="/tools/connector-failure-diagnostic/">Why Is My Connector Failing?</Link>{' '}
             to see the most likely causes and what to check first.
           </p>
-          <h3>Where can I learn the basics?</h3>
+          <p>
+            <strong>Where can I learn the basics?</strong>
+          </p>
           <p>
             Start with{' '}
             <Link href="/articles/electrical-connector-basics/">electrical connector basics</Link>
