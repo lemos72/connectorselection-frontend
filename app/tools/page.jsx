@@ -42,6 +42,11 @@ const TOOLS = [
     name: 'Connector Derating Calculator',
     description: 'Estimate a connector’s derated current rating for your actual operating ambient temperature.',
   },
+  {
+    href: '/tools/cable-derating-calculator/',
+    name: 'Cable Derating Factor Calculator',
+    description: 'Estimate a cable’s derated current from the number of conductors in the bundle, the insulation rating and the ambient temperature.',
+  },
 {
   href: '/tools/skin-effect-calculator/',
   name: 'Skin Effect Calculator',
