@@ -3,8 +3,9 @@ import { getCategories } from '../../lib/strapi';
 import { blocksToPlainText } from '../../components/BlocksRenderer';
 
 export const metadata = {
-  title: 'Categories',
-  description: 'Browse connector knowledge by application category.',
+  title: 'Connector Categories: Guides by Type and Application',
+  description:
+    'Browse connector and cable guides by category: FPC/FFC, high-speed and signal integrity, AI server and data center, connector fundamentals, and more.',
 };
 
 async function safe(fn, fallback) {
