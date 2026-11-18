@@ -227,18 +227,47 @@ export async function generateStaticParams() {
   }
 }
 
+// Optional site-wide fallback image for link cards (Teams, LinkedIn, Slack...)
+// when an article has no cover image. Put a 1200x630 image in /public and set
+// this to its path, e.g. '/og-default.png'. Leave null to send no image.
+const DEFAULT_OG_IMAGE = null;
+
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const article = await getArticleBySlug(slug).catch(() => null);
   if (!article) return { title: 'Article not found' };
+
+  const title = article.seo_title || article.title;
+  const description =
+    article.seo_description ||
+    article.excerpt ||
+    blocksToPlainText(article.content, 155);
+  const url = `${SITE_URL}/articles/${article.slug}/`;
+
+  const cover = imageFrom(article.cover_image, 'large');
+  const imageUrl = cover?.url || DEFAULT_OG_IMAGE;
+
   return {
-    title: article.seo_title || article.title,
-    description:
-      article.seo_description ||
-      article.excerpt ||
-      blocksToPlainText(article.content, 155),
+    title,
+    description,
     alternates: {
-      canonical: `${SITE_URL}/articles/${article.slug}/`,
+      canonical: url,
+    },
+    // Open Graph + Twitter tags: used for the preview card when a link is
+    // shared in Teams, LinkedIn, Slack, etc. (og:site_name is already set in
+    // app/layout.jsx, so it is not repeated here.)
+    openGraph: {
+      type: 'article',
+      url,
+      title,
+      description,
+      ...(imageUrl ? { images: [{ url: imageUrl }] } : {}),
+    },
+    twitter: {
+      card: imageUrl ? 'summary_large_image' : 'summary',
+      title,
+      description,
+      ...(imageUrl ? { images: [imageUrl] } : {}),
     },
   };
 }
