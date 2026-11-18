@@ -2,10 +2,26 @@ import { getQuestions } from '../../lib/strapi';
 import AskEngineerForm from '../../components/AskEngineerForm';
 import QuestionCard from '../../components/QuestionCard';
 
+const PAGE_TITLE = 'Ask the Engineer: Connector and Cable Questions Answered';
+const PAGE_DESCRIPTION =
+  'Browse answered connector, cable and interconnect questions, from FPC/FFC and ZIF to ORv3, FAKRA and cable shielding, or submit your own.';
+
 export const metadata = {
-  title: 'Ask the Engineer',
-  description:
-    'Submit a real connector, cable, or interconnect engineering question and get a curated, published answer.',
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
+  // Link-card tags for sharing (Teams, LinkedIn, Slack...). og:site_name is
+  // already set in app/layout.jsx.
+  openGraph: {
+    type: 'website',
+    url: 'https://connectorselection.com/ask-the-engineer/',
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+  },
+  twitter: {
+    card: 'summary',
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+  },
 };
 
 const catName = (q) =>
