@@ -52,6 +52,11 @@ const TOOLS = [
     name: 'Rack Power to Current Calculator',
     description: 'Convert rack kW to busbar amps at 12 V, 48 V, 400 V or 800 V DC, and estimate the I²R loss in the power path.',
   },
+  {
+    href: '/tools/liquid-cooling-flow-rate-calculator/',
+    name: 'Liquid Cooling Flow Rate Calculator',
+    description: 'Estimate the coolant flow in L/min and gpm needed for a heat load and temperature rise, for water or propylene glycol.',
+  },
 {
   href: '/tools/skin-effect-calculator/',
   name: 'Skin Effect Calculator',
