@@ -141,6 +141,46 @@ const TOOL_CALLOUTS = {
     label: 'Try the IP Code Decoder',
     description: 'Enter any IP code, such as IP67 or IP69K, and see what each digit means for dust and water protection.',
   },
+  '800v-dc-architecture-power-delivery-shift-beyond-48v': {
+    href: '/tools/rack-power-current-calculator/',
+    label: 'Try the Rack Power to Current Calculator',
+    description: 'Enter your rack power and DC bus voltage to see the busbar current in amps, the current per path and the I²R loss.',
+  },
+  'orv2-vs-orv3-what-changed-for-power-connectors': {
+    href: '/tools/rack-power-current-calculator/',
+    label: 'Try the Rack Power to Current Calculator',
+    description: 'Enter your rack power and DC bus voltage to see the busbar current in amps, the current per path and the I²R loss.',
+  },
+  'orv3-power-connectors-by-use-case-shelf-busbar-blind-mate-node': {
+    href: '/tools/rack-power-current-calculator/',
+    label: 'Try the Rack Power to Current Calculator',
+    description: 'Enter your rack power and DC bus voltage to see the busbar current in amps, the current per path and the I²R loss.',
+  },
+  'ocp-open-rack-busbar-power-connectors-orv2-orv3': {
+    href: '/tools/rack-power-current-calculator/',
+    label: 'Try the Rack Power to Current Calculator',
+    description: 'Enter your rack power and DC bus voltage to see the busbar current in amps, the current per path and the I²R loss.',
+  },
+  'ocp-dc-connectors-sideband-pins-48v-12v-peripheral-power': {
+    href: '/tools/rack-power-current-calculator/',
+    label: 'Try the Rack Power to Current Calculator',
+    description: 'Enter your rack power and DC bus voltage to see the busbar current in amps, the current per path and the I²R loss.',
+  },
+  'ocp-orv3-ai-rack-connector-selection-spotlight': {
+    href: '/tools/rack-power-current-calculator/',
+    label: 'Try the Rack Power to Current Calculator',
+    description: 'Enter your rack power and DC bus voltage to see the busbar current in amps, the current per path and the I²R loss.',
+  },
+  'liquid-cooled-network-switch-connectors-quick-disconnects': {
+    href: '/tools/liquid-cooling-flow-rate-calculator/',
+    label: 'Try the Liquid Cooling Flow Rate Calculator',
+    description: 'Enter your heat load and coolant temperature rise to see the flow in L/min and gpm for water or propylene glycol.',
+  },
+  'nvidia-vera-rubin-mgx-1-2-blind-mate-liquid-cooled-connectors': {
+    href: '/tools/liquid-cooling-flow-rate-calculator/',
+    label: 'Try the Liquid Cooling Flow Rate Calculator',
+    description: 'Enter your heat load and coolant temperature rise to see the flow in L/min and gpm for water or propylene glycol.',
+  },
 };
 
 // Anchor articles that should cross-link up to their topical hub page.
