@@ -47,6 +47,11 @@ const TOOLS = [
     name: 'Cable Derating Factor Calculator',
     description: 'Estimate a cable’s derated current from the number of conductors in the bundle, the insulation rating and the ambient temperature.',
   },
+  {
+    href: '/tools/rack-power-current-calculator/',
+    name: 'Rack Power to Current Calculator',
+    description: 'Convert rack kW to busbar amps at 12 V, 48 V, 400 V or 800 V DC, and estimate the I²R loss in the power path.',
+  },
 {
   href: '/tools/skin-effect-calculator/',
   name: 'Skin Effect Calculator',
