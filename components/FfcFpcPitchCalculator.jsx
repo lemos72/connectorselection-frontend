@@ -12,8 +12,18 @@ import {
   formatInch,
 } from '../lib/ffcPitch';
 
-const REQUEST_URL =
-  '/request-info/fpc-ffc-connectors/?utm_source=site&utm_medium=tool&utm_campaign=ffc-fpc-pitch-calculator';
+const REQUEST_BASE = '/request-info/fpc-ffc-connectors/';
+const UTM = 'utm_source=site&utm_medium=tool&utm_campaign=ffc-fpc-pitch-calculator';
+const REQUEST_URL = REQUEST_BASE + '?' + UTM;
+
+// Link to the request form with the visitor's pitch (and positions, when known)
+// already filled in. The form ignores anything it does not recognise.
+function buildRequestUrl(pitch, positions) {
+  let url = REQUEST_BASE + '?' + UTM + '&need=connector';
+  if (pitch) url += '&pitch=' + encodeURIComponent(pitch);
+  if (positions) url += '&positions=' + encodeURIComponent(positions);
+  return url;
+}
 
 export default function FfcFpcPitchCalculator() {
   const [mode, setMode] = useState('positions'); // positions | space
@@ -166,6 +176,26 @@ export default function FfcFpcPitchCalculator() {
           </p>
         )}
       </div>
+
+      {summary && (
+        <div style={{ margin: '16px 0' }}>
+          <Link
+            href={buildRequestUrl(
+              pitch,
+              mode === 'positions' && fromPositions ? fromPositions.positions : null
+            )}
+            prefetch={false}
+            className="cs-btn"
+          >
+            Get pricing for this spec
+          </Link>
+          <p style={{ fontSize: '0.85rem', color: 'var(--muted)', margin: '8px 0 0' }}>
+            Opens the request form with your pitch
+            {mode === 'positions' && fromPositions ? ' and number of positions' : ''} filled in.
+            No obligation.
+          </p>
+        </div>
+      )}
 
       <p className="cs-calc-disclaimer">
         Geometry only: span = (positions &minus; 1) &times; pitch, and nominal width = positions

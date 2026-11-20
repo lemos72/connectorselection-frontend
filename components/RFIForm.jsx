@@ -159,13 +159,42 @@ export default function RFIForm({ category }) {
   }, []);
 
   // Optional deep link, e.g. an ad can point at ?need=custom so the matching
-  // card is already chosen when the visitor lands.
+  // card is already chosen when the visitor lands. A tool page can also pass
+  // ?pitch=0.5&positions=24 so those two fields arrive filled in. Anything the
+  // form does not recognise is ignored.
   useEffect(() => {
     if (!config?.needs) return;
     try {
-      const n = new URLSearchParams(window.location.search).get('need');
-      if (n && config.needs.some((x) => x.key === n)) {
-        setFormData((prev) => ({ ...prev, need: n }));
+      const params = new URLSearchParams(window.location.search);
+      const n = params.get('need');
+      const pitchParam = (params.get('pitch') || '').trim();
+      const positionsParam = (params.get('positions') || '').trim();
+      setFormData((prev) => {
+        const next = { ...prev, spec: { ...prev.spec } };
+        if (n && config.needs.some((x) => x.key === n)) next.need = n;
+
+        const pitchField = config.fields.find((f) => f.name === 'pitch');
+        if (pitchField && /^[0-9]+(\.[0-9]+)?$/.test(pitchParam)) {
+          // Match numerically, so "1" finds the "1.0" option.
+          const hit = pitchField.options.find(
+            (o) => /^[0-9.]+$/.test(o) && parseFloat(o) === parseFloat(pitchParam)
+          );
+          if (hit) {
+            next.spec.pitch = hit;
+          } else if (pitchField.options.includes('Other')) {
+            // Pitch not in the list (for example 0.8 or 1.25): choose "Other"
+            // and keep the exact value in the notes so it is not lost.
+            next.spec.pitch = 'Other';
+            if (!prev.notes) next.notes = `Pitch: ${pitchParam} mm`;
+          }
+        }
+        if (/^[0-9]{1,3}$/.test(positionsParam) && 'positions' in prev.spec) {
+          next.spec.positions = positionsParam;
+        }
+        return next;
+      });
+      if (pitchParam || positionsParam) {
+        trackStep('rfi_prefilled', params.get('utm_campaign') || '');
       }
     } catch (e) {
       // ignore
