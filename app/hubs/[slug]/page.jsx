@@ -313,6 +313,30 @@ export default async function HubPage({ params }) {
         </section>
       )}
 
+      {/* Spanish guide (only on the PCIe CEM hub) */}
+      {hub.slug === 'pcie-cem-connectors' && (
+        <section className="cs-section">
+          <div className="cs-container">
+            <div className="cs-section-head">
+              <h2>Guía en español</h2>
+            </div>
+            <div className="cs-quicklink-grid">
+              <Link
+                href="/es/tamano-slot-pci-pcie/"
+                hrefLang="es"
+                prefetch={false}
+                className="cs-quicklink-card cs-quicklink-tools"
+              >
+                <div className="cs-quicklink-text">
+                  <h3>Tamaño del slot PCI y PCIe: x1, x4, x8 y x16</h3>
+                  <p>Medidas, compatibilidad, potencia y ancho de banda por generación.</p>
+                </div>
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* CTA */}
       <section className="cs-section">
         <div className="cs-container">
