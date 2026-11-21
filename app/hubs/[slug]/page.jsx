@@ -10,19 +10,28 @@ import BlocksRenderer, {
 } from '../../../components/BlocksRenderer';
 import ArticleCard from '../../../components/ArticleCard';
 import NewsletterSignup from '../../../components/NewsletterSignup';
+import HubIllustration from '../../../components/HubIllustration';
 
 // Matches the bare-domain fix applied across the rest of the site
 // (see the Aug 2026 www canonical URL fix — www.connectorselection.com
 // does not resolve; connectorselection.com is the canonical, working domain).
 const SITE_URL = 'https://connectorselection.com';
 
-// The other two hubs in the cluster, used for the cross-link strip at the
-// bottom of every hub page. Update this list as new hubs are added.
-const ALL_HUBS = [
-  { slug: 'ocp-server-interconnects', name: 'OCP Server Interconnects' },
-  { slug: 'pcie-cem-connectors', name: 'PCIe & CEM Slot Connectors' },
-  { slug: 'ai-data-center-interconnects', name: 'AI / GPU Data Center Interconnect' },
-];
+// Cross-link strip at the bottom of each hub page. Only hubs that are
+// genuinely related are listed; a hub with no entry (or an empty list)
+// shows no strip. Update this map as new hubs are added.
+const HUB_NAMES = {
+  'ocp-server-interconnects': 'OCP Server Interconnects',
+  'pcie-cem-connectors': 'PCIe & CEM Slot Connectors',
+  'ai-data-center-interconnects': 'AI / GPU Data Center Interconnect',
+  'fpc-ffc-connector-selection': 'FFC/FPC Connector Selection',
+};
+const RELATED_HUBS = {
+  'ocp-server-interconnects': ['pcie-cem-connectors', 'ai-data-center-interconnects'],
+  'pcie-cem-connectors': ['ai-data-center-interconnects', 'ocp-server-interconnects'],
+  'ai-data-center-interconnects': ['pcie-cem-connectors', 'ocp-server-interconnects'],
+  'fpc-ffc-connector-selection': [],
+};
 
 async function safe(fn, fallback) {
   try {
@@ -72,7 +81,10 @@ export default async function HubPage({ params }) {
   const featuredArticle = allRelatedArticles[0] || null;
   const remainingArticles = allRelatedArticles.slice(1);
   const toolLinks = hub.related_tool_links || [];
-  const otherHubs = ALL_HUBS.filter((h) => h.slug !== slug);
+  const otherHubs = (RELATED_HUBS[slug] || []).map((s) => ({
+    slug: s,
+    name: HUB_NAMES[s],
+  }));
 
   const featuredCover = featuredArticle
     ? imageFrom(featuredArticle.cover_image, 'large')
@@ -132,6 +144,17 @@ export default async function HubPage({ params }) {
           {hub.eyebrow && <span className="cs-eyebrow">{hub.eyebrow}</span>}
           <h1>{hub.title}</h1>
           {hub.intro_paragraph && <p>{hub.intro_paragraph}</p>}
+          <div
+            style={{
+              maxWidth: 420,
+              height: 120,
+              marginTop: 20,
+              border: '1px solid var(--line, #d9dee4)',
+              background: 'var(--paper, #f6f4ee)',
+            }}
+          >
+            <HubIllustration slug={hub.slug} />
+          </div>
         </div>
       </section>
 
