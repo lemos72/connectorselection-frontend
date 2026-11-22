@@ -67,7 +67,7 @@ export default async function HubsIndexPage() {
             <div
               className="cs-grid"
               style={{
-                gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
                 gap: '20px',
                 background: 'transparent',
                 border: 'none',
@@ -79,12 +79,18 @@ export default async function HubsIndexPage() {
                   href={`/hubs/${hub.slug}/`}
                   className="cs-card"
                   prefetch={false}
-                  style={{ display: 'flex', flexDirection: 'column' }}
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    background: '#fff',
+                    border: '1px solid var(--line, #d9dee4)',
+                    boxShadow: '0 1px 3px rgba(20, 40, 70, 0.08)',
+                  }}
                 >
                   <div
                     style={{
-                      height: 120,
-                      background: 'var(--paper, #f6f4ee)',
+                      height: 130,
+                      background: '#f4f6f9',
                       borderBottom: '1px solid var(--line, #d9dee4)',
                     }}
                   >
