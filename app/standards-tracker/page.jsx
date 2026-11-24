@@ -17,6 +17,7 @@ export const metadata = {
 // date, note (plain facts only), source (official page), optional internal link.
 const SECTIONS = [
   {
+    id: 'pcie',
     title: 'PCI Express',
     intro: 'The PCI-SIG roadmap that sets the signaling speed for slots, cables and card-edge connectors.',
     rows: [
@@ -39,6 +40,7 @@ const SECTIONS = [
     ],
   },
   {
+    id: 'sff',
     title: 'SNIA SFF and EDSFF',
     intro: 'Connector and storage form factor specifications published by the SFF technical work group.',
     rows: [
@@ -82,6 +84,7 @@ const SECTIONS = [
     ],
   },
   {
+    id: 'ocp-nic',
     title: 'OCP: network cards and accelerators',
     intro: 'Open Compute Project specifications for NICs and accelerator modules.',
     rows: [
@@ -104,6 +107,7 @@ const SECTIONS = [
     ],
   },
   {
+    id: 'dc-mhs',
     title: 'OCP DC-MHS (modular server hardware)',
     intro: 'Latest version of each base specification as listed by OCP. RC means release candidate.',
     rows: [
@@ -118,6 +122,7 @@ const SECTIONS = [
     source: { label: 'OCP DC-MHS specifications', href: 'https://www.opencompute.org/projects/server/mhs/dc-mhs-specs-and-designs/' },
   },
   {
+    id: 'orv3',
     title: 'OCP Open Rack V3 (ORv3)',
     intro: 'Rack and power specifications. Dates are the revision dates shown on each OCP document.',
     rows: [
@@ -160,6 +165,7 @@ const SECTIONS = [
     ],
   },
   {
+    id: 'optics',
     title: 'Pluggable optics',
     intro: 'Announced form factors that are not yet published specifications.',
     rows: [
@@ -180,49 +186,161 @@ const RELATED_HUBS = [
   { href: '/hubs/ocp-server-interconnects/', name: 'OCP Server Interconnects' },
 ];
 
-const th = {
-  textAlign: 'left',
-  padding: '10px 12px',
-  borderBottom: '2px solid var(--line, #d9dee4)',
-  fontSize: 13,
-  color: 'var(--muted, #5b6b7b)',
-  fontWeight: 600,
-  whiteSpace: 'nowrap',
-};
-const td = {
-  padding: '12px',
-  borderBottom: '1px solid var(--line, #d9dee4)',
-  verticalAlign: 'top',
-  fontSize: 15,
-  lineHeight: 1.45,
+const KINDS = {
+  published: { label: 'Published', bg: '#e6f4ec', fg: '#1f6b43' },
+  draft: { label: 'Draft / RC', bg: '#fdf1d8', fg: '#7a4f00' },
+  announced: { label: 'Announced', bg: '#e3edf9', fg: '#1d4577' },
 };
 
-function Row({ row, fallbackSource }) {
-  const source = row.source || fallbackSource;
+// Pill category from the status text we recorded for each row.
+function statusKind(status) {
+  if (/^announced/i.test(status)) return 'announced';
+  if (/^in development/i.test(status)) return 'draft';
+  if (/\bRC\d\b/.test(status)) return 'draft';
+  return 'published';
+}
+
+// Newest movements, taken from the rows above (date shown as recorded).
+const LATEST = [
+  { name: 'ORv3 60A AC whip cable', what: 'Rev 1.1.0', date: 'Nov 11, 2026', id: 'orv3' },
+  { name: 'USFP pluggable optics', what: 'Announced', date: 'Oct 12, 2026', id: 'optics' },
+  { name: 'OCP NIC 3.0', what: '1.6.1 in draft', date: 'Aug 5, 2026', id: 'ocp-nic' },
+  { name: 'SFF-TA-1008 (E3)', what: 'Published 3.0a', date: 'Jul 10, 2026', id: 'sff' },
+];
+
+const ICON_PROPS = {
+  width: 30,
+  height: 30,
+  viewBox: '0 0 32 32',
+  fill: 'none',
+  stroke: 'var(--copper, #b8662b)',
+  strokeWidth: 1.6,
+  strokeLinecap: 'round',
+  strokeLinejoin: 'round',
+  'aria-hidden': true,
+};
+
+function SectionIcon({ id }) {
+  switch (id) {
+    case 'pcie':
+      return (
+        <svg {...ICON_PROPS}>
+          <rect x="3" y="10" width="26" height="8" rx="1.5" />
+          <path d="M7 18v5M11 18v5M15 18v5M21 18v5M25 18v5" />
+        </svg>
+      );
+    case 'sff':
+      return (
+        <svg {...ICON_PROPS}>
+          <rect x="4" y="7" width="10" height="18" rx="1.5" />
+          <rect x="18" y="7" width="10" height="18" rx="1.5" />
+          <path d="M7 21h4M21 21h4" />
+        </svg>
+      );
+    case 'ocp-nic':
+      return (
+        <svg {...ICON_PROPS}>
+          <rect x="4" y="8" width="24" height="16" rx="1.5" />
+          <path d="M9 24v3M13 24v3M17 24v3M7 12h6v5H7z" />
+        </svg>
+      );
+    case 'dc-mhs':
+      return (
+        <svg {...ICON_PROPS}>
+          <rect x="4" y="6" width="24" height="7" rx="1.5" />
+          <rect x="4" y="19" width="24" height="7" rx="1.5" />
+          <path d="M8 9.5h2M8 22.5h2M22 9.5h2M22 22.5h2" />
+        </svg>
+      );
+    case 'orv3':
+      return (
+        <svg {...ICON_PROPS}>
+          <rect x="7" y="3" width="18" height="26" rx="1.5" />
+          <path d="M7 10h18M7 17h18M7 24h18M11 6.5h4M11 13.5h4M11 20.5h4" />
+        </svg>
+      );
+    default:
+      return (
+        <svg {...ICON_PROPS}>
+          <rect x="3" y="11" width="16" height="10" rx="1.5" />
+          <path d="M19 14h5M19 18h5M24 12v8M27 14v4" />
+        </svg>
+      );
+  }
+}
+
+const CARD = {
+  display: 'flex',
+  flexDirection: 'column',
+  background: '#fff',
+  border: '1px solid var(--line, #d9dee4)',
+  borderRadius: 8,
+  boxShadow: '0 1px 3px rgba(20, 40, 70, 0.08)',
+  overflow: 'hidden',
+};
+
+function StatusPill({ kind }) {
+  const k = KINDS[kind];
   return (
-    <tr>
-      <td style={{ ...td, fontWeight: 600, minWidth: 160 }}>{row.name}</td>
-      <td style={{ ...td, minWidth: 150 }}>{row.status}</td>
-      <td style={{ ...td, minWidth: 120 }}>{row.date}</td>
-      <td style={{ ...td, minWidth: 260 }}>
-        {row.note}
-        {row.internal && (
-          <>
-            {' '}
-            <Link href={row.internal.href} prefetch={false}>{row.internal.label} →</Link>
-          </>
+    <span
+      style={{
+        background: k.bg,
+        color: k.fg,
+        fontSize: 12,
+        fontWeight: 700,
+        letterSpacing: '0.03em',
+        textTransform: 'uppercase',
+        padding: '3px 9px',
+        borderRadius: 999,
+        whiteSpace: 'nowrap',
+      }}
+    >
+      {k.label}
+    </span>
+  );
+}
+
+function StandardCard({ row, fallbackSource }) {
+  const source = row.source || fallbackSource;
+  const kind = statusKind(row.status);
+  return (
+    <div style={CARD}>
+      <div style={{ height: 4, background: KINDS[kind].fg, opacity: 0.8 }} />
+      <div style={{ padding: '16px 18px', display: 'flex', flexDirection: 'column', flex: 1, gap: 10 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 10 }}>
+          <h3 style={{ margin: 0, fontSize: 17, lineHeight: 1.3, color: 'var(--blueprint, #12355b)' }}>{row.name}</h3>
+          <StatusPill kind={kind} />
+        </div>
+        <div style={{ fontSize: 15, fontWeight: 600 }}>{row.status}</div>
+        <div style={{ fontSize: 13, color: 'var(--muted, #5b6b7b)' }}>{row.date}</div>
+        <p style={{ margin: 0, fontSize: 14.5, lineHeight: 1.5 }}>
+          {row.note}
+          {row.internal && (
+            <>
+              {' '}
+              <Link href={row.internal.href} prefetch={false}>{row.internal.label} →</Link>
+            </>
+          )}
+        </p>
+        {source && (
+          <div
+            style={{
+              marginTop: 'auto',
+              paddingTop: 10,
+              borderTop: '1px solid var(--line, #d9dee4)',
+              fontSize: 14,
+            }}
+          >
+            <a href={source.href} target="_blank" rel="noopener noreferrer">{source.label} ↗</a>
+          </div>
         )}
-      </td>
-      <td style={{ ...td, minWidth: 130 }}>
-        {source ? (
-          <a href={source.href} target="_blank" rel="noopener noreferrer">{source.label} ↗</a>
-        ) : null}
-      </td>
-    </tr>
+      </div>
+    </div>
   );
 }
 
 export default function StandardsTrackerPage() {
+  const total = SECTIONS.reduce((n, s) => n + s.rows.length, 0);
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -248,33 +366,137 @@ export default function StandardsTrackerPage() {
             The current version and status of the standards behind data center connectors, each
             with a link to the official source. Last checked {CHECKED}.
           </p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: 20 }}>
+            {[
+              { n: total, l: 'standards tracked' },
+              { n: SECTIONS.length, l: 'families' },
+              { n: LATEST[0].date, l: 'newest revision' },
+            ].map((s) => (
+              <div
+                key={s.l}
+                style={{
+                  background: '#fff',
+                  border: '1px solid var(--line, #d9dee4)',
+                  borderRadius: 8,
+                  padding: '10px 18px',
+                  minWidth: 130,
+                }}
+              >
+                <div style={{ fontSize: 22, fontWeight: 700, color: 'var(--blueprint, #12355b)' }}>{s.n}</div>
+                <div style={{ fontSize: 13, color: 'var(--muted, #5b6b7b)' }}>{s.l}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {SECTIONS.map((s) => (
-        <section className="cs-section" key={s.title}>
+      <section className="cs-section">
+        <div className="cs-container">
+          <div className="cs-section-head">
+            <h2>Latest movement</h2>
+          </div>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+              gap: 16,
+            }}
+          >
+            {LATEST.map((l) => (
+              <a
+                key={l.name}
+                href={`#${l.id}`}
+                style={{
+                  ...CARD,
+                  padding: '14px 16px',
+                  textDecoration: 'none',
+                  color: 'inherit',
+                  borderLeft: '4px solid var(--copper, #b8662b)',
+                }}
+              >
+                <span style={{ fontSize: 13, color: 'var(--muted, #5b6b7b)' }}>{l.date}</span>
+                <span style={{ fontSize: 16, fontWeight: 700, color: 'var(--blueprint, #12355b)', margin: '4px 0' }}>{l.name}</span>
+                <span style={{ fontSize: 14 }}>{l.what}</span>
+              </a>
+            ))}
+          </div>
+
+          <nav
+            aria-label="Standards families"
+            style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 24, alignItems: 'center' }}
+          >
+            <span style={{ fontSize: 13, color: 'var(--muted, #5b6b7b)', marginRight: 4 }}>Jump to:</span>
+            {SECTIONS.map((s) => (
+              <a
+                key={s.id}
+                href={`#${s.id}`}
+                style={{
+                  border: '1px solid var(--line, #d9dee4)',
+                  borderRadius: 999,
+                  padding: '5px 14px',
+                  fontSize: 14,
+                  textDecoration: 'none',
+                  background: '#fff',
+                }}
+              >
+                {s.title}
+              </a>
+            ))}
+          </nav>
+
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 14, marginTop: 18, fontSize: 13 }}>
+            {Object.entries(KINDS).map(([key, k]) => (
+              <span key={key} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                <span style={{ width: 10, height: 10, borderRadius: 999, background: k.fg, display: 'inline-block' }} />
+                {k.label}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {SECTIONS.map((s, i) => (
+        <section
+          className="cs-section"
+          key={s.id}
+          id={s.id}
+          style={{ scrollMarginTop: 80, background: i % 2 === 0 ? '#f4f6f9' : undefined }}
+        >
           <div className="cs-container">
-            <div className="cs-section-head">
-              <h2>{s.title}</h2>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 6 }}>
+              <span
+                style={{
+                  width: 52,
+                  height: 52,
+                  borderRadius: 10,
+                  background: '#fff',
+                  border: '1px solid var(--line, #d9dee4)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0,
+                }}
+              >
+                <SectionIcon id={s.id} />
+              </span>
+              <div>
+                <h2 style={{ margin: 0 }}>{s.title}</h2>
+                <span style={{ fontSize: 13, color: 'var(--muted, #5b6b7b)' }}>
+                  {s.rows.length} {s.rows.length === 1 ? 'standard' : 'standards'}
+                </span>
+              </div>
             </div>
-            <p style={{ marginTop: 0 }}>{s.intro}</p>
-            <div style={{ overflowX: 'auto' }}>
-              <table style={{ borderCollapse: 'collapse', width: '100%', minWidth: 760 }}>
-                <thead>
-                  <tr>
-                    <th style={th}>Standard</th>
-                    <th style={th}>Latest status</th>
-                    <th style={th}>Date</th>
-                    <th style={th}>Notes</th>
-                    <th style={th}>Official source</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {s.rows.map((r) => (
-                    <Row key={r.name} row={r} fallbackSource={s.source} />
-                  ))}
-                </tbody>
-              </table>
+            <p style={{ margin: '8px 0 20px' }}>{s.intro}</p>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(290px, 1fr))',
+                gap: 18,
+              }}
+            >
+              {s.rows.map((r) => (
+                <StandardCard key={r.name} row={r} fallbackSource={s.source} />
+              ))}
             </div>
           </div>
         </section>
