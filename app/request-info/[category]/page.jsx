@@ -2,7 +2,9 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getCategoryBySlug } from '../../../lib/strapi';
 import RFIForm from '../../../components/RFIForm';
+import LeadMagnetForm from '../../../components/LeadMagnetForm';
 import { RFI_FIELD_CONFIGS } from '../../../lib/rfiFieldConfigs';
+import { LEAD_MAGNET_CONFIGS } from '../../../lib/leadMagnetConfigs';
 import {
   PitchDiagram,
   ZifDiagram,
@@ -54,6 +56,22 @@ export default async function RequestInfoPage({ params }) {
   // lib/rfiFieldConfigs.js get the visual page. Others keep the original.
   const guided = Boolean(config.needs && config.hero);
   const hero = config.hero;
+
+  // Softer option for visitors who are not ready to send a request: the
+  // category's existing PDF lead magnet, shown right under the form. The
+  // source gets an `rfi_page_` prefix so signups from this page can be told
+  // apart from signups on article and category pages.
+  const leadMagnet = LEAD_MAGNET_CONFIGS[category];
+  const leadStrip = leadMagnet ? (
+    <div style={{ marginTop: '1.5rem' }}>
+      <LeadMagnetForm
+        pdfUrl={leadMagnet.pdfUrl}
+        source={`rfi_page_${leadMagnet.source}`}
+        title="Not ready to request yet? Get the free PDF"
+        description={leadMagnet.description}
+      />
+    </div>
+  ) : null;
 
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
@@ -138,6 +156,8 @@ export default async function RequestInfoPage({ params }) {
             <>
               <RFIForm category={category} />
 
+              {leadStrip}
+
               <section className="cs-rfi-learn" aria-labelledby="rfi-learn-title">
                 <h2 id="rfi-learn-title">Not sure which part you need?</h2>
                 <p>Quick pictures to help you fill in the specs.</p>
@@ -217,6 +237,7 @@ export default async function RequestInfoPage({ params }) {
                 </p>
               </div>
               <RFIForm category={category} />
+              {leadStrip}
             </>
           )}
         </div>
