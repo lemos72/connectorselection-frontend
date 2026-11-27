@@ -187,7 +187,7 @@ const RELATED_HUBS = [
 ];
 
 const KINDS = {
-  published: { label: 'Published', bg: '#e6f4ec', fg: '#1f6b43' },
+  published: { label: 'Released', bg: '#e6f4ec', fg: '#1f6b43' },
   draft: { label: 'Draft / RC', bg: '#fdf1d8', fg: '#7a4f00' },
   announced: { label: 'Announced', bg: '#e3edf9', fg: '#1d4577' },
 };

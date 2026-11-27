@@ -248,6 +248,13 @@ export default function RFIForm({ category }) {
     trackStep('rfi_form_start', category);
   }
 
+  // Only count a real field (input, dropdown, text box) as "started". Focus on
+  // the need cards (buttons) is tracked separately as rfi_need_selected.
+  function handleFocusCapture(e) {
+    const tag = e && e.target && e.target.tagName;
+    if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') markStarted();
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
 
@@ -448,7 +455,7 @@ export default function RFIForm({ category }) {
         <form
           className="cs-form cs-rfi-guided"
           onSubmit={handleSubmit}
-          onFocusCapture={markStarted}
+          onFocusCapture={handleFocusCapture}
         >
           {honeypot}
 
@@ -489,7 +496,7 @@ export default function RFIForm({ category }) {
                   <span className="cs-rfi-stepnum">2</span>
                   {activeNeed.notesRequired
                     ? 'Tell us about your project'
-                    : 'Your specs'}
+                    : 'Your specs (optional)'}
                 </legend>
 
                 {activeNeed.notesRequired ? (

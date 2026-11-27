@@ -99,6 +99,25 @@ function Ai() {
   );
 }
 
+// Automotive: vehicle with a sensor on the bumper wired to a control unit
+function Auto() {
+  return (
+    <Frame label="Vehicle with a bumper sensor wired to a control unit">
+      <path d="M74 84 V68 q0 -8 8 -10 L106 54 L126 34 H196 L222 54 L246 58 q8 2 8 10 V84 Z" fill="#fff" />
+      <path d="M134 54 V40 M174 54 V40 M126 54 H222" />
+      <circle cx="110" cy="86" r="12" fill="#fff" />
+      <circle cx="214" cy="86" r="12" fill="#fff" />
+      <rect x="140" y="64" width="34" height="14" rx="2" stroke={COPPER} />
+      {[148, 156, 164].map((x) => (
+        <line key={x} x1={x} y1="68" x2={x} y2="74" stroke={COPPER} />
+      ))}
+      <path d="M174 71 H250" stroke={COPPER} strokeDasharray="1 6" />
+      <rect x="250" y="64" width="8" height="12" rx="1.5" stroke={COPPER} fill="#fff" />
+      <path d="M264 60 q8 10 0 20 M272 54 q12 16 0 32" stroke={SOFT} strokeWidth="2.5" />
+    </Frame>
+  );
+}
+
 // Fallback: a generic row of connector pins
 function Generic() {
   return (
@@ -118,6 +137,7 @@ const BY_SLUG = {
   'fpc-ffc-connector-selection': Ffc,
   'pcie-cem-connectors': Pcie,
   'ocp-server-interconnects': Ocp,
+  'automotive-connectors': Auto,
   'ai-data-center-interconnects': Ai,
 };
 
